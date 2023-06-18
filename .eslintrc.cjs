@@ -39,7 +39,7 @@ const config = {
     'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': 'warn',
     // react-three-fiber
-    'react/no-unknown-property': ['error', { ignore: ['args', 'position'] }],
+    'react/no-unknown-property': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
   },
 }
