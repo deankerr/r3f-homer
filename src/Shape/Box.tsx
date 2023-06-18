@@ -6,7 +6,7 @@ type Props = {
   position: Vector3
 }
 
-export default function Box(props: Props) {
+export function Box(props: Props) {
   const ref = useRef<Mesh>(null!)
 
   const [hovered, setHover] = useState(false)

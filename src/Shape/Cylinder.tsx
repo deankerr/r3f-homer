@@ -4,7 +4,7 @@ import { Mesh } from 'three'
 
 type Props = MeshProps
 
-export default function Cylinder(props: Props) {
+export function Cylinder(props: Props) {
   const ref = useRef<Mesh>(null!)
 
   useFrame(() => {
