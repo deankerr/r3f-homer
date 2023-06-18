@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+/* html,
 body,
 #root {
   width: 100%;
@@ -21,4 +21,4 @@ body {
   overflow: hidden;
   overscroll-behavior-y: none;
   background: #f0f0f0;
-}
+} */
