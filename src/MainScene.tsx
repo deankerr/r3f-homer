@@ -15,6 +15,7 @@ import {
 } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 
+import { Homer } from './Homer'
 import { Bust, Chair, Gnome, Lime, Skull, Taxi } from './Model'
 import { Box, Cylinder, Flower, Sphere } from './Shape'
 
@@ -22,12 +23,12 @@ export function MainScene() {
   return (
     <Canvas shadows>
       <Stage environment={'city'}>
-        <Taxi />
-        <OrbitControls target={[0, 0, 0]} />
+        <Homer />
       </Stage>
 
+      <OrbitControls target={[0, 0, 0]} />
       <axesHelper args={[10]} />
-      <gridHelper args={[100, 100]} />
+      {/* <gridHelper args={[100, 100]} /> */}
       <Stats />
     </Canvas>
   )
