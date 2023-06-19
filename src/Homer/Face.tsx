@@ -1,10 +1,33 @@
 import { Circle, Sphere, Torus } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
+import { useRef } from 'react'
+import { Group } from 'three'
 
-type Props = JSX.IntrinsicElements['group'] & { skinColor: string }
+const roatationSpeed = 0.3
 
-export function Face({ skinColor, ...group }: Props) {
+type Props = JSX.IntrinsicElements['group'] & {
+  skinColor: string
+  faceIsRotating: React.MutableRefObject<boolean>
+}
+
+export function Face({ skinColor, faceIsRotating, ...group }: Props) {
+  const ref = useRef<Group>(null!)
+
+  // rotate around the face quickly, once
+  useFrame(() => {
+    if (faceIsRotating.current) {
+      ref.current.rotation.y += roatationSpeed
+
+      // stop after a full rotation
+      if (ref.current.rotation.y >= 2 * Math.PI) {
+        faceIsRotating.current = false
+        ref.current.rotation.y = 0
+      }
+    }
+  })
+
   return (
-    <group {...group}>
+    <group {...group} ref={ref}>
       {/* left eye */}
       <Sphere args={[0.35]} position={[-0.4, 5, 0.8]}>
         <meshStandardMaterial color="white" />

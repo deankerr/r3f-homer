@@ -9,7 +9,7 @@ type Props = JSX.IntrinsicElements['group']
 export function Homer(props: Props) {
   return (
     <group {...props}>
-      <Head skinColor={skinColor} />
+      <Head skinColor={skinColor} rotation={[0, 0, 0]} />
       <Chest skinColor={skinColor} />
       <Pants />
     </group>
