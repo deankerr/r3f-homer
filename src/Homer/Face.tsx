@@ -1,8 +1,10 @@
 import { Circle, Sphere, Torus } from '@react-three/drei'
 
-export function Face(props: JSX.IntrinsicElements['group']) {
+type Props = JSX.IntrinsicElements['group'] & { skinColor: string }
+
+export function Face({ skinColor, ...group }: Props) {
   return (
-    <group {...props}>
+    <group {...group}>
       {/* left eye */}
       <Sphere args={[0.35]} position={[-0.4, 5, 0.8]}>
         <meshStandardMaterial color="white" />
@@ -21,7 +23,7 @@ export function Face(props: JSX.IntrinsicElements['group']) {
 
       {/* nose */}
       <Sphere args={[0.2]} position={[0, 4.6, 1]}>
-        <meshStandardMaterial color="yellow" />
+        <meshStandardMaterial color={skinColor} />
       </Sphere>
 
       {/* mouth */}

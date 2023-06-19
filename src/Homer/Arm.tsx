@@ -1,10 +1,5 @@
 import { Capsule } from '@react-three/drei'
 
-// type Props = {
-//   group: JSX.IntrinsicElements['group']
-//   skinColor: string
-// }
-
 type Props = JSX.IntrinsicElements['group'] & { skinColor: string }
 
 export function Arm({ skinColor, ...group }: Props) {
@@ -26,10 +21,3 @@ export function Arm({ skinColor, ...group }: Props) {
     </group>
   )
 }
-
-/* 
-rotation={[0, 0, Math.PI / 2]}
-
-position={[-1.5, 2.6, 0]}
-position={[-2.75, 2.6, 0]}
-*/

@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { OrbitControls, Stats } from '@react-three/drei'
-import { useRef } from 'react'
-import { Mesh } from 'three'
 
 import { BigText } from './BigText'
 import { Homer } from './Homer/Homer'
@@ -53,15 +51,10 @@ export function MainScene() {
       <ambientLight intensity={0.1} />
 
       <axesHelper args={[20]} />
-      <gridHelper args={[100, 100]} />
+      <gridHelper args={[100, 50]} />
 
       <OrbitControls target={[0, 8, 0]} />
       <Stats />
     </>
   )
 }
-
-/* 
-<Sun scale={10} position={[0, 50, -60]} />
-target={[0, 6, 0]}
-*/
