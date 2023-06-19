@@ -8,9 +8,11 @@ Title: Model 61A - Bottlenose Dolphin
 */
 import { useGLTF } from '@react-three/drei'
 import { PositionalAudio } from '@react-three/drei'
-import { Suspense, useState } from 'react'
+import { Suspense } from 'react'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
+
+import { useTaxiStore } from '@/store'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -25,17 +27,18 @@ type GLTFResult = GLTF & {
 }
 
 export function Dolphin(props: JSX.IntrinsicElements['group']) {
-  const [playSound, setPlaySound] = useState(false)
+  const canStartAudio = useTaxiStore((state) => state.canStartAudio)
+
   const { nodes, materials } = useGLTF(
     'model/bottlenose_dolphin-transformed.glb'
   ) as GLTFResult
   return (
-    <group {...props} dispose={null} onClick={() => setPlaySound(true)}>
+    <group {...props}>
       <Suspense>
-        {playSound && (
+        {canStartAudio && (
           <PositionalAudio
             url="sound/dolphin_clicks.ogg"
-            distance={80}
+            distance={10}
             loop
             autoplay
             load

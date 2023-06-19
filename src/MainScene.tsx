@@ -20,6 +20,7 @@ import {
 } from './Model'
 import { Orbit } from './Orbit'
 import { OuterSpace } from './OuterSpace'
+import { useTaxiStore } from './store'
 
 export function MainScene() {
   // const ambientLightRef = useRef<AmbientLight>(null!)
@@ -28,6 +29,7 @@ export function MainScene() {
   //   if (ambientLightRef.current.intensity < 0.1)
   //     ambientLightRef.current.intensity += 0.01
   // })
+  // const canStartAudio = useTaxiStore((state) => state.canStartAudio)
   return (
     <>
       <OuterSpace />

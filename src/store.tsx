@@ -1,21 +1,19 @@
+import { mountStoreDevtool } from 'simple-zustand-devtools'
 import { create } from 'zustand'
-import { devtools, persist } from 'zustand/middleware'
+import { devtools } from 'zustand/middleware'
 
 interface State {
   canStartAudio: boolean
   setCanStartAudio: () => void
 }
 
-export const useStateStore = create<State>()(
-  devtools(
-    persist(
-      (set) => ({
-        canStartAudio: false,
-        setCanStartAudio: () => set(() => ({ canStartAudio: true })),
-      }),
-      {
-        name: 'r3f-storage',
-      }
-    )
-  )
+export const useTaxiStore = create<State>()(
+  devtools((set) => ({
+    canStartAudio: false,
+    setCanStartAudio: () => set(() => ({ canStartAudio: true })),
+  }))
 )
+
+if (process.env.NODE_ENV === 'development') {
+  mountStoreDevtool('Store', useTaxiStore)
+}

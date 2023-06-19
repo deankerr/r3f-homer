@@ -1,7 +1,9 @@
 import { PositionalAudio } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { Suspense, useRef, useState } from 'react'
+import { Suspense, useRef } from 'react'
 import { Group, Vector3 } from 'three'
+
+import { useTaxiStore } from '@/store'
 
 import { Chest } from './Chest'
 import { Head } from './Head'
@@ -19,22 +21,15 @@ export function Homer(props: Props) {
     ref.current.position.lerp(homerToVec, 1 / 60 / 3)
   })
 
-  const [homey, setHomey] = useState(false)
+  const canStartAudio = useTaxiStore((state) => state.canStartAudio)
 
   return (
-    <group ref={ref} {...props} onClick={() => setHomey(true)}>
+    <group ref={ref} {...props}>
       <Suspense>
-        {homey && (
-          // <PositionalAudio
-          //   url="sound/dolphin_clicks.ogg"
-          //   distance={80}
-          //   loop
-          //   autoplay
-          //   load
-          // />
+        {canStartAudio && (
           <PositionalAudio
             url="sound/blind_shift.mp3"
-            distance={80}
+            distance={10}
             autoplay
             load
           />
@@ -46,7 +41,3 @@ export function Homer(props: Props) {
     </group>
   )
 }
-
-/* 
-    X
-*/

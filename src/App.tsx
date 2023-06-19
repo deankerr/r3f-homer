@@ -1,34 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Loader, PositionalAudio } from '@react-three/drei'
+import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import { Suspense, useState } from 'react'
 
 import { MainScene } from './MainScene'
-import { TestScene } from './TestScene'
+import { useTaxiStore } from './store'
 
 export default function App() {
-  // const music = (
-  //   <Suspense fallback={null}>
+  const [canStartAudio, setCanStartAudio] = useTaxiStore((state) => [
+    state.canStartAudio,
+    state.setCanStartAudio,
+  ])
 
-  //   </Suspense>
-  // )
-  const [canStartAudio, setCanStateAudio] = useState(false)
+  function handleInteraction() {
+    if (!canStartAudio) setCanStartAudio()
+  }
 
   return (
-    <div className="h-screen bg-black" onClick={() => setCanStateAudio(true)}>
+    <div className="h-screen bg-black" onClick={handleInteraction}>
       <Canvas camera={{ position: [0, 10, 10] }}>
         <MainScene />
-        {/* {canStartAudio && music} */}
         {/* <TestScene /> */}
-        {/* <Suspense fallback={null}>
-          <PositionalAudio url="sound/blind_shift.mp3" />
-        </Suspense> */}
       </Canvas>
       <Loader />
     </div>
   )
 }
-
-/* 
-rotation-y={Math.PI / 2}
-*/
