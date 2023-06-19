@@ -13,7 +13,7 @@ export function OuterSpace() {
 
   return (
     <group ref={starsRef}>
-      <Stars radius={100} factor={4} saturation={2} speed={1} fade />
+      <Stars radius={70} factor={4} saturation={2} speed={1} fade />
     </group>
   )
 }

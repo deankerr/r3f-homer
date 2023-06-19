@@ -7,6 +7,8 @@ Source: https://sketchfab.com/3d-models/model-61a-bottlenose-dolphin-2ec20f15b08
 Title: Model 61A - Bottlenose Dolphin
 */
 import { useGLTF } from '@react-three/drei'
+import { PositionalAudio } from '@react-three/drei'
+import { Suspense, useState } from 'react'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
 
@@ -23,11 +25,23 @@ type GLTFResult = GLTF & {
 }
 
 export function Dolphin(props: JSX.IntrinsicElements['group']) {
+  const [playSound, setPlaySound] = useState(false)
   const { nodes, materials } = useGLTF(
     'model/bottlenose_dolphin-transformed.glb'
   ) as GLTFResult
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} onClick={() => setPlaySound(true)}>
+      <Suspense>
+        {playSound && (
+          <PositionalAudio
+            url="sound/dolphin_clicks.ogg"
+            distance={80}
+            loop
+            autoplay
+            load
+          />
+        )}
+      </Suspense>
       <group name="Sketchfab_Scene">
         <primitive object={nodes.GLTF_created_0_rootJoint} />
         <skinnedMesh
