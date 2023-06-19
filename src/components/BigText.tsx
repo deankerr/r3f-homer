@@ -6,9 +6,10 @@ export function BigText({ text, ...group }: Props) {
   return (
     <Float>
       <Center {...group}>
-        <Text3D font={'font/bigblue.json'} size={16} height={10}>
+        <Text3D font={'font/bigblue.json'} size={6} height={10}>
           {text}
           <meshNormalMaterial />
+          {/* <meshPhongMaterial /> */}
         </Text3D>
       </Center>
     </Float>

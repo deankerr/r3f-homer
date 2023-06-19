@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Group } from 'three'
 
-export function OuterSpace() {
+export function Starfield() {
   const starsRef = useRef<Group>(null!)
 
   useFrame(() => {

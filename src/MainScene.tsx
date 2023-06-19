@@ -1,38 +1,27 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { OrbitControls, Stats } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
-import { AmbientLight } from 'three'
 
-import { BigText } from './BigText'
-import { Homer } from './Homer/Homer'
+import { BigText } from './components/BigText'
+import { Homer } from './components/Homer/Homer'
+import { Orbit } from './components/Orbit'
+import { Starfield } from './components/Starfield'
 import {
   Bust,
-  Chair,
   Dolphin,
   Eye,
   Gnome,
   Lime,
+  PlasticChair,
   Skull,
   Sun,
   Taxi,
   Toilet,
-} from './Model'
-import { Orbit } from './Orbit'
-import { OuterSpace } from './OuterSpace'
-import { useTaxiStore } from './store'
+} from './components/models'
 
 export function MainScene() {
-  // const ambientLightRef = useRef<AmbientLight>(null!)
-
-  // useFrame(() => {
-  //   if (ambientLightRef.current.intensity < 0.1)
-  //     ambientLightRef.current.intensity += 0.01
-  // })
-  // const canStartAudio = useTaxiStore((state) => state.canStartAudio)
   return (
     <>
-      <OuterSpace />
+      <Starfield />
       <BigText text="DEAN.TAXI" position={[-2, 10, -50]} />
 
       <Orbit y={0.01}>
@@ -52,7 +41,7 @@ export function MainScene() {
       </Orbit>
 
       <Orbit x={0.001} z={0.001}>
-        <Chair scale={8} position={[-40, 5, 0]} />
+        <PlasticChair scale={8} position={[-40, 5, 0]} />
         <Skull scale={5} position={[40, 5, 0]} />
         <Toilet scale={8} position={[0, 5, 40]} />
       </Orbit>
@@ -62,7 +51,6 @@ export function MainScene() {
       <Eye scale={200} position={[0, 200, 0]} rotation={[Math.PI / 2, 0, 0]} />
 
       <ambientLight intensity={0.1} />
-      {/* <ambientLight intensity={0.5} /> */}
 
       {/* <axesHelper args={[20]} /> */}
       {/* <gridHelper args={[100, 50]} /> */}
@@ -72,3 +60,20 @@ export function MainScene() {
     </>
   )
 }
+
+/* 
+
+      <Cloud position={[0, -10, 0]} />
+      <TorusKnot args={[100, 1]} material-color="hotpink" />
+<Flower position-y={10} />
+      <Float
+        speed={1}
+        rotationIntensity={5}
+        floatIntensity={1}
+        // floatingRange={[1, 4]}
+      >
+        <Sphere position={[5, 4, 0]} />
+      </Float>
+
+        <Sparkles color={'red'} count={100} size={5} scale={6} />
+*/

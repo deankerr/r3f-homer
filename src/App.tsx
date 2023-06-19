@@ -3,7 +3,10 @@ import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 
 import { MainScene } from './MainScene'
+import { TestScene } from './TestScene'
 import { useTaxiStore } from './store'
+
+const test = false
 
 export default function App() {
   const [canStartAudio, setCanStartAudio] = useTaxiStore((state) => [
@@ -18,8 +21,7 @@ export default function App() {
   return (
     <div className="h-screen bg-black" onClick={handleInteraction}>
       <Canvas camera={{ position: [0, 10, 10] }}>
-        <MainScene />
-        {/* <TestScene /> */}
+        {test ? <TestScene /> : <MainScene />}
       </Canvas>
       <Loader />
     </div>

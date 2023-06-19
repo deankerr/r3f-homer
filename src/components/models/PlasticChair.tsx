@@ -15,7 +15,7 @@ type GLTFResult = GLTF & {
   }
 }
 
-export function Chair(props: JSX.IntrinsicElements['group']) {
+export function PlasticChair(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF(
     'model/plastic_monobloc_chair_01_1k-transformed.glb'
   ) as GLTFResult
