@@ -3,6 +3,7 @@ import { OrbitControls, Stats } from '@react-three/drei'
 
 import { BigText } from './BigText'
 import { Homer } from './Homer/Homer'
+import { Pearls } from './Homer/Pearls'
 import {
   Bust,
   Chair,

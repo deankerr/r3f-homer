@@ -1,20 +1,29 @@
 import { Circle, Sphere, Torus } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
-import { Group } from 'three'
+import { Group, Vector3 } from 'three'
 
 const roatationSpeed = 0.3
 
 type Props = JSX.IntrinsicElements['group'] & {
   skinColor: string
   faceIsRotating: React.MutableRefObject<boolean>
+  headIsMarging: React.MutableRefObject<boolean>
 }
 
-export function Face({ skinColor, faceIsRotating, ...group }: Props) {
+const headTransformSeconds = 2
+const margeFacePosition = new Vector3(0, 1.5, 0)
+
+export function Face({
+  skinColor,
+  faceIsRotating,
+  headIsMarging,
+  ...group
+}: Props) {
   const ref = useRef<Group>(null!)
 
-  // rotate around the face quickly, once
   useFrame(() => {
+    // rotate around the face quickly, once
     if (faceIsRotating.current) {
       ref.current.rotation.y += roatationSpeed
 
@@ -23,6 +32,11 @@ export function Face({ skinColor, faceIsRotating, ...group }: Props) {
         faceIsRotating.current = false
         ref.current.rotation.y = 0
       }
+    }
+
+    // move face up
+    if (headIsMarging.current) {
+      ref.current.position.lerp(margeFacePosition, headTransformSeconds / 60)
     }
   })
 

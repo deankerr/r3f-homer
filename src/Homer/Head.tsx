@@ -1,19 +1,37 @@
 import { Capsule, Torus } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
+import { Color, Mesh, MeshStandardMaterial, Vector3 } from 'three'
 
 import { Face } from './Face'
+import { Pearls } from './Pearls'
+
+const headTransformSeconds = 2
+const headGrowVec = new Vector3(1, 2.4, 1)
+const margeColor = new Color('blue')
 
 type Props = JSX.IntrinsicElements['group'] & { skinColor: string }
 
 export function Head({ skinColor, ...group }: Props) {
+  const headRef = useRef<Mesh>(null!)
+  const headMaterialRef = useRef<MeshStandardMaterial>(null!)
+
   const faceIsRotating = useRef<boolean>(false)
+  const headIsMarging = useRef<boolean>(false)
+
+  useFrame(() => {
+    if (headIsMarging.current) {
+      headMaterialRef.current.color.lerp(margeColor, headTransformSeconds / 60)
+      headRef.current.scale.lerp(headGrowVec, headTransformSeconds / 60)
+    }
+  })
 
   return (
     <>
-      <group {...group} onClick={() => (faceIsRotating.current = true)}>
+      <group {...group} onClick={() => (headIsMarging.current = true)}>
         {/* head */}
-        <Capsule args={[1, 1.2]} position={[0, 5, 0]}>
-          <meshStandardMaterial color={skinColor} />
+        <Capsule ref={headRef} args={[1, 1.2]} position={[0, 5, 0]}>
+          <meshStandardMaterial ref={headMaterialRef} color={skinColor} />
         </Capsule>
 
         {/* hair */}
@@ -32,7 +50,10 @@ export function Head({ skinColor, ...group }: Props) {
           position={[0, 0.3, 0]}
           skinColor={skinColor}
           faceIsRotating={faceIsRotating}
+          headIsMarging={headIsMarging}
         />
+
+        <Pearls headIsMarging={headIsMarging} />
       </group>
     </>
   )
