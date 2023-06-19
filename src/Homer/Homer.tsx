@@ -30,7 +30,7 @@ export function Homer(props: Props) {
           <PositionalAudio
             url="sound/blind_shift.mp3"
             distance={100}
-            autoplay
+            // autoplay
             load
           />
         )}
