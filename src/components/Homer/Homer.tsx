@@ -1,10 +1,8 @@
-import { PositionalAudio } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { Suspense, useRef } from 'react'
+import { useRef } from 'react'
 import { Group, Vector3 } from 'three'
 
-import { useTaxiStore } from '@/store'
-
+import { AudioReady } from '..'
 import { Chest } from './Chest'
 import { Head } from './Head'
 import { Pants } from './Pants'
@@ -21,20 +19,9 @@ export function Homer(props: Props) {
     ref.current.position.lerp(homerToVec, 1 / 60 / 3)
   })
 
-  const canStartAudio = useTaxiStore((state) => state.canStartAudio)
-
   return (
     <group ref={ref} {...props}>
-      <Suspense>
-        {canStartAudio && (
-          <PositionalAudio
-            url="sound/blind_shift.mp3"
-            distance={100}
-            // autoplay
-            load
-          />
-        )}
-      </Suspense>
+      <AudioReady url="sound/blind_shift.mp3" distance={100} autoplay />
       <Head skinColor={skinColor} rotation={[0, 0, 0]} />
       <Chest skinColor={skinColor} />
       <Pants />
