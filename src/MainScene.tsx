@@ -7,6 +7,7 @@ import { Pearls } from './Homer/Pearls'
 import {
   Bust,
   Chair,
+  Dolphin,
   Eye,
   Gnome,
   Lime,
@@ -29,8 +30,9 @@ export function MainScene() {
         <directionalLight position={[0, 50, -60]} />
       </Orbit>
 
-      {/*<Orbit x={0.01} y={0.01}>
+      <Orbit x={0.01} y={0.01}>
         <Taxi scale={8} position={[0, 50, 60]} />
+        <Dolphin scale={20} position={[0, -50, -60]} />
       </Orbit>
 
       <Orbit y={0.01} z={0.001}>
@@ -43,14 +45,14 @@ export function MainScene() {
         <Chair scale={8} position={[-40, 5, 0]} />
         <Skull scale={5} position={[40, 5, 0]} />
         <Toilet scale={8} position={[0, 5, 40]} />
-      </Orbit> */}
+      </Orbit>
 
       <Homer position={[0, 6, 0]} />
 
-      <Eye scale={20} position={[0, 40, 0]} rotation={[Math.PI / 2, 0, 0]} />
+      <Eye scale={200} position={[0, 200, 0]} rotation={[Math.PI / 2, 0, 0]} />
 
-      {/* <ambientLight intensity={0.1} /> */}
-      <ambientLight intensity={0.5} />
+      <ambientLight intensity={0.1} />
+      {/* <ambientLight intensity={0.5} /> */}
 
       <axesHelper args={[20]} />
       <gridHelper args={[100, 50]} />
