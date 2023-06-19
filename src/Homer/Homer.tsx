@@ -26,8 +26,12 @@ export function Homer(props: Props) {
       <Face position={[0, 0.2, 0]} />
 
       {/* {body} */}
-      <Cone args={[1.75, 4]} position={[0, 3.5, 0]} />
-      <Sphere args={[2]} position={[0, 1, 0]} />
+      <Cone args={[1.75, 4]} position={[0, 3.5, 0]}>
+        <meshStandardMaterial color="white" />
+      </Cone>
+      <Sphere args={[2]} position={[0, 1, 0]}>
+        <meshStandardMaterial color="white" />
+      </Sphere>
 
       {/* arms */}
       <Arm
