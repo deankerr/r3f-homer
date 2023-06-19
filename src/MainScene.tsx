@@ -15,7 +15,7 @@ import {
 } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 
-import { Homer } from './Homer'
+import { Homer } from './Homer/Homer'
 import { Bust, Chair, Gnome, Lime, Skull, Taxi } from './Model'
 import { Box, Cylinder, Flower, Sphere } from './Shape'
 
