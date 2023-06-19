@@ -1,33 +1,18 @@
-import {
-  Box,
-  Capsule,
-  Circle,
-  Cone,
-  Cylinder,
-  Lathe,
-  Sphere,
-  Torus,
-} from '@react-three/drei'
-import { DoubleSide, Vector2 } from 'three'
+import { Capsule, Cone, Sphere, Torus } from '@react-three/drei'
 
 import { Arm } from './Arm'
 import { Face } from './Face'
 
-const points: Vector2[] = []
-for (let i = 0; i < 10; ++i) {
-  const x = Math.sin(i * 0.4) * 3 + 0
-  const y = (i - 5) * 0.8
-  points.push(new Vector2(x, y))
-  console.log(x, y)
-}
-// console.log(points)
+const skinColor = '#FFD700'
 
-export function Homer() {
+type Props = JSX.IntrinsicElements['group']
+
+export function Homer(props: Props) {
   return (
-    <group>
+    <group {...props}>
       {/* head */}
       <Capsule args={[1, 1.2]} position={[0, 5, 0]}>
-        <meshStandardMaterial color="yellow" />
+        <meshStandardMaterial color={skinColor} />
       </Capsule>
 
       {/* hair */}
@@ -45,8 +30,16 @@ export function Homer() {
       <Sphere args={[2]} position={[0, 1, 0]} />
 
       {/* arms */}
-      <Arm position={[-1.5, 2.6, 0]} rotation={[0, -Math.PI / 2, 0]} />
-      <Arm position={[1.5, 2.6, 0]} rotation={[0, Math.PI / 2, 0]} />
+      <Arm
+        position={[-1.5, 2.6, 0]}
+        rotation={[0, -Math.PI / 2, 0]}
+        skinColor={skinColor}
+      />
+      <Arm
+        position={[1.5, 2.6, 0]}
+        rotation={[0, Math.PI / 2, 0]}
+        skinColor={skinColor}
+      />
 
       {/* pants */}
       <Capsule args={[1.7, 0.1]} position={[0, 0, 0]}>
