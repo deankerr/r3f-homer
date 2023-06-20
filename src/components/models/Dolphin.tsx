@@ -9,6 +9,7 @@ Title: Model 61A - Bottlenose Dolphin
 import { useGLTF } from '@react-three/drei'
 import { PositionalAudio } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { useControls } from 'leva'
 import { Suspense, useRef } from 'react'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
@@ -33,6 +34,13 @@ function DolphinAudio() {
   const ref = useRef<THREE.PositionalAudio>(null!)
   const timeToClickRef = useRef<number>(0)
 
+  const { volume } = useControls('dolphin volume', { volume: 0 })
+
+  if (ref.current) {
+    console.log(volume)
+    ref.current.setVolume(volume)
+  }
+
   useFrame((state, dt) => {
     timeToClickRef.current -= dt
     if (timeToClickRef.current <= 0) {
@@ -44,7 +52,7 @@ function DolphinAudio() {
   return (
     <PositionalAudio
       ref={ref}
-      url="sound/dolphin_clicks.ogg"
+      url="sounds/dolphin_clicks.ogg"
       distance={10}
       loop={false}
       load

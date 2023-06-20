@@ -1,8 +1,15 @@
 import { Capsule, Torus } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
-import { Color, Mesh, MeshStandardMaterial, Vector3 } from 'three'
+import {
+  Color,
+  Mesh,
+  MeshStandardMaterial,
+  PositionalAudio,
+  Vector3,
+} from 'three'
 
+import { AudioReady } from '..'
 import { Face } from './Face'
 import { Pearls } from './Pearls'
 
@@ -19,6 +26,8 @@ export function Head({ skinColor, ...group }: Props) {
   const faceIsRotating = useRef<boolean>(false)
   const headIsMarging = useRef<boolean>(false)
 
+  const audioRef = useRef<PositionalAudio>(null!)
+
   useFrame(() => {
     if (headIsMarging.current) {
       headMaterialRef.current.color.lerp(margeColor, headTransformSeconds / 60)
@@ -26,9 +35,16 @@ export function Head({ skinColor, ...group }: Props) {
     }
   })
 
+  function handleHeadClick() {
+    headIsMarging.current = true
+    audioRef.current.play()
+  }
+
   return (
     <>
-      <group {...group} onClick={() => (headIsMarging.current = true)}>
+      <group {...group} onClick={handleHeadClick}>
+        <AudioReady ref={audioRef} url="sounds/long_groan.mp3" loop={false} />
+
         {/* head */}
         <Capsule ref={headRef} args={[1, 1.2]} position={[0, 5, 0]}>
           <meshStandardMaterial ref={headMaterialRef} color={skinColor} />
