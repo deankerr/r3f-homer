@@ -9,6 +9,8 @@ import {
   Vector3,
 } from 'three'
 
+import { useTaxiStore } from '@/store'
+
 import { AudioReady } from '..'
 import { Face } from './Face'
 import { Pearls } from './Pearls'
@@ -24,20 +26,27 @@ export function Head({ skinColor, ...group }: Props) {
   const headMaterialRef = useRef<MeshStandardMaterial>(null!)
 
   const faceIsRotating = useRef<boolean>(false)
-  const headIsMarging = useRef<boolean>(false)
+
+  // const headIsMarging = useRef<boolean>(false)
+  const [homerState, setHomerState] = useTaxiStore((state) => [
+    state.homerState,
+    state.setHomerState,
+  ])
 
   const audioRef = useRef<PositionalAudio>(null!)
 
   useFrame(() => {
-    if (headIsMarging.current) {
+    if (homerState === 'headMarging') {
       headMaterialRef.current.color.lerp(margeColor, headTransformSeconds / 60)
       headRef.current.scale.lerp(headGrowVec, headTransformSeconds / 60)
     }
   })
 
   function handleHeadClick() {
-    headIsMarging.current = true
-    audioRef.current.play()
+    if (homerState !== 'headMarging') {
+      setHomerState('headMarging')
+      audioRef.current.play()
+    }
   }
 
   return (
@@ -66,10 +75,9 @@ export function Head({ skinColor, ...group }: Props) {
           position={[0, 0.3, 0]}
           skinColor={skinColor}
           faceIsRotating={faceIsRotating}
-          headIsMarging={headIsMarging}
         />
 
-        <Pearls headIsMarging={headIsMarging} />
+        <Pearls />
       </group>
     </>
   )

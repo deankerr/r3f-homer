@@ -3,23 +3,24 @@ import { MeshProps, useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Group, Mesh, Vector3 } from 'three'
 
+import { useTaxiStore } from '@/store'
+
 const amount = 10
 const radius = 1.2
 
 const headTransformSeconds = 2
 const pearlsOutVec = new Vector3(1, 1, 1)
 
-type Props = JSX.IntrinsicElements['group'] & {
-  headIsMarging: React.MutableRefObject<boolean>
-}
+type Props = JSX.IntrinsicElements['group']
 
-export function Pearls({ headIsMarging, ...group }: Props) {
+export function Pearls(props: Props) {
   const ref = useRef<Group>(null!)
+  const homerState = useTaxiStore((state) => state.homerState)
 
   useFrame(() => {
     ref.current.rotation.y += 0.01
 
-    if (headIsMarging.current) {
+    if (homerState === 'headMarging') {
       ref.current.scale.lerp(pearlsOutVec, headTransformSeconds / 60)
     }
   })
@@ -32,7 +33,7 @@ export function Pearls({ headIsMarging, ...group }: Props) {
   }
 
   return (
-    <group ref={ref} {...group} scale={0.5}>
+    <group ref={ref} {...props} scale={0.5}>
       {...pearls}
     </group>
   )

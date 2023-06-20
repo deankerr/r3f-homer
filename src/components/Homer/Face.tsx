@@ -3,24 +3,22 @@ import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Group, Vector3 } from 'three'
 
+import { useTaxiStore } from '@/store'
+
 const roatationSpeed = 0.3
 
 type Props = JSX.IntrinsicElements['group'] & {
   skinColor: string
   faceIsRotating: React.MutableRefObject<boolean>
-  headIsMarging: React.MutableRefObject<boolean>
 }
 
 const headTransformSeconds = 2
 const margeFacePosition = new Vector3(0, 1.5, 0)
 
-export function Face({
-  skinColor,
-  faceIsRotating,
-  headIsMarging,
-  ...group
-}: Props) {
+export function Face({ skinColor, faceIsRotating, ...group }: Props) {
   const ref = useRef<Group>(null!)
+
+  const homerState = useTaxiStore((state) => state.homerState)
 
   useFrame(() => {
     // rotate around the face quickly, once
@@ -35,7 +33,7 @@ export function Face({
     }
 
     // move face up
-    if (headIsMarging.current) {
+    if (homerState === 'headMarging') {
       ref.current.position.lerp(margeFacePosition, headTransformSeconds / 60)
     }
   })

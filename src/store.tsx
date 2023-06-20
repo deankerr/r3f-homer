@@ -2,15 +2,28 @@ import { mountStoreDevtool } from 'simple-zustand-devtools'
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-interface State {
+type HomerState =
+  | 'approaching'
+  | 'idle'
+  | 'faceRotating'
+  | 'headMarging'
+  | 'Marged'
+
+type State = {
   canStartAudio: boolean
   setCanStartAudio: () => void
+
+  homerState: HomerState
+  setHomerState: (to: HomerState) => void
 }
 
 export const useTaxiStore = create<State>()(
   devtools((set) => ({
     canStartAudio: false,
     setCanStartAudio: () => set(() => ({ canStartAudio: true })),
+
+    homerState: 'idle',
+    setHomerState: (to: HomerState) => set(() => ({ homerState: to })),
   }))
 )
 
