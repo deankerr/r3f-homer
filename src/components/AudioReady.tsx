@@ -14,8 +14,6 @@ export const AudioReady = forwardRef<PostionalAudio3, Props>(
   function AudioReady(props, ref) {
     // const canStartAudio = useTaxiStore((state) => state.canStartAudio)
 
-    // const audio = 
-
     return <PositionalAudio ref={ref} {...props} autoplay={false} load />
     // return <Suspense>{canStartAudio && audio}</Suspense>
   }

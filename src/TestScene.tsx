@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { OrbitControls, Stats } from '@react-three/drei'
-import { ReactElement } from 'react'
-import { Group, Object3D } from 'three'
 
 import {
   Bust,

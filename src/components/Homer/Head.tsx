@@ -19,7 +19,7 @@ const headTransformSeconds = 2
 const headGrowVec = new Vector3(1, 2.4, 1)
 const margeColor = new Color('blue')
 
-const headShrinkVec = new Vector3(1, 1.2, 1)
+const headShrinkVec = new Vector3(1, 1, 1)
 
 type Props = JSX.IntrinsicElements['group'] & { skinColor: string }
 

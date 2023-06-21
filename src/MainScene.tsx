@@ -56,7 +56,7 @@ export function MainScene() {
       {/* <gridHelper args={[100, 50]} /> */}
 
       <OrbitControls target={[0, 8, 0]} enablePan={false} />
-      <Stats />
+      {/* <Stats /> */}
     </>
   )
 }
