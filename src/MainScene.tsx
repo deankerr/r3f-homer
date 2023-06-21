@@ -19,6 +19,9 @@ import {
   Toilet,
 } from './components/models'
 import { useState } from 'react'
+import { Flower } from './components'
+import { Dodecahedron } from './components/shapes/Dodecahedron'
+import { Cone } from './components/shapes/Cone'
 
 export function MainScene() {
   const [showSky, setShowSky] = useState(false)
@@ -40,20 +43,23 @@ export function MainScene() {
       </Orbit>
 
       <Orbit y={0.01} z={0.001}>
-        <Bust scale={20} position={[-20, 5, 0]} />
-        <Lime scale={80} position={[20, 5, 0]} />
-        <Gnome scale={20} position={[0, 5, 20]} />
+        <Bust scale={20} position={[-20, 5, 0]}  rotation={[0, Math.PI, 0]} />
+        <Lime scale={80} position={[20, 5, 0]}  />
+        <Gnome scale={20} position={[0, 5, 20]} rotation={[0, Math.PI, 0]} />
+        <Dodecahedron scale={5} position={[0, 5, -20]} />
       </Orbit>
 
       <Orbit x={0.001} z={0.001}>
         <PlasticChair scale={16} position={[-40, 5, 0]} />
         <Skull scale={5} position={[40, 5, 0]} />
         <Toilet scale={16} position={[0, 5, 40]} />
+        <Cone scale={8} position={[0, 5, -40]} />
       </Orbit>
 
       <Homer position={[0, 6, -100]} />
 
-      <Eye scale={200} position={[0, 200, 0]} rotation={[Math.PI / 2, 0, 0]} onClick={() => setShowSky(!showSky) } />
+      <Eye scale={200} position={[0, 200, 0]} rotation={[Math.PI / 2, 0, 0]} onClick={() => setShowSky(!showSky)} />
+      {/* <Flower scale={130} position={[0, 200, 0]} /> */}
 
       <ambientLight intensity={0.1} />
 
