@@ -2,12 +2,7 @@ import { mountStoreDevtool } from 'simple-zustand-devtools'
 import { create } from 'zustand'
 import { devtools } from 'zustand/middleware'
 
-type HomerState =
-  | 'approaching'
-  | 'idle'
-  | 'faceRotating'
-  | 'headMarging'
-  | 'Marged'
+type HomerState = 'idle' | 'faceRotating' | 'headMarging' | 'headDemarging'
 
 type State = {
   canStartAudio: boolean

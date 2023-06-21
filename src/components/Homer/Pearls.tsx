@@ -10,6 +10,7 @@ const radius = 1.2
 
 const headTransformSeconds = 2
 const pearlsOutVec = new Vector3(1, 1, 1)
+const pearlsInVec = new Vector3(0.5, 0.5, 0.5)
 
 type Props = JSX.IntrinsicElements['group']
 
@@ -22,6 +23,10 @@ export function Pearls(props: Props) {
 
     if (homerState === 'headMarging') {
       ref.current.scale.lerp(pearlsOutVec, headTransformSeconds / 60)
+    }
+
+    if (homerState === 'headDemarging') {
+      ref.current.scale.lerp(pearlsInVec, headTransformSeconds / 60)
     }
   })
 

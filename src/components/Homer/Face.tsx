@@ -14,6 +14,7 @@ type Props = JSX.IntrinsicElements['group'] & {
 
 const headTransformSeconds = 2
 const margeFacePosition = new Vector3(0, 1.5, 0)
+const demargeFacePosition = new Vector3(0, 0.3, 0)
 
 export function Face({ skinColor, faceIsRotating, ...group }: Props) {
   const ref = useRef<Group>(null!)
@@ -35,6 +36,10 @@ export function Face({ skinColor, faceIsRotating, ...group }: Props) {
     // move face up
     if (homerState === 'headMarging') {
       ref.current.position.lerp(margeFacePosition, headTransformSeconds / 60)
+    }
+
+    if (homerState === 'headDemarging') {
+      ref.current.position.lerp(demargeFacePosition, headTransformSeconds / 60)
     }
   })
 

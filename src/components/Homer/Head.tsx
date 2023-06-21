@@ -19,6 +19,8 @@ const headTransformSeconds = 2
 const headGrowVec = new Vector3(1, 2.4, 1)
 const margeColor = new Color('blue')
 
+const headShrinkVec = new Vector3(1, 1.2, 1)
+
 type Props = JSX.IntrinsicElements['group'] & { skinColor: string }
 
 export function Head({ skinColor, ...group }: Props) {
@@ -27,7 +29,6 @@ export function Head({ skinColor, ...group }: Props) {
 
   const faceIsRotating = useRef<boolean>(false)
 
-  // const headIsMarging = useRef<boolean>(false)
   const [homerState, setHomerState] = useTaxiStore((state) => [
     state.homerState,
     state.setHomerState,
@@ -35,16 +36,24 @@ export function Head({ skinColor, ...group }: Props) {
 
   const audioRef = useRef<PositionalAudio>(null!)
 
+  const skinColorC = new Color(skinColor)
+
   useFrame(() => {
     if (homerState === 'headMarging') {
       headMaterialRef.current.color.lerp(margeColor, headTransformSeconds / 60)
       headRef.current.scale.lerp(headGrowVec, headTransformSeconds / 60)
+    } else if (homerState === 'headDemarging') {
+      headMaterialRef.current.color.lerp(skinColorC, headTransformSeconds / 60)
+      headRef.current.scale.lerp(headShrinkVec, headTransformSeconds / 60)
     }
   })
 
   function handleHeadClick() {
-    if (homerState !== 'headMarging') {
+    if (homerState === 'idle' || homerState === 'headDemarging') {
       setHomerState('headMarging')
+      audioRef.current.play()
+    } else if (homerState === 'headMarging') {
+      setHomerState('headDemarging')
       audioRef.current.play()
     }
   }
