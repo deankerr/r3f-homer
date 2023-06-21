@@ -2,7 +2,6 @@ import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Group, Vector3 } from 'three'
 
-import { AudioReady } from '../AudioReady'
 import { Chest } from './Chest'
 import { Head } from './Head'
 import { Pants } from './Pants'
@@ -21,7 +20,6 @@ export function Homer(props: Props) {
 
   return (
     <group ref={ref} {...props}>
-      <AudioReady url="sounds/blind_shift.mp3" distance={100} />
       <Head skinColor={skinColor} rotation={[0, 0, 0]} />
       <Chest skinColor={skinColor} />
       <Pants />
