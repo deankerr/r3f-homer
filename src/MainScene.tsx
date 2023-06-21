@@ -10,6 +10,7 @@ import {
   Dolphin,
   Eye,
   Gnome,
+  LightBlueSky,
   Lime,
   PlasticChair,
   Skull,
@@ -17,12 +18,16 @@ import {
   Taxi,
   Toilet,
 } from './components/models'
+import { useState } from 'react'
 
 export function MainScene() {
+  const [showSky, setShowSky] = useState(false)
   return (
     <>
       <Starfield />
       <BigText text="DEAN.TAXI" position={[-2, 10, -50]} />
+
+      <LightBlueSky visible={showSky}/>
 
       <Orbit y={0.01}>
         <Sun scale={10} position={[0, 50, -60]} />
@@ -48,7 +53,7 @@ export function MainScene() {
 
       <Homer position={[0, 6, -100]} />
 
-      <Eye scale={200} position={[0, 200, 0]} rotation={[Math.PI / 2, 0, 0]} />
+      <Eye scale={200} position={[0, 200, 0]} rotation={[Math.PI / 2, 0, 0]} onClick={() => setShowSky(!showSky) } />
 
       <ambientLight intensity={0.1} />
 
