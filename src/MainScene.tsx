@@ -35,15 +35,15 @@ export function MainScene() {
       </Orbit>
 
       <Orbit y={0.01} z={0.001}>
-        <Bust scale={10} position={[-20, 5, 0]} />
-        <Lime scale={40} position={[20, 5, 0]} />
-        <Gnome scale={10} position={[0, 5, 20]} />
+        <Bust scale={20} position={[-20, 5, 0]} />
+        <Lime scale={80} position={[20, 5, 0]} />
+        <Gnome scale={20} position={[0, 5, 20]} />
       </Orbit>
 
       <Orbit x={0.001} z={0.001}>
-        <PlasticChair scale={8} position={[-40, 5, 0]} />
+        <PlasticChair scale={16} position={[-40, 5, 0]} />
         <Skull scale={5} position={[40, 5, 0]} />
-        <Toilet scale={8} position={[0, 5, 40]} />
+        <Toilet scale={16} position={[0, 5, 40]} />
       </Orbit>
 
       <Homer position={[0, 6, -100]} />
