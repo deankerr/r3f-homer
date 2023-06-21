@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Mesh } from 'three'
 
-const armGrowthSpeed = 0.00005
+const armGrowthSpeed = 0.0001
 
 type Props = JSX.IntrinsicElements['group'] & { skinColor: string }
 

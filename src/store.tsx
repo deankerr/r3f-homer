@@ -10,6 +10,9 @@ type State = {
 
   homerState: HomerState
   setHomerState: (to: HomerState) => void
+
+  homerFace: boolean
+  setHomerFace: (to: boolean) => void
 }
 
 export const useTaxiStore = create<State>()(
@@ -19,6 +22,9 @@ export const useTaxiStore = create<State>()(
 
     homerState: 'idle',
     setHomerState: (to: HomerState) => set(() => ({ homerState: to })),
+
+    homerFace: false,
+    setHomerFace: (to: boolean) => set(() => ({ homerFace: to })),
   }))
 )
 

@@ -27,8 +27,6 @@ export function Head({ skinColor, ...group }: Props) {
   const headRef = useRef<Mesh>(null!)
   const headMaterialRef = useRef<MeshStandardMaterial>(null!)
 
-  const faceIsRotating = useRef<boolean>(false)
-
   const [homerState, setHomerState] = useTaxiStore((state) => [
     state.homerState,
     state.setHomerState,
@@ -80,11 +78,7 @@ export function Head({ skinColor, ...group }: Props) {
           <meshStandardMaterial color="black" />
         </Torus>
 
-        <Face
-          position={[0, 0.3, 0]}
-          skinColor={skinColor}
-          faceIsRotating={faceIsRotating}
-        />
+        <Face position={[0, 0.3, 0]} skinColor={skinColor} />
 
         <Pearls />
       </group>

@@ -9,26 +9,29 @@ const roatationSpeed = 0.3
 
 type Props = JSX.IntrinsicElements['group'] & {
   skinColor: string
-  faceIsRotating: React.MutableRefObject<boolean>
 }
 
 const headTransformSeconds = 2
 const margeFacePosition = new Vector3(0, 1.5, 0)
 const demargeFacePosition = new Vector3(0, 0.3, 0)
 
-export function Face({ skinColor, faceIsRotating, ...group }: Props) {
+export function Face({ skinColor, ...group }: Props) {
   const ref = useRef<Group>(null!)
 
   const homerState = useTaxiStore((state) => state.homerState)
+  const [faceState, setHomerFace] = useTaxiStore((state) => [
+    state.homerFace,
+    state.setHomerFace,
+  ])
 
   useFrame(() => {
     // rotate around the face quickly, once
-    if (faceIsRotating.current) {
+    if (faceState) {
       ref.current.rotation.y += roatationSpeed
 
       // stop after a full rotation
       if (ref.current.rotation.y >= 2 * Math.PI) {
-        faceIsRotating.current = false
+        setHomerFace(false)
         ref.current.rotation.y = 0
       }
     }
