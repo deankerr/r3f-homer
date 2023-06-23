@@ -20,9 +20,9 @@ export default function App() {
   return (
     <div className="h-screen bg-black" onClick={handleInteraction}>
       <Canvas camera={{ position: [0, 10, 12] }}>
-        <MainScene />
+        {/* <MainScene /> */}
         {/* <TestScene /> */}
-        {/* <PyramidScene /> */}
+        <PyramidScene />
       </Canvas>
       <Loader />
     </div>
