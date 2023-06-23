@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 
 import { MainScene } from './MainScene'
+import { PyramidScene } from './PyramidScene'
+import { TestScene } from './TestScene'
 import { useTaxiStore } from './store'
 
 export default function App() {
@@ -18,6 +21,8 @@ export default function App() {
     <div className="h-screen bg-black" onClick={handleInteraction}>
       <Canvas camera={{ position: [0, 10, 12] }}>
         <MainScene />
+        {/* <TestScene /> */}
+        {/* <PyramidScene /> */}
       </Canvas>
       <Loader />
     </div>
