@@ -41,6 +41,8 @@ const config = {
     // react-three-fiber
     'react/no-unknown-property': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    // dev
+    '@typescript-eslint/no-unused-vars': 'off',
   },
 }
 
