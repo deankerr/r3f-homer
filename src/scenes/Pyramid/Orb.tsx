@@ -30,6 +30,8 @@ export function Orb(props: Props) {
           temporalDistortion={0}
           // roughness={0.05}
           thickness={1.5}
+          chromaticAberration={0.5}
+          anisotropicBlur={0.5}
         />
         {/* <Edges scale={1.0} threshold={15} color="orange" /> */}
       </Icosahedron>

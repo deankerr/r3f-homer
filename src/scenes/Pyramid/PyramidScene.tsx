@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import {
+  AsciiRenderer,
   Dodecahedron,
   Edges,
   MeshTransmissionMaterial,
@@ -54,7 +55,7 @@ export function PyramidScene() {
       <Orb position={[0, 20, 0]} scale={1} />
 
       <Floor />
-
+      {/* <AsciiRenderer fgColor="orange" /> */}
       {/* Utility */}
       {/* <Environment preset="night" /> */}
       {/* <axesHelper args={[10]} /> */}

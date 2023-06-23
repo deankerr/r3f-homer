@@ -1,4 +1,5 @@
-import { Edges, MeshTransmissionMaterial } from '@react-three/drei'
+import { Edges, MeshTransmissionMaterial, useFBO } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 
 export function Pyramid(props: JSX.IntrinsicElements['group']) {
   return (
@@ -20,6 +21,8 @@ export function Pyramid(props: JSX.IntrinsicElements['group']) {
           // metalness={0.1}
           thickness={3.0}
           // ior={1.74}
+          chromaticAberration={0.5}
+          // anisotropicBlur={0.5}
         />
         <Edges scale={1.0} threshold={15} color="orange" />
       </mesh>
