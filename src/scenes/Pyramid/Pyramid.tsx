@@ -21,7 +21,7 @@ export function Pyramid(props: JSX.IntrinsicElements['group']) {
           thickness={3.0}
           // ior={1.74}
         />
-        <Edges scale={1.0} threshold={15} color="orange"></Edges>
+        <Edges scale={1.0} threshold={15} color="orange" />
       </mesh>
     </group>
   )
