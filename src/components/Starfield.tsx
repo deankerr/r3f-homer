@@ -3,12 +3,18 @@ import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Group } from 'three'
 
-export function Starfield() {
+type Props = {
+  rotate: boolean
+}
+
+export function Starfield({ rotate }: Props) {
   const starsRef = useRef<Group>(null!)
 
   useFrame(() => {
-    starsRef.current.rotation.x += 0.0005
-    starsRef.current.rotation.y += 0.0005
+    if (rotate) {
+      starsRef.current.rotation.x += 0.0005
+      starsRef.current.rotation.y += 0.0005
+    }
   })
 
   return (

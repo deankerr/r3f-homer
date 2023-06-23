@@ -28,7 +28,7 @@ export function MainScene() {
   const [showSky, setShowSky] = useState(false)
   return (
     <>
-      <Starfield />
+      <Starfield rotate={true} />
       <BigText text="DEAN.TAXI" position={[-2, 10, -50]} />
 
       <LightBlueSky visible={showSky} />

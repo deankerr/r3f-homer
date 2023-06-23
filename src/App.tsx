@@ -3,8 +3,8 @@ import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 
 import { MainScene } from './MainScene'
-import { PyramidScene } from './PyramidScene'
 import { TestScene } from './TestScene'
+import { PyramidScene } from './scenes/Pyramid/PyramidScene'
 import { useTaxiStore } from './store'
 
 export default function App() {
