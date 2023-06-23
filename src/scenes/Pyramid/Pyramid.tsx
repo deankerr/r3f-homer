@@ -24,6 +24,7 @@ export function Pyramid(props: JSX.IntrinsicElements['group']) {
           chromaticAberration={0.5}
           // anisotropicBlur={0.5}
         />
+        {/* <meshPhysicalMaterial /> */}
         <Edges scale={1.0} threshold={15} color="orange" />
       </mesh>
     </group>

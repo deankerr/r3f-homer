@@ -3,6 +3,7 @@ import {
   AsciiRenderer,
   Dodecahedron,
   Edges,
+  Environment,
   MeshTransmissionMaterial,
   OrbitControls,
   PerspectiveCamera,
@@ -11,7 +12,7 @@ import {
 } from '@react-three/drei'
 import { useControls } from 'leva'
 
-import { Effects } from './Effects'
+import { WowEffects } from './Effects'
 import { Floor } from './Floor'
 import { Lights } from './Lights'
 import { Orb } from './Orb'
@@ -38,7 +39,6 @@ export function PyramidScene() {
         target={[config.targetX, config.targetY, config.targetZ]}
         autoRotate={config.autoRotate}
       />
-      {/* <Effects /> */}
 
       <PyrText
         text="DEAN.TAXI"
@@ -60,6 +60,7 @@ export function PyramidScene() {
       {/* <Environment preset="night" /> */}
       {/* <axesHelper args={[10]} /> */}
       {/* <ambientLight intensity={0.5} /> */}
+      <WowEffects />
       <Stats />
     </>
   )
