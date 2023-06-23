@@ -8,8 +8,8 @@ import {
   Stars,
   Stats,
 } from '@react-three/drei'
+import { useControls } from 'leva'
 
-import { Starfield } from '../../components'
 import { Effects } from './Effects'
 import { Floor } from './Floor'
 import { Lights } from './Lights'
@@ -18,10 +18,25 @@ import { PyrText } from './PyrText'
 import { Pyramid } from './Pyramid'
 
 export function PyramidScene() {
+  const config = useControls('camera', {
+    autoRotate: true,
+    positionX: 0,
+    positionY: 10,
+    positionZ: 50,
+    targetX: 0,
+    targetY: 6,
+    targetZ: 0,
+  })
   return (
     <>
-      <PerspectiveCamera makeDefault position={[0, 10, 50]} />
-      <OrbitControls target={[0, 6, 0]} autoRotate={false} />
+      <PerspectiveCamera
+        makeDefault
+        position={[config.positionX, config.positionY, config.positionZ]}
+      />
+      <OrbitControls
+        target={[config.targetX, config.targetY, config.targetZ]}
+        autoRotate={config.autoRotate}
+      />
       {/* <Effects /> */}
 
       <PyrText
