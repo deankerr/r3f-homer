@@ -1,4 +1,4 @@
-import { Edges, Line, MeshTransmissionMaterial } from '@react-three/drei'
+import { Edges, MeshTransmissionMaterial } from '@react-three/drei'
 
 export function Pyramid(props: JSX.IntrinsicElements['group']) {
   return (
