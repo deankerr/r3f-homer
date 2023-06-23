@@ -13,7 +13,14 @@ export function Pyramid(props: JSX.IntrinsicElements['group']) {
       {/* outer */}
       <mesh>
         <octahedronGeometry args={[13]} />
-        <MeshTransmissionMaterial distortionScale={0} temporalDistortion={0} />
+        <MeshTransmissionMaterial
+          distortionScale={0.5}
+          temporalDistortion={0}
+          roughness={0.05}
+          // metalness={0.1}
+          thickness={3.0}
+          // ior={1.74}
+        />
         <Edges scale={1.0} threshold={15} color="orange"></Edges>
       </mesh>
     </group>
