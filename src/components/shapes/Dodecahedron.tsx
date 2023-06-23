@@ -1,4 +1,4 @@
-import { Dodecahedron as DreiDodecahedron} from '@react-three/drei'
+import { Dodecahedron as DreiDodecahedron } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Group } from 'three'
@@ -12,9 +12,10 @@ export function Dodecahedron(props: JSX.IntrinsicElements['group']) {
   })
 
   return (
-    <group {...props} ref={ref} >
-    <DreiDodecahedron>
-    <meshNormalMaterial wireframe />
+    <group {...props} ref={ref}>
+      <DreiDodecahedron>
+        <meshNormalMaterial wireframe />
       </DreiDodecahedron>
-  </group>)
+    </group>
+  )
 }

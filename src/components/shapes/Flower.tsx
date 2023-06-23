@@ -11,7 +11,7 @@ export function Flower(props: MeshProps) {
     <mesh {...props} ref={mesh} rotation-x={Math.PI / 2}>
       <torusKnotGeometry args={[0.4, 0.05, 400, 32, 3, 7]} />
       {/* <meshStandardMaterial color={'cyan'} /> */}
-      <meshNormalMaterial  />
+      <meshNormalMaterial />
     </mesh>
   )
 }

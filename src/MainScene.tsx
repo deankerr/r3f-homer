@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { OrbitControls, Stats } from '@react-three/drei'
+import { useState } from 'react'
 
+import { Flower } from './components'
 import { BigText } from './components/BigText'
 import { Homer } from './components/Homer/Homer'
 import { Orbit } from './components/Orbit'
@@ -18,10 +20,8 @@ import {
   Taxi,
   Toilet,
 } from './components/models'
-import { useState } from 'react'
-import { Flower } from './components'
-import { Dodecahedron } from './components/shapes/Dodecahedron'
 import { Cone } from './components/shapes/Cone'
+import { Dodecahedron } from './components/shapes/Dodecahedron'
 
 export function MainScene() {
   const [showSky, setShowSky] = useState(false)
@@ -30,7 +30,7 @@ export function MainScene() {
       <Starfield />
       <BigText text="DEAN.TAXI" position={[-2, 10, -50]} />
 
-      <LightBlueSky visible={showSky}/>
+      <LightBlueSky visible={showSky} />
 
       <Orbit y={0.01}>
         <Sun scale={10} position={[0, 50, -60]} />
@@ -43,8 +43,8 @@ export function MainScene() {
       </Orbit>
 
       <Orbit y={0.01} z={0.001}>
-        <Bust scale={20} position={[-20, 5, 0]}  rotation={[0, Math.PI, 0]} />
-        <Lime scale={80} position={[20, 5, 0]}  />
+        <Bust scale={20} position={[-20, 5, 0]} rotation={[0, Math.PI, 0]} />
+        <Lime scale={80} position={[20, 5, 0]} />
         <Gnome scale={20} position={[0, 5, 20]} rotation={[0, Math.PI, 0]} />
         <Dodecahedron scale={5} position={[0, 5, -20]} />
       </Orbit>
@@ -58,7 +58,12 @@ export function MainScene() {
 
       <Homer position={[0, 6, -100]} />
 
-      <Eye scale={200} position={[0, 200, 0]} rotation={[Math.PI / 2, 0, 0]} onClick={() => setShowSky(!showSky)} />
+      <Eye
+        scale={200}
+        position={[0, 200, 0]}
+        rotation={[Math.PI / 2, 0, 0]}
+        onClick={() => setShowSky(!showSky)}
+      />
       {/* <Flower scale={130} position={[0, 200, 0]} /> */}
 
       <ambientLight intensity={0.1} />
