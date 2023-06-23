@@ -1,4 +1,6 @@
 export * from './Box'
+export * from './Cone'
 export * from './Cylinder'
+export * from './Dodecahedron'
 export * from './Flower'
 export * from './Sphere'

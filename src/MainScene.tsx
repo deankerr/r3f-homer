@@ -2,11 +2,14 @@
 import { OrbitControls, Stats } from '@react-three/drei'
 import { useState } from 'react'
 
-import { Flower } from './components'
-import { BigText } from './components/BigText'
-import { Homer } from './components/Homer/Homer'
-import { Orbit } from './components/Orbit'
-import { Starfield } from './components/Starfield'
+import {
+  BigText,
+  Cone,
+  Dodecahedron,
+  Homer,
+  Orbit,
+  Starfield,
+} from './components'
 import {
   Bust,
   Dolphin,
@@ -20,8 +23,6 @@ import {
   Taxi,
   Toilet,
 } from './components/models'
-import { Cone } from './components/shapes/Cone'
-import { Dodecahedron } from './components/shapes/Dodecahedron'
 
 export function MainScene() {
   const [showSky, setShowSky] = useState(false)
