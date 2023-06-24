@@ -3,7 +3,8 @@ import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 
 import { MainScene } from './MainScene'
-import { TestScene } from './TestScene'
+import { MaterialTestScene } from './scenes/MaterialTestScene'
+import { TestScene } from './scenes/ModelTestScene'
 import { PyramidScene } from './scenes/Pyramid/PyramidScene'
 import { useTaxiStore } from './store'
 
@@ -19,10 +20,11 @@ export default function App() {
 
   return (
     <div className="h-screen bg-black" onClick={handleInteraction}>
-      <Canvas camera={{ position: [0, 10, 12] }}>
+      <Canvas camera={{ position: [0, 10, 12] }} color="cyan">
         {/* <MainScene /> */}
         {/* <TestScene /> */}
         <PyramidScene />
+        {/* <MaterialTestScene /> */}
       </Canvas>
       <Loader />
     </div>

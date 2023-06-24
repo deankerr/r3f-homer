@@ -1,16 +1,13 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
-  AsciiRenderer,
-  Dodecahedron,
-  Edges,
+  Box,
   Environment,
-  MeshTransmissionMaterial,
   OrbitControls,
   PerspectiveCamera,
   Stars,
   Stats,
 } from '@react-three/drei'
 import { useControls } from 'leva'
+import * as THREE from 'three'
 
 import { WowEffects } from './Effects'
 import { Floor } from './Floor'
@@ -20,24 +17,27 @@ import { PyrText } from './PyrText'
 import { Pyramid } from './Pyramid'
 
 export function PyramidScene() {
-  const config = useControls('camera', {
-    autoRotate: true,
-    positionX: 0,
-    positionY: 10,
-    positionZ: 50,
-    targetX: 0,
-    targetY: 6,
-    targetZ: 0,
-  })
+  const config = useControls(
+    'camera',
+    {
+      autoRotate: true,
+      positionX: 0,
+      positionY: 10,
+      positionZ: 50,
+      targetX: 0,
+      targetY: 6,
+      targetZ: 0,
+    },
+    { collapsed: true }
+  )
+
+  const configEffects = useControls('Wow!Effects', { enable: false })
+
   return (
     <>
       <PerspectiveCamera
         makeDefault
         position={[config.positionX, config.positionY, config.positionZ]}
-      />
-      <OrbitControls
-        target={[config.targetX, config.targetY, config.targetZ]}
-        autoRotate={config.autoRotate}
       />
 
       <PyrText
@@ -47,21 +47,31 @@ export function PyramidScene() {
         scale={2}
       />
 
-      <Lights />
-      {/* <Starfield rotate={false} /> */}
-      <Stars radius={200} />
-
       <Pyramid position={[0, 0.1, 0]} />
       <Orb position={[0, 20, 0]} scale={1} />
 
+      {/* stage */}
+      <Stars radius={200} />
+
       <Floor />
-      {/* <AsciiRenderer fgColor="orange" /> */}
+      <Box
+        args={[800, 400, 800]}
+        position={[0, 190, 0]}
+        material-side={THREE.BackSide}
+        material-color={0x000000}
+      />
+
+      <Lights />
+      <Environment preset="night" />
+
       {/* Utility */}
-      {/* <Environment preset="night" /> */}
-      {/* <axesHelper args={[10]} /> */}
-      {/* <ambientLight intensity={0.5} /> */}
-      <WowEffects />
+      {configEffects.enable && <WowEffects />}
       <Stats />
+
+      <OrbitControls
+        target={[config.targetX, config.targetY, config.targetZ]}
+        autoRotate={config.autoRotate}
+      />
     </>
   )
 }

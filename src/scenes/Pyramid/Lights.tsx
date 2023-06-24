@@ -14,6 +14,7 @@ export function Lights() {
         // intensity={0.5}
         ref={dirLightRef}
       />
+      {/* <ambientLight intensity={0.5} /> */}
     </>
   )
 }

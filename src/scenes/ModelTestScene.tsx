@@ -11,7 +11,7 @@ import {
   Sun,
   Taxi,
   Toilet,
-} from './components/models'
+} from '../components/models'
 
 export function TestScene() {
   const models = [
