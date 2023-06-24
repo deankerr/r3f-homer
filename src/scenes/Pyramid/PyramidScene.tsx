@@ -1,12 +1,14 @@
 import {
   Box,
   Environment,
+  Html,
   OrbitControls,
   PerspectiveCamera,
   Stars,
   Stats,
 } from '@react-three/drei'
 import { useControls } from 'leva'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 import { Floor } from './Floor'
@@ -31,7 +33,7 @@ export function PyramidScene() {
     { collapsed: true }
   )
 
-  const configEffects = useControls('Wow!Effects', { enable: true })
+  const configEffects = useControls('enable ShaderFX', { enable: true })
 
   const cams = [
     [config.positionX, config.positionY, config.positionZ],
@@ -42,12 +44,35 @@ export function PyramidScene() {
   ] as [number, number, number][]
 
   const cinema = useControls('cinema', {
+    autoIncrement: false,
     pos: { value: 0, min: 0, max: cams.length - 1, step: 1 },
   })
 
+  const [camPos, setCamPos] = useState(0)
+
+  const nextCam = useCallback(() => {
+    if (cinema.autoIncrement) {
+      const next = camPos + 1
+      setCamPos(next >= cams.length ? 0 : next)
+    }
+  }, [camPos, cams.length, cinema.autoIncrement])
+
+  const intervalRef = useRef<NodeJS.Timer>()
+
+  useEffect(() => {
+    // TODO switch to useFrame
+    // TODO CameraControls
+    intervalRef.current = setInterval(nextCam, 3000)
+
+    return () => {
+      clearInterval(intervalRef.current)
+      intervalRef.current = undefined
+    }
+  }, [nextCam])
+
   return (
     <>
-      <PerspectiveCamera makeDefault position={cams[cinema.pos]} />
+      <PerspectiveCamera makeDefault position={cams[camPos]} />
 
       <PyrText
         text="DEAN.TAXI"
@@ -56,7 +81,7 @@ export function PyramidScene() {
         scale={2}
       />
 
-      <Pyramid position={[0, 0.1, 0]} />
+      <Pyramid position={[0, 0.1, 0]} onClick={nextCam} />
       <Orb position={[0, 20, 0]} scale={1} />
 
       {/* stage */}
