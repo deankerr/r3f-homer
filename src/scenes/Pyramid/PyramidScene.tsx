@@ -9,12 +9,12 @@ import {
 import { useControls } from 'leva'
 import * as THREE from 'three'
 
-import { WowEffects } from './Effects'
 import { Floor } from './Floor'
 import { Lights } from './Lights'
 import { Orb } from './Orb'
 import { PyrText } from './PyrText'
 import { Pyramid } from './Pyramid'
+import { ShaderFX } from './ShaderFX'
 
 export function PyramidScene() {
   const config = useControls(
@@ -31,7 +31,7 @@ export function PyramidScene() {
     { collapsed: true }
   )
 
-  const configEffects = useControls('Wow!Effects', { enable: false })
+  const configEffects = useControls('Wow!Effects', { enable: true })
 
   return (
     <>
@@ -51,7 +51,7 @@ export function PyramidScene() {
       <Orb position={[0, 20, 0]} scale={1} />
 
       {/* stage */}
-      <Stars radius={200} />
+      <Stars radius={100} />
 
       <Floor />
       <Box
@@ -65,7 +65,7 @@ export function PyramidScene() {
       <Environment preset="night" />
 
       {/* Utility */}
-      {configEffects.enable && <WowEffects />}
+      {configEffects.enable && <ShaderFX />}
       <Stats />
 
       <OrbitControls
