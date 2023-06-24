@@ -18,15 +18,19 @@ const glitchDuration = new Vector2(1, 1.1)
 const glitchStrength = new Vector2(1, 1.1)
 
 export function ShaderFX() {
-  const config = useControls('ShaderFX', {
-    scanline: true,
-    density: { value: 1.25, step: 0.25 },
-    vignette: true,
-    vignetteDarkness: { value: 0.5, min: 0, max: 20, step: 0.25 },
-    glitch: false,
-    grid: true,
-    noise: true,
-  })
+  const config = useControls(
+    'ShaderFX',
+    {
+      scanline: true,
+      density: { value: 1.25, step: 0.25 },
+      vignette: true,
+      vignetteDarkness: { value: 0.5, min: 0, max: 20, step: 0.25 },
+      glitch: false,
+      grid: true,
+      noise: true,
+    },
+    { collapsed: true }
+  )
 
   const scanline = (
     <Scanline

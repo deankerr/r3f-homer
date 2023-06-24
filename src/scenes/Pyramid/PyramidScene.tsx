@@ -33,12 +33,21 @@ export function PyramidScene() {
 
   const configEffects = useControls('Wow!Effects', { enable: true })
 
+  const cams = [
+    [config.positionX, config.positionY, config.positionZ],
+    [0, 30, 60],
+    [0, 60, 90],
+    [0, 80, 120],
+    [0, 20, 160],
+  ] as [number, number, number][]
+
+  const cinema = useControls('cinema', {
+    pos: { value: 0, min: 0, max: cams.length - 1, step: 1 },
+  })
+
   return (
     <>
-      <PerspectiveCamera
-        makeDefault
-        position={[config.positionX, config.positionY, config.positionZ]}
-      />
+      <PerspectiveCamera makeDefault position={cams[cinema.pos]} />
 
       <PyrText
         text="DEAN.TAXI"
@@ -71,6 +80,7 @@ export function PyramidScene() {
       <OrbitControls
         target={[config.targetX, config.targetY, config.targetZ]}
         autoRotate={config.autoRotate}
+        autoRotateSpeed={8}
       />
     </>
   )
