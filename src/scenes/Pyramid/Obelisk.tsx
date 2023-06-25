@@ -1,20 +1,33 @@
-import { Edges, MeshTransmissionMaterial } from '@react-three/drei'
+import { Edges, Lathe, MeshTransmissionMaterial } from '@react-three/drei'
 import { useControls } from 'leva'
+import { DoubleSide, Vector2 } from 'three'
 
 type Props = JSX.IntrinsicElements['group']
 
-export function Pyramid({ ...group }: Props) {
+const points = [
+  [0, 16],
+  [2.5, 12],
+  [2.5, 0],
+]
+
+const points2 = [
+  [0, 17.5],
+  [3.75, 12],
+  [3.75, 0],
+]
+
+export function Obelisk(props: Props) {
   const config = useControls(
-    'pyramid outer',
+    'obelisk outer',
     {
-      radius: { value: 14, min: 1, max: 200, step: 1 },
+      radius: { value: 13, min: 1, max: 200, step: 1 },
       transmissionSampler: true,
       backside: false,
       samples: { value: 6, min: 1, max: 32, step: 1 },
       resolution: { value: 2048, min: 256, max: 2048, step: 256 },
       transmission: { value: 1, min: 0, max: 1 },
       roughness: { value: 0.0, min: 0, max: 1, step: 0.01 },
-      thickness: { value: 3.5, min: 0, max: 10, step: 0.01 },
+      thickness: { value: 0.5, min: 0, max: 10, step: 0.01 },
       ior: { value: 1.5, min: 1, max: 5, step: 0.01 },
       chromaticAberration: { value: 0.5, min: 0, max: 1 },
       anisotropy: { value: 0.1, min: 0, max: 1, step: 0.01 },
@@ -31,33 +44,16 @@ export function Pyramid({ ...group }: Props) {
   )
 
   return (
-    <group {...group}>
-      {/* inner */}
-      <mesh>
-        <octahedronGeometry args={[10]} />
-        <meshStandardMaterial color="black" />
+    <group {...props}>
+      <Lathe args={[points.map((p) => new Vector2(...p)), 4]}>
+        <meshStandardMaterial color="black" side={DoubleSide} />
         <Edges scale={1.0} threshold={15} color="orange" />
-      </mesh>
+      </Lathe>
 
-      {/* outer */}
-      <mesh>
-        <octahedronGeometry args={[config.radius]} />
-        <MeshTransmissionMaterial {...config} />
+      <Lathe args={[points2.map((p) => new Vector2(...p)), 4]}>
+        <MeshTransmissionMaterial {...config} side={DoubleSide} />
         <Edges scale={1.0} threshold={15} color="orange" />
-      </mesh>
+      </Lathe>
     </group>
   )
 }
-
-/* 
-<MeshTransmissionMaterial
-  distortionScale={0.5}
-  temporalDistortion={0}
-  roughness={0.05}
-  // metalness={0.1}
-  thickness={3.0}
-  // ior={1.74}
-  chromaticAberration={0.5}
-  // anisotropicBlur={0.5}
-/>
- */

@@ -13,6 +13,7 @@ import * as THREE from 'three'
 
 import { Floor } from './Floor'
 import { Lights } from './Lights'
+import { Obelisk } from './Obelisk'
 import { Orb } from './Orb'
 import { PyrText } from './PyrText'
 import { Pyramid } from './Pyramid'
@@ -22,7 +23,7 @@ export function PyramidScene() {
   const config = useControls(
     'camera',
     {
-      autoRotate: true,
+      autoRotate: false,
       positionX: 0,
       positionY: 10,
       positionZ: 50,
@@ -33,7 +34,7 @@ export function PyramidScene() {
     { collapsed: true }
   )
 
-  const configEffects = useControls('enable ShaderFX', { enable: true })
+  const configEffects = useControls('enable ShaderFX', { enable: false })
 
   const cams = [
     [config.positionX, config.positionY, config.positionZ],
@@ -76,13 +77,23 @@ export function PyramidScene() {
 
       <PyrText
         text="DEAN.TAXI"
-        position={[0, 40, -100]}
+        position={[0, 80, -100]}
         rotation={[Math.PI / 8, 0, 0]}
-        scale={2}
+        scale={1}
       />
 
-      <Pyramid position={[0, 0.1, 0]} onClick={nextCam} />
-      <Orb position={[0, 20, 0]} scale={1} />
+      <group position={[0, 0, 0]} scale={1}>
+        <Pyramid position={[0, 0.1, 0]} onClick={nextCam} />
+        <Orb position={[0, 20, 0]} scale={1} />
+      </group>
+
+      <group>
+        <Obelisk position={[-30, 0.1, 0]} />
+        <Obelisk position={[30, 0.1, 0]} />
+      </group>
+
+      {/* <Obelisk position={[0, 0.1, 27]} /> */}
+      {/* <Obelisk position={[0, 0.1, -27]} /> */}
 
       {/* stage */}
       <Stars radius={100} />
@@ -96,7 +107,7 @@ export function PyramidScene() {
       />
 
       <Lights />
-      <Environment preset="night" />
+      {/* <Environment preset="night" /> */}
 
       {/* Utility */}
       {configEffects.enable && <ShaderFX />}
