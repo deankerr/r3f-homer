@@ -96,14 +96,15 @@ export function PyramidScene() {
       {/* <Obelisk position={[0, 0.1, -27]} /> */}
 
       {/* stage */}
-      <Stars radius={100} />
+      <Stars radius={240} />
 
       <Floor />
       <Box
-        args={[800, 400, 800]}
-        position={[0, 190, 0]}
+        args={[2000, 2000, 2000]}
+        position={[0, 0, 0]}
         material-side={THREE.BackSide}
         material-color={0x000000}
+        visible={true}
       />
 
       <Lights />
