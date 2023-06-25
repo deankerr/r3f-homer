@@ -113,6 +113,8 @@ export function PyramidScene() {
       {configEffects.enable && <ShaderFX />}
       <Stats />
 
+      {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}
+
       <OrbitControls
         target={[config.targetX, config.targetY, config.targetZ]}
         autoRotate={config.autoRotate}

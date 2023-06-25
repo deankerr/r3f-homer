@@ -1,6 +1,15 @@
-import { Edges, Lathe, MeshTransmissionMaterial } from '@react-three/drei'
+import {
+  Center,
+  Edges,
+  Lathe,
+  MeshTransmissionMaterial,
+  Text,
+  Text3D,
+} from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
-import { DoubleSide, Vector2 } from 'three'
+import { useRef } from 'react'
+import { DoubleSide, Group, Vector2 } from 'three'
 
 type Props = JSX.IntrinsicElements['group']
 
@@ -43,6 +52,12 @@ export function Obelisk(props: Props) {
     { collapsed: true }
   )
 
+  const textRef = useRef<Group>(null!)
+
+  useFrame(() => {
+    textRef.current.rotation.y += 0.02
+  })
+
   return (
     <group {...props}>
       <Lathe args={[points.map((p) => new Vector2(...p)), 4]}>
@@ -50,10 +65,69 @@ export function Obelisk(props: Props) {
         <Edges scale={1.0} threshold={15} color="orange" />
       </Lathe>
 
+      <group rotation={[0, Math.PI / 4, 0]} ref={textRef}>
+        <ObText />
+      </group>
+
       <Lathe args={[points2.map((p) => new Vector2(...p)), 4]}>
         <MeshTransmissionMaterial {...config} side={DoubleSide} />
         <Edges scale={1.0} threshold={15} color="orange" />
       </Lathe>
     </group>
   )
+}
+
+function ObText() {
+  // const material = <meshStandardMaterial color="orange" />
+  const material = <meshBasicMaterial color="orange" />
+
+  const height = 8.7
+  const radius = 2.0
+  const shift = 0.5
+
+  return (
+    <>
+      <Text3D
+        {...textConfig}
+        rotation={[0, 2 * (Math.PI / 4), 0]}
+        position={[radius, height, shift]}
+      >
+        {material}
+        {`W\nI\nN\nE`}
+      </Text3D>
+
+      <Text3D
+        {...textConfig}
+        rotation={[0, 6 * (Math.PI / 4), 0]}
+        position={[-radius, height, -shift]}
+      >
+        {material}
+        {`C\nO\nK\nE`}
+      </Text3D>
+
+      <Text3D
+        {...textConfig}
+        rotation={[0, 8 * (Math.PI / 4), 0]}
+        position={[-shift, height, radius]}
+      >
+        {material}
+        {`M\nD\nM\nA`}
+      </Text3D>
+
+      <Text3D
+        {...textConfig}
+        rotation={[0, 4 * (Math.PI / 4), 0]}
+        position={[shift, height, -radius]}
+      >
+        {material}
+        {`A\nC\nI\nD`}
+      </Text3D>
+    </>
+  )
+}
+
+const textConfig = {
+  font: 'font/bigblue.json',
+  size: 1.5,
+  height: 0.5,
 }
