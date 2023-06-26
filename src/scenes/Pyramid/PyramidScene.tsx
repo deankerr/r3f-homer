@@ -11,8 +11,11 @@ import { useControls } from 'leva'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
+import { Sun } from '@/components'
+
 import { Floor } from './Floor'
 import { Lights } from './Lights'
+import { Mask } from './Mask'
 import { Obelisk } from './Obelisk'
 import { Orb } from './Orb'
 import { PyrText } from './PyrText'
@@ -74,6 +77,11 @@ export function PyramidScene() {
   return (
     <>
       <PerspectiveCamera makeDefault position={cams[camPos]} />
+
+      <group position={[0, 40, 0]}>
+        <Sun position={[0, 200, 1000]} scale={200} />
+        <Mask position={[-5, -80, 600]} scale={9} />
+      </group>
 
       <PyrText
         text="DEAN.TAXI"
