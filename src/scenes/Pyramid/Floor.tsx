@@ -1,31 +1,25 @@
-import { Plane, useTexture } from '@react-three/drei'
+import { Plane } from '@react-three/drei'
 import * as THREE from 'three'
 
 const size = 800
+const step = 80
 
 export function Floor() {
-  const grid = useTexture('/grid.png')
-  grid.wrapS = THREE.RepeatWrapping
-  grid.wrapT = THREE.RepeatWrapping
-  grid.repeat.set(50, 50)
+  const start = -Math.floor(size / 2)
+  const end = Math.floor(size / 2)
 
   return (
     <>
-      {/* <gridHelper
-        args={[size, 40, 'orange', 'orange']}
-        position={[400, 1, 0]}
+      <gridHelper
+        args={[size, step, 'orange', 'orange']}
+        position={[0, 0.5, 0]}
       />
       <Plane
         args={[size, size]}
         rotation={[-Math.PI / 2, 0, 0]}
-        position={[400, 1, 0]}
+        position={[0, 0, 0]}
       >
         <meshStandardMaterial color="black" />
-      </Plane> */}
-
-      <Plane args={[size, size]} rotation={[-Math.PI / 2, 0, 0]}>
-        {/* <meshStandardMaterial map={grid} color={'orange'} /> */}
-        <meshBasicMaterial map={grid} color={'#ffb23e'} />
       </Plane>
     </>
   )

@@ -10,7 +10,7 @@ export function Lights() {
     <>
       <directionalLight
         position={[30, 20, 0]}
-        color={'orange'}
+        color={'red'}
         // intensity={0.5}
         ref={dirLightRef}
         visible={true}
