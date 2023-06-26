@@ -1,6 +1,7 @@
 import {
   Box,
   Environment,
+  Grid,
   Html,
   OrbitControls,
   PerspectiveCamera,
@@ -13,6 +14,7 @@ import * as THREE from 'three'
 
 import { Sun } from '@/components'
 
+import { Effect } from './Effect'
 import { Floor } from './Floor'
 import { Lights } from './Lights'
 import { Mask } from './Mask'
@@ -100,9 +102,6 @@ export function PyramidScene() {
         <Obelisk position={[30, 0.1, 0]} />
       </group>
 
-      {/* <Obelisk position={[0, 0.1, 27]} /> */}
-      {/* <Obelisk position={[0, 0.1, -27]} /> */}
-
       {/* stage */}
       <Stars radius={240} />
 
@@ -120,6 +119,7 @@ export function PyramidScene() {
 
       {/* Utility */}
       {configEffects.enable && <ShaderFX />}
+      <Effect />
       <Stats />
 
       {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}
