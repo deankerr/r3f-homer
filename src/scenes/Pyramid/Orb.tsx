@@ -10,7 +10,7 @@ export function Orb(props: Props) {
   const config = useControls(
     'orb outer',
     {
-      radius: { value: 4, min: 1, max: 200, step: 1 },
+      radius: { value: 16, min: 1, max: 200, step: 1 },
       transmissionSampler: true,
       backside: false,
       samples: { value: 6, min: 1, max: 32, step: 1 },
@@ -41,7 +41,7 @@ export function Orb(props: Props) {
 
   return (
     <group {...props} ref={ref}>
-      <Icosahedron args={[2]}>
+      <Icosahedron args={[8]}>
         <meshStandardMaterial color="black" />
         <Edges scale={1.0} threshold={15} color="orange" />
       </Icosahedron>

@@ -16,9 +16,13 @@ import { Sun } from '@/components'
 
 import { Effect } from './Effect'
 import { Floor } from './Floor'
+import { LandscapeCone } from './LandscapeCone'
+import { LandscapeOctahedron } from './LandscapeOctahedron'
 import { Lights } from './Lights'
 import { Mask } from './Mask'
 import { Obelisk } from './Obelisk'
+import { ObeliskCapsule } from './ObeliskCapsule'
+import { ObeliskCone } from './ObeliskCone'
 import { Orb } from './Orb'
 import { PyrText } from './PyrText'
 import { Pyramid } from './Pyramid'
@@ -31,7 +35,7 @@ export function PyramidScene() {
       autoRotate: false,
       positionX: 0,
       positionY: 10,
-      positionZ: 50,
+      positionZ: 200,
       targetX: 0,
       targetY: 6,
       targetZ: 0,
@@ -43,7 +47,7 @@ export function PyramidScene() {
 
   const cams = [
     [config.positionX, config.positionY, config.positionZ],
-    [0, 30, 60],
+    [0, 30, 200],
     [0, 60, 90],
     [0, 80, 120],
     [0, 20, 160],
@@ -81,8 +85,8 @@ export function PyramidScene() {
       <PerspectiveCamera makeDefault position={cams[camPos]} />
 
       <group position={[0, 40, 0]}>
-        <Sun position={[0, 200, 1000]} scale={200} />
-        <Mask position={[-5, -80, 600]} scale={9} />
+        {/* <Sun position={[0, 200, 1000]} scale={200} /> */}
+        {/* <Mask position={[-5, -80, 600]} scale={9} /> */}
       </group>
 
       <PyrText
@@ -92,15 +96,39 @@ export function PyramidScene() {
         scale={1}
       />
 
-      <group position={[0, 0, 0]} scale={1}>
-        <Pyramid position={[0, 0.1, 0]} onClick={nextCam} />
-        <Orb position={[0, 20, 0]} scale={1} />
+      <group position={[0, 0, 0]}>
+        <Pyramid position={[0, 0, 0]} onClick={nextCam} />
+        <Orb position={[0, 80, 0]} />
       </group>
 
-      <group>
-        <Obelisk position={[-30, 0.1, 0]} />
-        <Obelisk position={[30, 0.1, 0]} />
-      </group>
+      <ObeliskCone
+        position={[-100, 0, 0]}
+        rotation={[0, Math.PI / 2, 0]}
+        scale={1.0}
+      />
+      <ObeliskCone
+        position={[-150, 0, 0]}
+        rotation={[0, Math.PI / 2, 0]}
+        scale={0.5}
+      />
+
+      <ObeliskCone
+        position={[100, 0, 0]}
+        rotation={[0, -Math.PI / 2, 0]}
+        scale={1.0}
+      />
+      <ObeliskCone
+        position={[150, 0, 0]}
+        rotation={[0, -Math.PI / 2, 0]}
+        scale={0.5}
+      />
+
+      <ObeliskCapsule position={[200, 0, -100]} />
+      <LandscapeCone position={[-200, 0, -150]} />
+      <LandscapeOctahedron
+        position={[-200, 0, 150]}
+        rotation={[-Math.PI / 4, 0, 0]}
+      />
 
       {/* stage */}
       <Stars radius={240} />
