@@ -1,13 +1,10 @@
 import { Plane } from '@react-three/drei'
 import * as THREE from 'three'
 
-const size = 800
-const step = 80
+const size = 2000
+const step = 40
 
 export function Floor() {
-  const start = -Math.floor(size / 2)
-  const end = Math.floor(size / 2)
-
   return (
     <>
       <gridHelper

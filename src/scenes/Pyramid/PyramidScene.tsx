@@ -26,6 +26,8 @@ import { ObeliskCone } from './ObeliskCone'
 import { Orb } from './Orb'
 import { PyrText } from './PyrText'
 import { Pyramid } from './Pyramid'
+import { SceneCenter } from './SceneCenter'
+import { SceneLandscape } from './SceneLandscape'
 import { ShaderFX } from './ShaderFX'
 
 export function PyramidScene() {
@@ -91,51 +93,26 @@ export function PyramidScene() {
 
       <PyrText
         text="DEAN.TAXI"
-        position={[0, 80, -100]}
-        rotation={[Math.PI / 8, 0, 0]}
+        position={[100, 120, -150]}
+        rotation={[(2 * Math.PI) / 8, -Math.PI / 8, Math.PI / 8]}
         scale={1}
       />
 
-      <group position={[0, 0, 0]}>
-        <Pyramid position={[0, 0, 0]} onClick={nextCam} />
-        <Orb position={[0, 80, 0]} />
-      </group>
+      <SceneCenter />
+      <SceneLandscape />
 
-      <ObeliskCone
-        position={[-100, 0, 0]}
-        rotation={[0, Math.PI / 2, 0]}
-        scale={1.0}
-      />
-      <ObeliskCone
-        position={[-150, 0, 0]}
-        rotation={[0, Math.PI / 2, 0]}
-        scale={0.5}
-      />
-
-      <ObeliskCone
-        position={[100, 0, 0]}
-        rotation={[0, -Math.PI / 2, 0]}
-        scale={1.0}
-      />
-      <ObeliskCone
-        position={[150, 0, 0]}
-        rotation={[0, -Math.PI / 2, 0]}
-        scale={0.5}
-      />
-
-      <ObeliskCapsule position={[200, 0, -100]} />
-      <LandscapeCone position={[-200, 0, -150]} />
-      <LandscapeOctahedron
+      <ObeliskCapsule position={[300, 0, -200]} />
+      {/* <LandscapeOctahedron
         position={[-200, 0, 150]}
         rotation={[-Math.PI / 4, 0, 0]}
-      />
+      /> */}
 
       {/* stage */}
-      <Stars radius={240} />
+      <Stars radius={600} />
 
       <Floor />
       <Box
-        args={[2000, 2000, 2000]}
+        args={[2600, 3000, 2600]}
         position={[0, 0, 0]}
         material-side={THREE.BackSide}
         material-color={0x000000}
