@@ -41,14 +41,14 @@ export function Orb(props: Props) {
 
   return (
     <group {...props} ref={ref}>
-      <Icosahedron args={[4]}>
+      <Icosahedron args={[5]}>
         <meshStandardMaterial color="black" />
         <Edges scale={1.0} threshold={15} color="orange" />
       </Icosahedron>
 
       <Icosahedron args={[config.radius]}>
         <MeshTransmissionMaterial {...config} />
-        <Edges scale={1.0} threshold={15} color="orange" />
+        {/* <Edges scale={1.0} threshold={15} color="orange" /> */}
       </Icosahedron>
     </group>
   )

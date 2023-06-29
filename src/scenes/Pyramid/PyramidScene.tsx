@@ -14,15 +14,19 @@ import { Ground, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
 export function PyramidScene() {
+  const { autoRotate, camAdvance } = useControls({
+    autoRotate: false,
+    camAdvance: false,
+  })
   const config = useControls(
-    'camera',
+    'initial camera',
     {
       autoRotate: false,
       positionX: 0,
-      positionY: 10,
-      positionZ: 200,
+      positionY: 12,
+      positionZ: 100,
       targetX: 0,
-      targetY: 6,
+      targetY: 14,
       targetZ: 0,
     },
     { collapsed: true }
@@ -38,19 +42,14 @@ export function PyramidScene() {
     [0, 20, 160],
   ] as [number, number, number][]
 
-  const cinema = useControls('cinema', {
-    autoIncrement: false,
-    pos: { value: 0, min: 0, max: cams.length - 1, step: 1 },
-  })
-
   const [camPos, setCamPos] = useState(0)
 
   const nextCam = useCallback(() => {
-    if (cinema.autoIncrement) {
+    if (camAdvance) {
       const next = camPos + 1
       setCamPos(next >= cams.length ? 0 : next)
     }
-  }, [camPos, cams.length, cinema.autoIncrement])
+  }, [camPos, cams.length, camAdvance])
 
   const intervalRef = useRef<NodeJS.Timer>()
 
