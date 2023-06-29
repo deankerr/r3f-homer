@@ -7,7 +7,7 @@ export function Pyramid({ ...group }: Props) {
   const config = useControls(
     'pyramid outer',
     {
-      radius: { value: 56, min: 1, max: 200, step: 1 },
+      radius: { value: 28, min: 1, max: 200, step: 1 },
       transmissionSampler: true,
       backside: false,
       samples: { value: 6, min: 1, max: 32, step: 1 },
@@ -34,7 +34,7 @@ export function Pyramid({ ...group }: Props) {
     <group {...group}>
       {/* inner */}
       <mesh>
-        <octahedronGeometry args={[40]} />
+        <octahedronGeometry args={[20]} />
         <meshStandardMaterial color="black" />
         <Edges scale={1.0} threshold={15} color="orange" />
       </mesh>

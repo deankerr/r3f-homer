@@ -6,7 +6,7 @@ export function Stone({ ...group }: Props) {
   return (
     <group {...group}>
       <Octahedron
-        args={[12]}
+        args={[6]}
         position={[0, 0, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
       >

@@ -42,7 +42,6 @@ export function SceneLandscape({ ...group }: Props) {
 
   return (
     <group {...group}>
-      <Shard position={[-200, 0, -200]} />
       {...inner}
       {...outer}
     </group>
