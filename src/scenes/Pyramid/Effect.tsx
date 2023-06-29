@@ -3,8 +3,7 @@ import { extend } from '@react-three/fiber'
 import { GlitchPass } from 'three-stdlib'
 
 extend({ GlitchPass })
-type Props = any
 
-export function Effect({ props }: Props) {
+export function Effect() {
   return <Effects>{/* <glitchPass /> */}</Effects>
 }

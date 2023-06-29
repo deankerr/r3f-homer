@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 
-import { Obelisk } from '../components/Obelisk'
-import { Shard } from '../components/Shard'
+import { Shard } from '../components/'
 
 type Props = JSX.IntrinsicElements['group']
 

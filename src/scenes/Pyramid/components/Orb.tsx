@@ -48,7 +48,7 @@ export function Orb(props: Props) {
 
       <Icosahedron args={[config.radius]}>
         <MeshTransmissionMaterial {...config} />
-        {/* <Edges scale={1.0} threshold={15} color="orange" /> */}
+        <Edges scale={1.0} threshold={15} color="orange" />
       </Icosahedron>
     </group>
   )

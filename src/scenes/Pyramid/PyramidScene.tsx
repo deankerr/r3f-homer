@@ -9,14 +9,9 @@ import { useControls } from 'leva'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
-import { Effect } from './Effect'
-import { Floor } from './Floor'
-import { Lights } from './Lights'
-import { ShaderFX } from './ShaderFX'
-import { URLText } from './components/URLText'
-import { Center } from './region/Center'
-import { InnerRim } from './region/InnerRim'
-import { OuterRim } from './region/OuterRim'
+import { Lights, ShaderFX } from '.'
+import { Ground, URLText } from './components'
+import { Central, InnerRim, OuterRim } from './region'
 
 export function PyramidScene() {
   const config = useControls(
@@ -86,14 +81,14 @@ export function PyramidScene() {
         scale={1}
       />
 
-      <Center />
+      <Central />
       <InnerRim />
       <OuterRim />
 
       {/* stage */}
       <Stars radius={600} />
 
-      <Floor />
+      <Ground />
       <Box
         args={[2600, 3000, 2600]}
         position={[0, 0, 0]}
@@ -107,7 +102,7 @@ export function PyramidScene() {
 
       {/* Utility */}
       {configEffects.enable && <ShaderFX />}
-      <Effect />
+      {/* <Effect /> */}
       <Stats />
 
       {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}

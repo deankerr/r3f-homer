@@ -1,10 +1,9 @@
 import { Plane } from '@react-three/drei'
-import * as THREE from 'three'
 
 const size = 2000
 const step = 40
 
-export function Floor() {
+export function Ground() {
   return (
     <>
       <gridHelper

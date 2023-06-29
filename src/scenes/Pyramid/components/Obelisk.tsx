@@ -1,4 +1,4 @@
-import { Capsule, Cone, Edges } from '@react-three/drei'
+import { Capsule, Edges } from '@react-three/drei'
 
 type Props = JSX.IntrinsicElements['group']
 

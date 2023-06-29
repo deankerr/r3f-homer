@@ -1,6 +1,13 @@
 {
   "exportall.config.folderListener": [
     "/src/components",
-    "/src/components/shapes"
+    "/src/components/shapes",
+    "/src/scenes/Pyramid",
+    "/src/scenes/Pyramid/region",
+    "/src/scenes/Pyramid/components"
+  ],
+  "exportall.config.relExclusion": [
+    "/src/scenes/Pyramid/region",
+    "/src/scenes/Pyramid/components"
   ]
 }

@@ -1,4 +1,4 @@
-import { Cone, Edges, Octahedron } from '@react-three/drei'
+import { Edges, Octahedron } from '@react-three/drei'
 
 type Props = JSX.IntrinsicElements['group']
 
