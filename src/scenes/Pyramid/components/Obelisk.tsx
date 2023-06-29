@@ -5,8 +5,8 @@ type Props = JSX.IntrinsicElements['group']
 export function Obelisk({ ...group }: Props) {
   return (
     <group {...group}>
-      <Capsule args={[5, 30, 1, 4]} position={[0, 0, 0]}>
-        <meshStandardMaterial color="pink" />
+      <Capsule args={[3, 20, 1, 4]} position={[0, 0, 0]}>
+        <meshStandardMaterial color="black" />
         <Edges scale={1.0} threshold={15} color="orange" />
       </Capsule>
     </group>
