@@ -6,6 +6,7 @@ import {
   Stats,
 } from '@react-three/drei'
 import { useControls } from 'leva'
+import { Perf } from 'r3f-perf'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
@@ -14,11 +15,13 @@ import { Ground, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
 export function PyramidScene() {
-  const { autoRotate, camAdvance } = useControls({
+  const config = useControls({
     autoRotate: false,
     camAdvance: false,
+    showPerf: false,
   })
-  const config = useControls(
+
+  const configInitCam = useControls(
     'initial camera',
     {
       autoRotate: false,
@@ -35,7 +38,7 @@ export function PyramidScene() {
   const configEffects = useControls('enable ShaderFX', { enable: false })
 
   const cams = [
-    [config.positionX, config.positionY, config.positionZ],
+    [configInitCam.positionX, configInitCam.positionY, configInitCam.positionZ],
     [0, 30, 200],
     [0, 60, 90],
     [0, 80, 120],
@@ -45,11 +48,11 @@ export function PyramidScene() {
   const [camPos, setCamPos] = useState(0)
 
   const nextCam = useCallback(() => {
-    if (camAdvance) {
+    if (config.camAdvance) {
       const next = camPos + 1
       setCamPos(next >= cams.length ? 0 : next)
     }
-  }, [camPos, cams.length, camAdvance])
+  }, [camPos, cams.length, config.camAdvance])
 
   const intervalRef = useRef<NodeJS.Timer>()
 
@@ -103,12 +106,17 @@ export function PyramidScene() {
       {/* Utility */}
       {configEffects.enable && <ShaderFX />}
       {/* <Effect /> */}
-      <Stats />
+      {/* <Stats /> */}
+      {config.showPerf && <Perf position="top-left" antialias={false} />}
 
       {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}
 
       <OrbitControls
-        target={[config.targetX, config.targetY, config.targetZ]}
+        target={[
+          configInitCam.targetX,
+          configInitCam.targetY,
+          configInitCam.targetZ,
+        ]}
         autoRotate={config.autoRotate}
         autoRotateSpeed={8}
       />

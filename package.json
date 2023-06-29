@@ -17,6 +17,7 @@
     "@vercel/analytics": "^1.0.1",
     "leva": "^0.9.35",
     "postprocessing": "^6.32.1",
+    "r3f-perf": "^7.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "three": "^0.153.0",
