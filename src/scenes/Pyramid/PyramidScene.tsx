@@ -12,12 +12,11 @@ import * as THREE from 'three'
 import { Effect } from './Effect'
 import { Floor } from './Floor'
 import { Lights } from './Lights'
-import { SceneCenter } from './SceneCenter'
-import { SceneLandscape } from './SceneLandscape'
 import { ShaderFX } from './ShaderFX'
-import { Obelisk } from './components/Obelisk'
-import { Stone } from './components/Stone'
 import { URLText } from './components/URLText'
+import { Center } from './region/Center'
+import { InnerRim } from './region/InnerRim'
+import { OuterRim } from './region/OuterRim'
 
 export function PyramidScene() {
   const config = useControls(
@@ -87,11 +86,9 @@ export function PyramidScene() {
         scale={1}
       />
 
-      <SceneCenter />
-      <SceneLandscape />
-
-      <Obelisk position={[300, 0, -200]} />
-      <Stone position={[-200, 0, 150]} rotation={[-Math.PI / 4, 0, 0]} />
+      <Center />
+      <InnerRim />
+      <OuterRim />
 
       {/* stage */}
       <Stars radius={600} />

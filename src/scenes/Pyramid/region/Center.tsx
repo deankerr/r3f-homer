@@ -1,10 +1,10 @@
-import { Orb } from './components/Orb'
-import { Pyramid } from './components/Pyramid'
-import { Shard } from './components/Shard'
+import { Orb } from '../components/Orb'
+import { Pyramid } from '../components/Pyramid'
+import { Shard } from '../components/Shard'
 
 type Props = JSX.IntrinsicElements['group']
 
-export function SceneCenter({ ...group }: Props) {
+export function Center({ ...group }: Props) {
   return (
     <group {...group}>
       <group position={[0, 0, 0]}>
