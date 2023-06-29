@@ -1,8 +1,5 @@
 import {
   Box,
-  Environment,
-  Grid,
-  Html,
   OrbitControls,
   PerspectiveCamera,
   Stars,
@@ -12,23 +9,14 @@ import { useControls } from 'leva'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
-import { Sun } from '@/components'
-
 import { Effect } from './Effect'
 import { Floor } from './Floor'
-import { LandscapeCone } from './LandscapeCone'
-import { LandscapeOctahedron } from './LandscapeOctahedron'
 import { Lights } from './Lights'
-import { Mask } from './Mask'
-import { Obelisk } from './Obelisk'
-import { ObeliskCapsule } from './ObeliskCapsule'
-import { ObeliskCone } from './ObeliskCone'
-import { Orb } from './Orb'
-import { PyrText } from './PyrText'
-import { Pyramid } from './Pyramid'
 import { SceneCenter } from './SceneCenter'
 import { SceneLandscape } from './SceneLandscape'
 import { ShaderFX } from './ShaderFX'
+import { ObeliskCapsule } from './components/ObeliskCapsule'
+import { PyrText } from './components/PyrText'
 
 export function PyramidScene() {
   const config = useControls(

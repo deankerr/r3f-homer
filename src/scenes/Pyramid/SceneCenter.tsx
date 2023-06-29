@@ -1,6 +1,6 @@
-import { ObeliskCone } from './ObeliskCone'
-import { Orb } from './Orb'
-import { Pyramid } from './Pyramid'
+import { ObeliskCone } from './components/ObeliskCone'
+import { Orb } from './components/Orb'
+import { Pyramid } from './components/Pyramid'
 
 type Props = JSX.IntrinsicElements['group']
 

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 

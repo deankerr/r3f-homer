@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Mesh } from 'three'
 
-import { LandscapeCone } from './LandscapeCone'
+import { LandscapeCone } from './components/LandscapeCone'
 
 type Props = JSX.IntrinsicElements['group']
 

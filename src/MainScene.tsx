@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+ 
 import { OrbitControls, Stats } from '@react-three/drei'
 import { useState } from 'react'
 
