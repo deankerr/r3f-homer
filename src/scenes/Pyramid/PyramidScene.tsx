@@ -11,7 +11,7 @@ import * as THREE from 'three'
 
 import { Lights, ShaderFX } from '.'
 import { Ground, URLText } from './components'
-import { Central, InnerRim, OuterRim } from './region'
+import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
 export function PyramidScene() {
   const config = useControls(
@@ -83,6 +83,7 @@ export function PyramidScene() {
 
       <Central />
       <InnerRim />
+      <MiddleRim />
       <OuterRim />
 
       {/* stage */}
