@@ -2,7 +2,7 @@ import { Center, Edges, Float, Text3D } from '@react-three/drei'
 
 type Props = JSX.IntrinsicElements['group'] & { text: string }
 
-export function PyrText({ text, ...group }: Props) {
+export function URLText({ text, ...group }: Props) {
   return (
     <Float>
       <Center {...group}>

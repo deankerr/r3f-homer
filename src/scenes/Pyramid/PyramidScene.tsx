@@ -15,8 +15,9 @@ import { Lights } from './Lights'
 import { SceneCenter } from './SceneCenter'
 import { SceneLandscape } from './SceneLandscape'
 import { ShaderFX } from './ShaderFX'
-import { ObeliskCapsule } from './components/ObeliskCapsule'
-import { PyrText } from './components/PyrText'
+import { Obelisk } from './components/Obelisk'
+import { Stone } from './components/Stone'
+import { URLText } from './components/URLText'
 
 export function PyramidScene() {
   const config = useControls(
@@ -79,7 +80,7 @@ export function PyramidScene() {
         {/* <Mask position={[-5, -80, 600]} scale={9} /> */}
       </group>
 
-      <PyrText
+      <URLText
         text="DEAN.TAXI"
         position={[100, 120, -150]}
         rotation={[(2 * Math.PI) / 8, -Math.PI / 8, Math.PI / 8]}
@@ -89,11 +90,8 @@ export function PyramidScene() {
       <SceneCenter />
       <SceneLandscape />
 
-      <ObeliskCapsule position={[300, 0, -200]} />
-      {/* <LandscapeOctahedron
-        position={[-200, 0, 150]}
-        rotation={[-Math.PI / 4, 0, 0]}
-      /> */}
+      <Obelisk position={[300, 0, -200]} />
+      <Stone position={[-200, 0, 150]} rotation={[-Math.PI / 4, 0, 0]} />
 
       {/* stage */}
       <Stars radius={600} />

@@ -2,7 +2,7 @@ import { Cone, Edges, Octahedron } from '@react-three/drei'
 
 type Props = JSX.IntrinsicElements['group']
 
-export function LandscapeOctahedron({ ...group }: Props) {
+export function Stone({ ...group }: Props) {
   return (
     <group {...group}>
       <Octahedron

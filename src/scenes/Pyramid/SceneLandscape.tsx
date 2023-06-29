@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import { Mesh } from 'three'
 
-import { LandscapeCone } from './components/LandscapeCone'
+import { Shard } from './components/Shard'
 
 type Props = JSX.IntrinsicElements['group']
 
@@ -13,10 +13,7 @@ export function SceneLandscape({ ...group }: Props) {
       const z = 200 * Math.cos((i * (2 * Math.PI)) / 400)
 
       objects.push(
-        <LandscapeCone
-          position={[x, 0, z]}
-          rotation={[0, (2 * Math.PI) / 2, 0]}
-        />
+        <Shard position={[x, 0, z]} rotation={[0, (2 * Math.PI) / 2, 0]} />
       )
     }
     return objects
@@ -33,7 +30,7 @@ export function SceneLandscape({ ...group }: Props) {
       const z = outerRadius * Math.cos((i * (2 * Math.PI)) / (2 * outerRadius))
 
       objects.push(
-        <LandscapeCone
+        <Shard
           position={[x, 0, z]}
           rotation={[0, (Math.random() * 4 * Math.PI) / 2, 0]}
           scale={Math.random() + scale}
@@ -45,7 +42,7 @@ export function SceneLandscape({ ...group }: Props) {
 
   return (
     <group {...group}>
-      <LandscapeCone position={[-200, 0, -200]} />
+      <Shard position={[-200, 0, -200]} />
       {...inner}
       {...outer}
     </group>
