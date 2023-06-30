@@ -1,6 +1,6 @@
 import { Plane } from '@react-three/drei'
 
-const size = 2000
+const size = 1000
 const step = 40
 
 export function Ground() {

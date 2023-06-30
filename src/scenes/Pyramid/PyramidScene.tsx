@@ -25,12 +25,12 @@ export function PyramidScene() {
     'initial camera',
     {
       autoRotate: false,
-      positionX: 0,
-      positionY: 12,
-      positionZ: 100,
-      targetX: 0,
-      targetY: 14,
-      targetZ: 0,
+      positionX: { value: 0, min: -200, max: 200, step: 1 },
+      positionY: { value: 4, min: -200, max: 200, step: 1 },
+      positionZ: { value: 50, min: -200, max: 200, step: 1 },
+      targetX: { value: 0, min: -200, max: 200, step: 1 },
+      targetY: { value: 11, min: -200, max: 200, step: 1 },
+      targetZ: { value: 0, min: -200, max: 200, step: 1 },
     },
     { collapsed: true }
   )
@@ -39,10 +39,8 @@ export function PyramidScene() {
 
   const cams = [
     [configInitCam.positionX, configInitCam.positionY, configInitCam.positionZ],
-    [0, 30, 200],
-    [0, 60, 90],
-    [0, 80, 120],
-    [0, 20, 160],
+    [0, 4, 150],
+    [0, 60, 120],
   ] as [number, number, number][]
 
   const [camPos, setCamPos] = useState(0)
@@ -89,11 +87,11 @@ export function PyramidScene() {
       <OuterRim />
 
       {/* stage */}
-      <Stars radius={600} />
+      <Stars radius={300} />
 
       <Ground />
       <Box
-        args={[2600, 3000, 2600]}
+        args={[1500, 1500, 1500]}
         position={[0, 0, 0]}
         material-side={THREE.BackSide}
         material-color={0x000000}
