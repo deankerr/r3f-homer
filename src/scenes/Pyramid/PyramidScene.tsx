@@ -21,6 +21,7 @@ export function PyramidScene() {
     showPerf: false,
   })
 
+  // TODO don't update memoed geometries when changed
   const { mainColor } = useControls({ mainColor: 'orange' })
 
   const configInitCam = useControls(
@@ -78,8 +79,8 @@ export function PyramidScene() {
 
       <URLText
         text="DEAN.TAXI"
-        position={[100, 120, -150]}
-        rotation={[(2 * Math.PI) / 8, -Math.PI / 8, Math.PI / 8]}
+        position={[100, 60, -150]}
+        rotation={[(1 * Math.PI) / 8, (2 * -Math.PI) / 8, Math.PI / 8]}
         scale={1}
         mainColor={mainColor}
       />
