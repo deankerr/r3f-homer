@@ -1,11 +1,11 @@
 import { useMemo } from 'react'
 
-import { Obelisk, Shard } from '../components/'
+import { Shard } from '../components/'
 
 type Props = JSX.IntrinsicElements['group']
 
 export function MiddleRim({ ...group }: Props) {
-  const radius = 400
+  const radius = 175
   const step = 10
   const scaleMin = 1
   const scaleMax = 2

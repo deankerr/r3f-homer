@@ -5,12 +5,12 @@ import { Obelisk, Shard } from '../components/'
 type Props = JSX.IntrinsicElements['group']
 
 export function OuterRim({ ...group }: Props) {
-  const radius = 600
-  const hillsStep = 10
+  const radius = 300
+  const hillsStep = 5
   const hillScaleMin = 4
   const hillScaleMax = 6
 
-  const obeliskStep = 100
+  const obeliskStep = 50
   const obeliskScaleMin = 3
   const obeliskScaleMax = 5
 

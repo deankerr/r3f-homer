@@ -7,7 +7,7 @@ export function Central({ ...group }: Props) {
     <group {...group}>
       <group position={[0, 0, 0]}>
         <Pyramid position={[0, 0.05, 0]} />
-        <Orb position={[0, 50, 0]} />
+        <Orb position={[0, 30, 0]} />
       </group>
     </group>
   )
