@@ -1,8 +1,11 @@
 import { Center, Edges, Float, Text3D } from '@react-three/drei'
 
-type Props = JSX.IntrinsicElements['group'] & { text: string }
+type Props = JSX.IntrinsicElements['group'] & {
+  text: string
+  mainColor: string
+}
 
-export function URLText({ text, ...group }: Props) {
+export function URLText({ text, mainColor, ...group }: Props) {
   return (
     <Float>
       <Center {...group}>
@@ -11,7 +14,7 @@ export function URLText({ text, ...group }: Props) {
           {/* <meshBasicMaterial color={'black'} /> */}
           <meshStandardMaterial />
           {/* <meshBasicMaterial /> */}
-          <Edges scale={1.0} threshold={15} color="orange" />
+          <Edges scale={1.0} threshold={15} color={mainColor} />
         </Text3D>
       </Center>
     </Float>

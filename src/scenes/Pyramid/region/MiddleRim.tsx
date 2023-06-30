@@ -2,9 +2,9 @@ import { useMemo } from 'react'
 
 import { Shard } from '../components/'
 
-type Props = JSX.IntrinsicElements['group']
+type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
 
-export function MiddleRim({ ...group }: Props) {
+export function MiddleRim({ mainColor, ...group }: Props) {
   const radius = 175
   const step = 10
   const scaleMin = 1
@@ -27,12 +27,17 @@ export function MiddleRim({ ...group }: Props) {
       const scale = Math.random() * (scaleMax - scaleMin) + scaleMin
 
       objects.push(
-        <Shard position={[x, 0, z]} rotation={rotation} scale={scale} />
+        <Shard
+          position={[x, 0, z]}
+          rotation={rotation}
+          scale={scale}
+          mainColor={mainColor}
+        />
       )
     }
 
     return objects
-  }, [])
+  }, [mainColor])
 
   return <group {...group}>{...debris}</group>
 }

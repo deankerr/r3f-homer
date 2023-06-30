@@ -4,9 +4,9 @@ import { useControls } from 'leva'
 import { useRef } from 'react'
 import { Group } from 'three'
 
-type Props = JSX.IntrinsicElements['group']
+type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
 
-export function Orb(props: Props) {
+export function Orb({ mainColor, ...group }: Props) {
   const config = useControls(
     'orb outer',
     {
@@ -40,10 +40,10 @@ export function Orb(props: Props) {
   })
 
   return (
-    <group {...props} ref={ref}>
+    <group {...group} ref={ref}>
       <Icosahedron args={[3]}>
         <meshStandardMaterial color="black" />
-        <Edges scale={1.0} threshold={15} color="orange" />
+        <Edges scale={1.0} threshold={15} color={mainColor} />
       </Icosahedron>
 
       <Icosahedron args={[config.radius]}>

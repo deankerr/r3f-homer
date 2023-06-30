@@ -2,9 +2,9 @@ import { useMemo } from 'react'
 
 import { Obelisk, Shard } from '../components/'
 
-type Props = JSX.IntrinsicElements['group']
+type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
 
-export function OuterRim({ ...group }: Props) {
+export function OuterRim({ mainColor, ...group }: Props) {
   const radius = 300
   const hillsStep = 5
   const hillScaleMin = 4
@@ -31,7 +31,12 @@ export function OuterRim({ ...group }: Props) {
       const scale = Math.random() * (hillScaleMax - hillScaleMin) + hillScaleMin
 
       objects.push(
-        <Shard position={[x, 0, z]} rotation={rotation} scale={scale} />
+        <Shard
+          position={[x, 0, z]}
+          rotation={rotation}
+          scale={scale}
+          mainColor={mainColor}
+        />
       )
     }
 
@@ -49,12 +54,13 @@ export function OuterRim({ ...group }: Props) {
           position={[x, 0, z]}
           rotation={[0, Math.random() * 2 * Math.PI, 0]}
           scale={scale}
+          mainColor={mainColor}
         />
       )
     }
 
     return objects
-  }, [])
+  }, [mainColor])
 
   return <group {...group}>{...edgeObjects}</group>
 }

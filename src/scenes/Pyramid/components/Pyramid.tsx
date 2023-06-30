@@ -1,9 +1,9 @@
 import { Edges, MeshTransmissionMaterial } from '@react-three/drei'
 import { useControls } from 'leva'
 
-type Props = JSX.IntrinsicElements['group']
+type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
 
-export function Pyramid({ ...group }: Props) {
+export function Pyramid({ mainColor, ...group }: Props) {
   const config = useControls(
     'pyramid outer',
     {
@@ -36,14 +36,14 @@ export function Pyramid({ ...group }: Props) {
       <mesh>
         <octahedronGeometry args={[15]} />
         <meshStandardMaterial color="black" />
-        <Edges scale={1.0} threshold={15} color="orange" />
+        <Edges scale={1.0} threshold={15} color={mainColor} />
       </mesh>
 
       {/* outer */}
       <mesh>
         <octahedronGeometry args={[config.radius]} />
         <MeshTransmissionMaterial {...config} />
-        <Edges scale={1.0} threshold={15} color="orange" />
+        <Edges scale={1.0} threshold={15} color={mainColor} />
       </mesh>
     </group>
   )

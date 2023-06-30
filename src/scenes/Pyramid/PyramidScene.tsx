@@ -21,6 +21,8 @@ export function PyramidScene() {
     showPerf: false,
   })
 
+  const { mainColor } = useControls({ mainColor: 'orange' })
+
   const configInitCam = useControls(
     'initial camera',
     {
@@ -79,17 +81,18 @@ export function PyramidScene() {
         position={[100, 120, -150]}
         rotation={[(2 * Math.PI) / 8, -Math.PI / 8, Math.PI / 8]}
         scale={1}
+        mainColor={mainColor}
       />
 
-      <Central />
-      <InnerRim />
-      <MiddleRim />
-      <OuterRim />
+      <Central mainColor={mainColor} />
+      <InnerRim mainColor={mainColor} />
+      <MiddleRim mainColor={mainColor} />
+      <OuterRim mainColor={mainColor} />
 
       {/* stage */}
       <Stars radius={300} />
 
-      <Ground />
+      <Ground mainColor={mainColor} />
       <Box
         args={[1500, 1500, 1500]}
         position={[0, 0, 0]}
