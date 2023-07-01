@@ -40,10 +40,13 @@ export function Orb({ ...group }: Props) {
     ref.current.rotation.y -= delta
   })
 
-  const mainColor = usePyramidStore((state) => state.mainColor)
+  const [mainColor, startMainColorCycle] = usePyramidStore((state) => [
+    state.mainColor,
+    state.startMainColorCycle,
+  ])
 
   return (
-    <group {...group} ref={ref}>
+    <group {...group} ref={ref} onClick={startMainColorCycle}>
       <Icosahedron args={[3]}>
         <meshStandardMaterial color="black" />
         <Edges threshold={15} color={mainColor} />

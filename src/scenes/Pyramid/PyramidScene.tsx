@@ -1,8 +1,7 @@
-import { Box, OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
+import { Box, PerspectiveCamera, Stars } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useControls } from 'leva'
+import { folder, useControls } from 'leva'
 import { Perf } from 'r3f-perf'
-import { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
 import { usePyramidStore } from '@/store'
@@ -12,7 +11,9 @@ import { Ground, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
 export function PyramidScene() {
-  const setMainColor = usePyramidStore((state) => state.setMainColor)
+  const [mainColor, setMainColor, mainColorIsCycling] = usePyramidStore(
+    (state) => [state.mainColor, state.setMainColor, state.mainColorIsCycling]
+  )
 
   const config = useControls({
     rotateCam: true,
@@ -25,38 +26,40 @@ export function PyramidScene() {
         setMainColor(mainColor)
       },
     },
+    camera: folder(
+      {
+        positionX: { value: 0, min: -200, max: 200, step: 1 },
+        positionY: { value: 8, min: -200, max: 200, step: 1 },
+        positionZ: { value: 50, min: -200, max: 200, step: 1 },
+        targetX: { value: 0, min: -200, max: 200, step: 1 },
+        targetY: { value: 11, min: -200, max: 200, step: 1 },
+        targetZ: { value: 0, min: -200, max: 200, step: 1 },
+        rotationX: {
+          value: 0.1,
+          min: -Math.PI / 2,
+          max: Math.PI / 2,
+          step: 0.1,
+        },
+      },
+      { collapsed: true }
+    ),
   })
 
-  const {
-    positionX,
-    positionY,
-    positionZ,
-    targetX,
-    targetY,
-    targetZ,
-    rotationX,
-  } = useControls(
-    'initial camera',
-    {
-      autoRotate: false,
-      positionX: { value: 0, min: -200, max: 200, step: 1 },
-      positionY: { value: 8, min: -200, max: 200, step: 1 },
-      positionZ: { value: 50, min: -200, max: 200, step: 1 },
-      targetX: { value: 0, min: -200, max: 200, step: 1 },
-      targetY: { value: 11, min: -200, max: 200, step: 1 },
-      targetZ: { value: 0, min: -200, max: 200, step: 1 },
-      rotationX: { value: 0.1, min: -Math.PI / 2, max: Math.PI / 2, step: 0.1 },
-    },
-    { collapsed: true }
-  )
-
-  //* rotate camera
   useFrame((state, delta) => {
+    //* rotate camera
     if (config.rotateCam) {
       const angle = state.clock.elapsedTime
-      state.camera.position.x = Math.sin(angle) * positionZ
-      state.camera.position.z = Math.cos(angle) * positionZ
-      state.camera.lookAt(targetX, targetY, targetZ)
+      state.camera.position.x = Math.sin(angle / 2) * config.positionZ
+      state.camera.position.z = Math.cos(angle / 2) * config.positionZ
+      state.camera.lookAt(config.targetX, config.targetY, config.targetZ)
+    }
+
+    //* cycle color
+    //! slow, switch to hue stepping?
+    if (mainColorIsCycling) {
+      const color = new THREE.Color(mainColor)
+      color.offsetHSL(delta / 4, 0, 0)
+      setMainColor('#' + color.getHexString())
     }
   })
 
@@ -64,14 +67,9 @@ export function PyramidScene() {
     <>
       <PerspectiveCamera
         makeDefault
-        position={[positionX, positionY, positionZ]}
-        rotation={[rotationX, 0, 0]}
+        position={[config.positionX, config.positionY, config.positionZ]}
+        rotation={[config.rotationX, 0, 0]}
       />
-
-      <group position={[0, 40, 0]}>
-        {/* <Sun position={[0, 200, 1000]} scale={200} /> */}
-        {/* <Mask position={[-5, -80, 600]} scale={9} /> */}
-      </group>
 
       <URLText
         text="DEAN.TAXI"
@@ -98,7 +96,6 @@ export function PyramidScene() {
       />
 
       <Lights />
-      {/* <Environment preset="night" /> */}
 
       {/* Utility */}
       {config.effects && <Effects />}

@@ -1,4 +1,3 @@
- 
 import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 
@@ -20,7 +19,7 @@ export default function App() {
 
   return (
     <div className="h-screen bg-black" onClick={handleInteraction}>
-      <Canvas camera={{ position: [0, 10, 12] }} color="cyan">
+      <Canvas camera={{ position: [0, 10, 12] }}>
         {/* <MainScene /> */}
         {/* <TestScene /> */}
         <PyramidScene />

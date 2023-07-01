@@ -31,11 +31,15 @@ export const useTaxiStore = create<State>()(
 type PyramidState = {
   mainColor: string
   setMainColor: (to: string) => void
+  mainColorIsCycling: boolean
+  startMainColorCycle: () => void
 }
 
 export const usePyramidStore = create<PyramidState>()((set) => ({
   mainColor: 'orange',
   setMainColor: (to: string) => set(() => ({ mainColor: to })),
+  mainColorIsCycling: false,
+  startMainColorCycle: () => set(() => ({ mainColorIsCycling: true })),
 }))
 
 if (process.env.NODE_ENV === 'development') {
