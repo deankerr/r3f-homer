@@ -47,12 +47,12 @@ export function Orb({ ...group }: Props) {
     <group {...group} ref={ref}>
       <Icosahedron args={[3]}>
         <meshStandardMaterial color="black" />
-        <Edges scale={1.0} threshold={15} color={mainColor} />
+        <Edges threshold={15} color={mainColor} />
       </Icosahedron>
 
       <Icosahedron args={[config.radius]}>
         <MeshTransmissionMaterial {...config} />
-        {/* <Edges scale={1.0} threshold={15} color="orange" /> */}
+        {/* <Edges threshold={15} color="orange" /> */}
       </Icosahedron>
     </group>
   )
