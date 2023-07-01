@@ -37,8 +37,8 @@ export function Orb({ ...group }: Props) {
 
   const ref = useRef<Group>(null!)
 
-  useFrame(() => {
-    ref.current.rotation.y += 0.01
+  useFrame((_, delta) => {
+    ref.current.rotation.y -= delta
   })
 
   const mainColor = usePyramidStore((state) => state.mainColor)

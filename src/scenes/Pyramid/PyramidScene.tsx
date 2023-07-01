@@ -1,4 +1,5 @@
 import { Box, OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -11,16 +12,13 @@ import { Ground, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
 export function PyramidScene() {
+  const setMainColor = usePyramidStore((state) => state.setMainColor)
+
   const config = useControls({
-    autoRotate: false,
+    rotateCam: true,
     camAdvance: false,
     effects: true,
     showPerf: false,
-  })
-
-  const setMainColor = usePyramidStore((state) => state.setMainColor)
-
-  useControls({
     mainColor: {
       value: 'orange',
       onChange: (mainColor: string) => {
@@ -29,51 +27,46 @@ export function PyramidScene() {
     },
   })
 
-  const configInitCam = useControls(
+  const {
+    positionX,
+    positionY,
+    positionZ,
+    targetX,
+    targetY,
+    targetZ,
+    rotationX,
+  } = useControls(
     'initial camera',
     {
       autoRotate: false,
       positionX: { value: 0, min: -200, max: 200, step: 1 },
-      positionY: { value: 6, min: -200, max: 200, step: 1 },
+      positionY: { value: 8, min: -200, max: 200, step: 1 },
       positionZ: { value: 50, min: -200, max: 200, step: 1 },
       targetX: { value: 0, min: -200, max: 200, step: 1 },
       targetY: { value: 11, min: -200, max: 200, step: 1 },
       targetZ: { value: 0, min: -200, max: 200, step: 1 },
+      rotationX: { value: 0.1, min: -Math.PI / 2, max: Math.PI / 2, step: 0.1 },
     },
     { collapsed: true }
   )
 
-  const cams = [
-    [configInitCam.positionX, configInitCam.positionY, configInitCam.positionZ],
-    [0, 4, 150],
-    [0, 60, 120],
-  ] as [number, number, number][]
-
-  const [camPos, setCamPos] = useState(0)
-
-  const nextCam = useCallback(() => {
-    if (config.camAdvance) {
-      const next = camPos + 1
-      setCamPos(next >= cams.length ? 0 : next)
+  //* rotate camera
+  useFrame((state, delta) => {
+    if (config.rotateCam) {
+      const angle = state.clock.elapsedTime
+      state.camera.position.x = Math.sin(angle) * positionZ
+      state.camera.position.z = Math.cos(angle) * positionZ
+      state.camera.lookAt(targetX, targetY, targetZ)
     }
-  }, [camPos, cams.length, config.camAdvance])
-
-  const intervalRef = useRef<NodeJS.Timer>()
-
-  useEffect(() => {
-    // TODO switch to useFrame
-    // TODO CameraControls
-    intervalRef.current = setInterval(nextCam, 3000)
-
-    return () => {
-      clearInterval(intervalRef.current)
-      intervalRef.current = undefined
-    }
-  }, [nextCam])
+  })
 
   return (
     <>
-      <PerspectiveCamera makeDefault position={cams[camPos]} />
+      <PerspectiveCamera
+        makeDefault
+        position={[positionX, positionY, positionZ]}
+        rotation={[rotationX, 0, 0]}
+      />
 
       <group position={[0, 40, 0]}>
         {/* <Sun position={[0, 200, 1000]} scale={200} /> */}
@@ -115,7 +108,7 @@ export function PyramidScene() {
 
       {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}
 
-      <OrbitControls
+      {/* <OrbitControls
         target={[
           configInitCam.targetX,
           configInitCam.targetY,
@@ -123,7 +116,7 @@ export function PyramidScene() {
         ]}
         autoRotate={config.autoRotate}
         autoRotateSpeed={8}
-      />
+      /> */}
     </>
   )
 }
