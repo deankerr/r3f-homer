@@ -16,7 +16,6 @@ export function Orb({ ...group }: Props) {
       transmissionSampler: true,
       backside: false,
       samples: { value: 6, min: 1, max: 32, step: 1 },
-      resolution: { value: 2048, min: 256, max: 2048, step: 256 },
       transmission: { value: 1, min: 0, max: 1 },
       roughness: { value: 0.0, min: 0, max: 1, step: 0.01 },
       thickness: { value: 1.5, min: 0, max: 10, step: 0.01 },
