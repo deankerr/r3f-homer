@@ -1,10 +1,4 @@
-import {
-  Box,
-  OrbitControls,
-  PerspectiveCamera,
-  Stars,
-  Stats,
-} from '@react-three/drei'
+import { Box, OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
 import { useCallback, useEffect, useRef, useState } from 'react'
@@ -12,7 +6,7 @@ import * as THREE from 'three'
 
 import { usePyramidStore } from '@/store'
 
-import { Lights, ShaderFX } from '.'
+import { Effects, Lights } from '.'
 import { Ground, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
@@ -20,12 +14,12 @@ export function PyramidScene() {
   const config = useControls({
     autoRotate: false,
     camAdvance: false,
+    effects: true,
     showPerf: false,
   })
 
   const setMainColor = usePyramidStore((state) => state.setMainColor)
 
-  // TODO don't update memoed geometries when changed
   useControls({
     mainColor: {
       value: 'orange',
@@ -40,7 +34,7 @@ export function PyramidScene() {
     {
       autoRotate: false,
       positionX: { value: 0, min: -200, max: 200, step: 1 },
-      positionY: { value: 4, min: -200, max: 200, step: 1 },
+      positionY: { value: 6, min: -200, max: 200, step: 1 },
       positionZ: { value: 50, min: -200, max: 200, step: 1 },
       targetX: { value: 0, min: -200, max: 200, step: 1 },
       targetY: { value: 11, min: -200, max: 200, step: 1 },
@@ -48,8 +42,6 @@ export function PyramidScene() {
     },
     { collapsed: true }
   )
-
-  const configEffects = useControls('enable ShaderFX', { enable: false })
 
   const cams = [
     [configInitCam.positionX, configInitCam.positionY, configInitCam.positionZ],
@@ -116,8 +108,8 @@ export function PyramidScene() {
       {/* <Environment preset="night" /> */}
 
       {/* Utility */}
-      {configEffects.enable && <ShaderFX />}
-      {/* <Effect /> */}
+      {config.effects && <Effects />}
+
       {/* <Stats /> */}
       {config.showPerf && <Perf position="top-left" antialias={false} />}
 

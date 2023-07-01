@@ -16,7 +16,8 @@ export function Lights() {
       intensity: { value: 2, min: 0, max: 10, step: 0.1 },
       color: 'red',
       visible: true,
-    }
+    },
+    { collapsed: true }
   )
 
   return (

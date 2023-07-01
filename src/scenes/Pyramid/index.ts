@@ -1,4 +1,3 @@
-export * from './Effect'
+export * from './Effects'
 export * from './Lights'
 export * from './PyramidScene'
-export * from './ShaderFX'

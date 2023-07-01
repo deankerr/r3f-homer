@@ -1,32 +1,28 @@
-import { Circle, Sphere } from '@react-three/drei'
 import {
   EffectComposer,
   Glitch,
-  GodRays,
   Grid,
   Noise,
   Scanline,
-  Vignette,
 } from '@react-three/postprocessing'
 import { useControls } from 'leva'
 import { BlendFunction, GlitchMode } from 'postprocessing'
-import { forwardRef, useRef, useState } from 'react'
-import { Mesh, Vector2 } from 'three'
+import { Vector2 } from 'three'
 
 const glitchDelay = new Vector2(3, 3.1)
 const glitchDuration = new Vector2(1, 1.1)
 const glitchStrength = new Vector2(1, 1.1)
 
-export function ShaderFX() {
+export function Effects() {
   const config = useControls(
-    'ShaderFX',
+    'Effects',
     {
       scanline: true,
       density: { value: 1.25, step: 0.25 },
-      vignette: true,
+      vignette: false,
       vignetteDarkness: { value: 0.5, min: 0, max: 20, step: 0.25 },
       glitch: false,
-      grid: true,
+      grid: false,
       noise: true,
     },
     { collapsed: true }
@@ -36,15 +32,6 @@ export function ShaderFX() {
     <Scanline
       blendFunction={BlendFunction.OVERLAY} // blend mode
       density={1.25} // scanline density
-    />
-  )
-
-  const vignette = (
-    <Vignette
-      offset={0.5} // vignette offset
-      darkness={config.vignetteDarkness} // vignette darkness
-      eskil={false} // Eskil's vignette technique
-      blendFunction={BlendFunction.NORMAL} // blend mode
     />
   )
 
@@ -63,12 +50,10 @@ export function ShaderFX() {
 
   const noise = <Noise />
 
-  const [material, set] = useState<Mesh>(null!)
   return (
     <>
-      <EffectComposer>
+      <EffectComposer multisampling={4}>
         {config.scanline ? scanline : <></>}
-        {config.vignette ? vignette : <></>}
         {config.glitch ? glitch : <></>}
         {config.grid ? grid : <></>}
         {config.noise ? noise : <></>}

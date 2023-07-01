@@ -17,7 +17,8 @@ export function URLText({ text }: Props) {
       rotationX: { value: 0.7, min: -Math.PI, max: Math.PI, step: 0.1 },
       rotationY: { value: -0.6, min: -Math.PI, max: Math.PI, step: 0.1 },
       rotationZ: { value: 0.3, min: -Math.PI, max: Math.PI, step: 0.1 },
-    }
+    },
+    { collapsed: true }
   )
 
   const mainColor = usePyramidStore((state) => state.mainColor)
