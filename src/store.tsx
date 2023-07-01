@@ -28,6 +28,16 @@ export const useTaxiStore = create<State>()(
   }))
 )
 
+type PyramidState = {
+  mainColor: string
+  setMainColor: (to: string) => void
+}
+
+export const usePyramidStore = create<PyramidState>()((set) => ({
+  mainColor: 'orange',
+  setMainColor: (to: string) => set(() => ({ mainColor: to })),
+}))
+
 if (process.env.NODE_ENV === 'development') {
   mountStoreDevtool('Store', useTaxiStore)
 }

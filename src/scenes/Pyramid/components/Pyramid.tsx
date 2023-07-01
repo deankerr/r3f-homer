@@ -1,9 +1,11 @@
 import { Edges, MeshTransmissionMaterial } from '@react-three/drei'
 import { useControls } from 'leva'
 
-type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
+import { usePyramidStore } from '@/store'
 
-export function Pyramid({ mainColor, ...group }: Props) {
+type Props = JSX.IntrinsicElements['group']
+
+export function Pyramid({ ...group }: Props) {
   const config = useControls(
     'pyramid outer',
     {
@@ -29,6 +31,8 @@ export function Pyramid({ mainColor, ...group }: Props) {
     },
     { collapsed: true }
   )
+
+  const mainColor = usePyramidStore((state) => state.mainColor)
 
   return (
     <group {...group}>

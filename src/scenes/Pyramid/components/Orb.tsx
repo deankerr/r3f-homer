@@ -4,9 +4,11 @@ import { useControls } from 'leva'
 import { useRef } from 'react'
 import { Group } from 'three'
 
-type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
+import { usePyramidStore } from '@/store'
 
-export function Orb({ mainColor, ...group }: Props) {
+type Props = JSX.IntrinsicElements['group']
+
+export function Orb({ ...group }: Props) {
   const config = useControls(
     'orb outer',
     {
@@ -38,6 +40,8 @@ export function Orb({ mainColor, ...group }: Props) {
   useFrame(() => {
     ref.current.rotation.y += 0.01
   })
+
+  const mainColor = usePyramidStore((state) => state.mainColor)
 
   return (
     <group {...group} ref={ref}>

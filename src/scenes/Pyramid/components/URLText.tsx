@@ -1,12 +1,13 @@
 import { Center, Edges, Float, Text3D } from '@react-three/drei'
 import { useControls } from 'leva'
 
+import { usePyramidStore } from '@/store'
+
 type Props = JSX.IntrinsicElements['group'] & {
   text: string
-  mainColor: string
 }
 
-export function URLText({ text, mainColor }: Props) {
+export function URLText({ text }: Props) {
   const { x, y, z, rotationX, rotationY, rotationZ } = useControls(
     'URL 3D Text',
     {
@@ -18,6 +19,9 @@ export function URLText({ text, mainColor }: Props) {
       rotationZ: { value: 0.3, min: -Math.PI, max: Math.PI, step: 0.1 },
     }
   )
+
+  const mainColor = usePyramidStore((state) => state.mainColor)
+
   return (
     <Float>
       <Center position={[x, y, z]} rotation={[rotationX, rotationY, rotationZ]}>

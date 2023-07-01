@@ -10,6 +10,8 @@ import { Perf } from 'r3f-perf'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 
+import { usePyramidStore } from '@/store'
+
 import { Lights, ShaderFX } from '.'
 import { Ground, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
@@ -21,8 +23,17 @@ export function PyramidScene() {
     showPerf: false,
   })
 
+  const setMainColor = usePyramidStore((state) => state.setMainColor)
+
   // TODO don't update memoed geometries when changed
-  const { mainColor } = useControls({ mainColor: 'orange' })
+  useControls({
+    mainColor: {
+      value: 'orange',
+      onChange: (mainColor: string) => {
+        setMainColor(mainColor)
+      },
+    },
+  })
 
   const configInitCam = useControls(
     'initial camera',
@@ -82,18 +93,17 @@ export function PyramidScene() {
         position={[100, 60, -150]}
         rotation={[(1 * Math.PI) / 8, (2 * -Math.PI) / 8, Math.PI / 8]}
         scale={1}
-        mainColor={mainColor}
       />
 
-      <Central mainColor={mainColor} />
-      <InnerRim mainColor={mainColor} />
-      <MiddleRim mainColor={mainColor} />
-      <OuterRim mainColor={mainColor} />
+      <Central />
+      <InnerRim />
+      <MiddleRim />
+      <OuterRim />
 
       {/* stage */}
       <Stars radius={300} />
 
-      <Ground mainColor={mainColor} />
+      <Ground />
       <Box
         args={[1500, 1500, 1500]}
         position={[0, 0, 0]}

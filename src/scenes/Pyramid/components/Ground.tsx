@@ -1,9 +1,13 @@
 import { Plane } from '@react-three/drei'
 
+import { usePyramidStore } from '@/store'
+
 const size = 1000
 const step = 60
 
-export function Ground({ mainColor }: { mainColor: string }) {
+export function Ground() {
+  const mainColor = usePyramidStore((state) => state.mainColor)
+
   return (
     <>
       <gridHelper

@@ -1,12 +1,12 @@
 import { Orb, Pyramid } from '../components'
 
-type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
+type Props = JSX.IntrinsicElements['group']
 
-export function Central({ mainColor, ...group }: Props) {
+export function Central({ ...group }: Props) {
   return (
     <group {...group}>
-      <Pyramid position={[0, 0.05, 0]} mainColor={mainColor} />
-      <Orb position={[0, 30, 0]} mainColor={mainColor} />
+      <Pyramid position={[0, 0.05, 0]} />
+      <Orb position={[0, 30, 0]} />
     </group>
   )
 }

@@ -1,8 +1,12 @@
 import { Capsule, Edges } from '@react-three/drei'
 
-type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
+import { usePyramidStore } from '@/store'
 
-export function Obelisk({ mainColor, ...group }: Props) {
+type Props = JSX.IntrinsicElements['group']
+
+export function Obelisk({ ...group }: Props) {
+  const mainColor = usePyramidStore((state) => state.mainColor)
+
   return (
     <group {...group}>
       <Capsule args={[1.5, 10, 1, 4]} position={[0, 0, 0]}>

@@ -1,8 +1,12 @@
 import { Cone, Edges } from '@react-three/drei'
 
-type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
+import { usePyramidStore } from '@/store'
 
-export function Shard({ mainColor, ...group }: Props) {
+type Props = JSX.IntrinsicElements['group']
+
+export function Shard({ ...group }: Props) {
+  const mainColor = usePyramidStore((state) => state.mainColor)
+
   return (
     <group {...group}>
       <Cone args={[3, 10, 3, 1]} position={[0, 5, 0]}>

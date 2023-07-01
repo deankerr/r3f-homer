@@ -2,9 +2,9 @@ import { useMemo } from 'react'
 
 import { Shard } from '../components/'
 
-type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
+type Props = JSX.IntrinsicElements['group']
 
-export function InnerRim({ mainColor, ...group }: Props) {
+export function InnerRim({ ...group }: Props) {
   const radius = 60
   const step = 5
 
@@ -15,16 +15,11 @@ export function InnerRim({ mainColor, ...group }: Props) {
       const z = radius * Math.cos(((i * (2 * Math.PI)) / radius) * 2)
 
       objects.push(
-        <Shard
-          position={[x, 0, z]}
-          rotation={[0, 0, 0]}
-          scale={1.5}
-          mainColor={mainColor}
-        />
+        <Shard position={[x, 0, z]} rotation={[0, 0, 0]} scale={1.5} />
       )
     }
     return objects
-  }, [mainColor])
+  }, [])
 
   return <group {...group}>{...innerObjects}</group>
 }

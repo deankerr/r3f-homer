@@ -1,10 +1,12 @@
 import { useMemo } from 'react'
 
+import { usePyramidStore } from '@/store'
+
 import { Shard } from '../components/'
 
-type Props = JSX.IntrinsicElements['group'] & { mainColor: string }
+type Props = JSX.IntrinsicElements['group']
 
-export function MiddleRim({ mainColor, ...group }: Props) {
+export function MiddleRim({ ...group }: Props) {
   const radius = 175
   const step = 10
   const scaleMin = 1
@@ -27,17 +29,12 @@ export function MiddleRim({ mainColor, ...group }: Props) {
       const scale = Math.random() * (scaleMax - scaleMin) + scaleMin
 
       objects.push(
-        <Shard
-          position={[x, 0, z]}
-          rotation={rotation}
-          scale={scale}
-          mainColor={mainColor}
-        />
+        <Shard position={[x, 0, z]} rotation={rotation} scale={scale} />
       )
     }
 
     return objects
-  }, [mainColor])
+  }, [])
 
   return <group {...group}>{...debris}</group>
 }
