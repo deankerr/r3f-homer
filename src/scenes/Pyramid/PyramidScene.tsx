@@ -18,7 +18,7 @@ export function PyramidScene() {
   const config = useControls({
     rotateCam: true,
     camAdvance: false,
-    effects: true,
+    effects: false,
     showPerf: false,
     mainColor: {
       value: 'orange',
@@ -28,12 +28,12 @@ export function PyramidScene() {
     },
     camera: folder(
       {
-        positionX: { value: 0, min: -200, max: 200, step: 1 },
-        positionY: { value: 8, min: -200, max: 200, step: 1 },
-        positionZ: { value: 50, min: -200, max: 200, step: 1 },
-        targetX: { value: 0, min: -200, max: 200, step: 1 },
-        targetY: { value: 11, min: -200, max: 200, step: 1 },
-        targetZ: { value: 0, min: -200, max: 200, step: 1 },
+        positionX: { value: 0, min: 0, max: 50, step: 1 },
+        positionY: { value: 10, min: 0, max: 50, step: 1 },
+        positionZ: { value: 80, min: 40, max: 100, step: 1 },
+        targetX: { value: 0, min: 0, max: 50, step: 1 },
+        targetY: { value: 15, min: 0, max: 50, step: 1 },
+        targetZ: { value: 0, min: 0, max: 50, step: 1 },
         rotationX: {
           value: 0.1,
           min: -Math.PI / 2,

@@ -1,5 +1,6 @@
 import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
+import { Leva } from 'leva'
 
 import { MainScene } from './MainScene'
 import { MaterialTestScene } from './scenes/MaterialTestScene'
@@ -26,6 +27,7 @@ export default function App() {
         {/* <MaterialTestScene /> */}
       </Canvas>
       <Loader />
+      <Leva collapsed={true} />
     </div>
   )
 }
