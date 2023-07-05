@@ -22,7 +22,7 @@ export function PyramidScene() {
       rotateCam: true,
       camAdvance: false,
       effects: true,
-      showPerf: false,
+      showPerf: true,
       mainColor: {
         value: 'orange',
         onChange: (mainColor: string) => {
@@ -42,7 +42,7 @@ export function PyramidScene() {
 
   const floatingState = usePyramidStore((state) => state.floatingState)
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
     //* rotate camera
     if (config.rotateCam) {
       const angle = state.clock.elapsedTime
@@ -52,13 +52,17 @@ export function PyramidScene() {
     }
 
     if (floatingState) {
-      const { x, z } = config.pos
-      const y = THREE.MathUtils.lerp(config.pos.y, floatingYPos, 1 / 60 / 5)
-      setConfig({ pos: { x, y, z } })
+      const { pos, tar } = config
 
-      const { x: tx, z: tz } = config.tar
-      const ty = THREE.MathUtils.lerp(config.tar.y, floatingYPos, 1 / 60 / 6)
-      setConfig({ tar: { x: tx, y: ty, z: tz } })
+      if (pos.y > 0) {
+        const y = pos.y - delta
+        setConfig({ pos: { ...pos, y } })
+      }
+
+      if (tar.y > 0) {
+        const y = tar.y - delta / 0.8
+        setConfig({ tar: { ...tar, y } })
+      }
     }
   })
 
@@ -99,7 +103,7 @@ export function PyramidScene() {
       {config.effects && <Effects />}
 
       {/* <Stats /> */}
-      {config.showPerf && <Perf position="top-left" antialias={false} />}
+      {config.showPerf && <Perf position="bottom-left" antialias={false} />}
 
       {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}
 

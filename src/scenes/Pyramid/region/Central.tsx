@@ -14,11 +14,12 @@ export function Central({ ...group }: Props) {
   const floatingState = usePyramidStore((state) => state.floatingState)
   const ref = useRef<Group>(null!)
 
-  useFrame(() => {
-    if (floatingState) {
-      ref.current.position.lerp(floatingPosition, 1 / 60 / 5)
-    }
-  })
+  // useFrame(() => {
+  //   if (floatingState) {
+  //     ref.current.position.lerp(floatingPosition, 0.25)
+  //     console.log(ref.current.position.y)
+  //   }
+  // })
 
   return (
     <group {...group} ref={ref}>
