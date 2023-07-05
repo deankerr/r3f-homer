@@ -11,9 +11,7 @@ import { Ground, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
 export function PyramidScene() {
-  const [mainColor, setMainColor, mainColorIsCycling] = usePyramidStore(
-    (state) => [state.mainColor, state.setMainColor, state.mainColorIsCycling]
-  )
+  const setMainColor = usePyramidStore((state) => state.setMainColor)
 
   const config = useControls({
     main: folder({
@@ -49,21 +47,13 @@ export function PyramidScene() {
     ),
   })
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     //* rotate camera
     if (config.rotateCam) {
       const angle = state.clock.elapsedTime
       state.camera.position.x = Math.sin(angle / 2) * config.positionZ
       state.camera.position.z = Math.cos(angle / 2) * config.positionZ
       state.camera.lookAt(config.targetX, config.targetY, config.targetZ)
-    }
-
-    //* cycle color
-    //! slow, switch to hue stepping?
-    if (mainColorIsCycling) {
-      const color = new THREE.Color(mainColor)
-      color.offsetHSL(delta / 4, 0, 0)
-      setMainColor('#' + color.getHexString())
     }
   })
 

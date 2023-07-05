@@ -8,6 +8,8 @@ import { usePyramidStore } from '@/store'
 
 type Props = JSX.IntrinsicElements['group']
 
+const mainColorSteps = ['orange', 'violet', 'lime', 'cyan', 'magenta', 'red']
+
 export function Orb({ ...group }: Props) {
   const config = useControls(
     'orb outer',
@@ -40,35 +42,28 @@ export function Orb({ ...group }: Props) {
     ref.current.rotation.y -= delta
   })
 
-  const [mainColor, startMainColorCycle] = usePyramidStore((state) => [
+  const mainColorIndex = useRef<number>(0)
+  const [mainColor, setMainColor] = usePyramidStore((state) => [
     state.mainColor,
-    state.startMainColorCycle,
+    state.setMainColor,
   ])
 
+  function handleClick() {
+    mainColorIndex.current++
+    setMainColor(mainColorSteps[mainColorIndex.current % mainColorSteps.length])
+  }
+
   return (
-    <group {...group} ref={ref} onClick={startMainColorCycle}>
+    <group {...group} ref={ref}>
       <Icosahedron args={[3]}>
         <meshStandardMaterial color="black" />
         <Edges threshold={15} color={mainColor} />
       </Icosahedron>
 
-      <Icosahedron args={[config.radius]}>
+      <Icosahedron args={[config.radius]} onClick={handleClick}>
         <MeshTransmissionMaterial {...config} />
         {/* <Edges threshold={15} color="orange" /> */}
       </Icosahedron>
     </group>
   )
-}
-
-{
-  /* <Icosahedron args={[4]}>
-<MeshTransmissionMaterial
-  distortionScale={0.5}
-  temporalDistortion={0}
-  // roughness={0.05}
-  thickness={1.5}
-  chromaticAberration={0.5}
-  anisotropicBlur={0.5}
-/>
- */
 }
