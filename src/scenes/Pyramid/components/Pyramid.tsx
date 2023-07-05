@@ -40,13 +40,18 @@ export function Pyramid({ ...group }: Props) {
   ])
   const timerRef = useRef<number>(0)
 
+  const setFloatingState = usePyramidStore((state) => state.setFloatingState)
+
   function handleClick() {
     if (!glitchEffect) {
       setGlitchEffect(true)
     }
 
     window.clearTimeout(timerRef.current)
-    timerRef.current = window.setTimeout(() => setGlitchEffect(false), 1000)
+    timerRef.current = window.setTimeout(() => setGlitchEffect(false), 250)
+
+    // transition to space
+    setFloatingState(true)
   }
 
   return (

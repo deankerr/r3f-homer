@@ -1,5 +1,6 @@
 import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
+import TakeControl from '@react-three/postprocessing'
 import { Leva } from 'leva'
 
 import { MainScene } from './MainScene'

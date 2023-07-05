@@ -2,6 +2,7 @@ import { Box, OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { folder, useControls } from 'leva'
 import { Perf } from 'r3f-perf'
+import { useRef } from 'react'
 import * as THREE from 'three'
 
 import { usePyramidStore } from '@/store'
@@ -10,10 +11,12 @@ import { Effects, Lights } from '.'
 import { Ground, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
+const floatingYPos = 26
+
 export function PyramidScene() {
   const setMainColor = usePyramidStore((state) => state.setMainColor)
 
-  const config = useControls({
+  const [config, setConfig] = useControls(() => ({
     main: folder({
       orbitControls: false,
       rotateCam: true,
@@ -30,30 +33,32 @@ export function PyramidScene() {
 
     camera: folder(
       {
-        positionX: { value: 0, min: 0, max: 50, step: 1 },
-        positionY: { value: 10, min: 0, max: 50, step: 1 },
-        positionZ: { value: 80, min: 40, max: 100, step: 1 },
-        targetX: { value: 0, min: 0, max: 50, step: 1 },
-        targetY: { value: 15, min: 0, max: 50, step: 1 },
-        targetZ: { value: 0, min: 0, max: 50, step: 1 },
-        rotationX: {
-          value: 0.1,
-          min: -Math.PI / 2,
-          max: Math.PI / 2,
-          step: 0.1,
-        },
+        pos: { value: { x: 0, y: 10, z: 80 }, step: 1 },
+        tar: { value: { x: 0, y: 15, z: 0 }, step: 1 },
       },
       { collapsed: true }
     ),
-  })
+  }))
+
+  const floatingState = usePyramidStore((state) => state.floatingState)
 
   useFrame((state) => {
     //* rotate camera
     if (config.rotateCam) {
       const angle = state.clock.elapsedTime
-      state.camera.position.x = Math.sin(angle / 2) * config.positionZ
-      state.camera.position.z = Math.cos(angle / 2) * config.positionZ
-      state.camera.lookAt(config.targetX, config.targetY, config.targetZ)
+      state.camera.position.x = Math.sin(angle / 2) * config.pos.z
+      state.camera.position.z = Math.cos(angle / 2) * config.pos.z
+      state.camera.lookAt(config.tar.x, config.tar.y, config.tar.z)
+    }
+
+    if (floatingState) {
+      const { x, z } = config.pos
+      const y = THREE.MathUtils.lerp(config.pos.y, floatingYPos, 1 / 60 / 5)
+      setConfig({ pos: { x, y, z } })
+
+      const { x: tx, z: tz } = config.tar
+      const ty = THREE.MathUtils.lerp(config.tar.y, floatingYPos, 1 / 60 / 6)
+      setConfig({ tar: { x: tx, y: ty, z: tz } })
     }
   })
 
@@ -61,8 +66,7 @@ export function PyramidScene() {
     <>
       <PerspectiveCamera
         makeDefault
-        position={[config.positionX, config.positionY, config.positionZ]}
-        rotation={[config.rotationX, 0, 0]}
+        position={[config.pos.x, config.pos.y, config.pos.z]}
       />
 
       <URLText
@@ -100,9 +104,7 @@ export function PyramidScene() {
       {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}
 
       {config.orbitControls && (
-        <OrbitControls
-          target={[config.targetX, config.targetY, config.targetZ]}
-        />
+        <OrbitControls target={[config.tar.x, config.tar.y, config.tar.z]} />
       )}
     </>
   )

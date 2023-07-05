@@ -13,11 +13,13 @@ export function Ground() {
       <gridHelper
         args={[size, step, mainColor, mainColor]}
         position={[0, 0.5, 0]}
+        visible={true}
       />
       <Plane
         args={[size, size]}
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, 0, 0]}
+        visible={true}
       >
         <meshStandardMaterial color="black" />
       </Plane>

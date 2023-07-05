@@ -5,7 +5,7 @@ import { Shard } from '../components/'
 type Props = JSX.IntrinsicElements['group']
 
 export function InnerRim({ ...group }: Props) {
-  const radius = 60
+  const radius = 90
   const step = 5
 
   const innerObjects = useMemo(() => {
