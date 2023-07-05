@@ -18,7 +18,7 @@ export function PyramidScene() {
   const config = useControls({
     rotateCam: true,
     camAdvance: false,
-    effects: false,
+    effects: true,
     showPerf: false,
     mainColor: {
       value: 'orange',
