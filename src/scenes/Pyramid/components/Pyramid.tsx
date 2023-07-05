@@ -1,5 +1,6 @@
 import { Edges, MeshTransmissionMaterial } from '@react-three/drei'
 import { useControls } from 'leva'
+import { useRef } from 'react'
 
 import { usePyramidStore } from '@/store'
 
@@ -33,8 +34,23 @@ export function Pyramid({ ...group }: Props) {
 
   const mainColor = usePyramidStore((state) => state.mainColor)
 
+  const [glitchEffect, setGlitchEffect] = usePyramidStore((state) => [
+    state.glitchEffect,
+    state.setGlitchEffect,
+  ])
+  const timerRef = useRef<number>(0)
+
+  function handleClick() {
+    if (!glitchEffect) {
+      setGlitchEffect(true)
+    }
+
+    window.clearTimeout(timerRef.current)
+    timerRef.current = window.setTimeout(() => setGlitchEffect(false), 1000)
+  }
+
   return (
-    <group {...group}>
+    <group {...group} onClick={handleClick}>
       {/* inner */}
       <mesh>
         <octahedronGeometry args={[15]} />
@@ -51,16 +67,3 @@ export function Pyramid({ ...group }: Props) {
     </group>
   )
 }
-
-/* 
-<MeshTransmissionMaterial
-  distortionScale={0.5}
-  temporalDistortion={0}
-  roughness={0.05}
-  // metalness={0.1}
-  thickness={3.0}
-  // ior={1.74}
-  chromaticAberration={0.5}
-  // anisotropicBlur={0.5}
-/>
- */

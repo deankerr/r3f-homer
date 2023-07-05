@@ -1,4 +1,4 @@
-import { Box, PerspectiveCamera, Stars } from '@react-three/drei'
+import { Box, OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { folder, useControls } from 'leva'
 import { Perf } from 'r3f-perf'
@@ -16,16 +16,20 @@ export function PyramidScene() {
   )
 
   const config = useControls({
-    rotateCam: true,
-    camAdvance: false,
-    effects: true,
-    showPerf: false,
-    mainColor: {
-      value: 'orange',
-      onChange: (mainColor: string) => {
-        setMainColor(mainColor)
+    main: folder({
+      orbitControls: false,
+      rotateCam: true,
+      camAdvance: false,
+      effects: true,
+      showPerf: false,
+      mainColor: {
+        value: 'orange',
+        onChange: (mainColor: string) => {
+          setMainColor(mainColor)
+        },
       },
-    },
+    }),
+
     camera: folder(
       {
         positionX: { value: 0, min: 0, max: 50, step: 1 },
@@ -105,15 +109,11 @@ export function PyramidScene() {
 
       {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}
 
-      {/* <OrbitControls
-        target={[
-          configInitCam.targetX,
-          configInitCam.targetY,
-          configInitCam.targetZ,
-        ]}
-        autoRotate={config.autoRotate}
-        autoRotateSpeed={8}
-      /> */}
+      {config.orbitControls && (
+        <OrbitControls
+          target={[config.targetX, config.targetY, config.targetZ]}
+        />
+      )}
     </>
   )
 }

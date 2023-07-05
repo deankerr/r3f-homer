@@ -12,9 +12,9 @@ import { BlendFunction, GlitchEffect, GlitchMode } from 'postprocessing'
 import { Ref, forwardRef, useEffect, useLayoutEffect, useMemo } from 'react'
 import { Vector2 } from 'three'
 
-const glitchDelay = new Vector2(1.5, 3.5)
-const glitchDuration = new Vector2(0.6, 1.0)
-const glitchStrength = new Vector2(0.3, 1.0)
+import { usePyramidStore } from '@/store'
+
+const glitchStrength = new Vector2(0.5, 0.5)
 
 export function Effects() {
   const config = useControls(
@@ -25,7 +25,7 @@ export function Effects() {
       vignette: false,
       vignetteDarkness: { value: 0.5, min: 0, max: 20, step: 0.25 },
       glitch: true,
-      glitchActive: true,
+      glitchActive: false,
       grid: false,
       noise: false,
     },
@@ -39,13 +39,14 @@ export function Effects() {
     />
   )
 
+  //* Glitch
+  const glitchEffectActive = usePyramidStore((state) => state.glitchEffect)
+
   const glitch = (
     <FixedGlitch
-      delay={glitchDelay}
-      duration={glitchDuration}
       strength={glitchStrength}
-      mode={GlitchMode.SPORADIC}
-      active={config.glitchActive}
+      mode={GlitchMode.CONSTANT_WILD}
+      active={config.glitchActive || glitchEffectActive}
     />
   )
 
@@ -55,7 +56,7 @@ export function Effects() {
 
   return (
     <>
-      <EffectComposer multisampling={4}>
+      <EffectComposer multisampling={4} disableNormalPass>
         {config.scanline ? scanline : <></>}
         {config.glitch ? glitch : <></>}
         {config.grid ? grid : <></>}
@@ -86,12 +87,12 @@ export const FixedGlitch = forwardRef<GlitchEffect, GlitchProps>(
         strength,
         chromaticAberrationOffset,
       })
-      console.log('create')
+      // console.log('create')
       // debugger
       return eff
     }, [delay, duration, props, strength, chromaticAberrationOffset])
     // console.log('effect', effect)
-    console.log('render')
+    // console.log('render')
     useLayoutEffect(() => {
       effect.mode = active
         ? props.mode || GlitchMode.SPORADIC
@@ -103,7 +104,7 @@ export const FixedGlitch = forwardRef<GlitchEffect, GlitchProps>(
         // console.log('effect.dispose', effect)
         // debugger
         effect.dispose()
-        console.log('dispose')
+        // console.log('dispose')
       }
     }, [effect])
     return <primitive ref={ref} object={effect} />

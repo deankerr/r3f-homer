@@ -33,6 +33,8 @@ type PyramidState = {
   setMainColor: (to: string) => void
   mainColorIsCycling: boolean
   startMainColorCycle: () => void
+  glitchEffect: boolean
+  setGlitchEffect: (to: boolean) => void
 }
 
 export const usePyramidStore = create<PyramidState>()((set) => ({
@@ -40,6 +42,8 @@ export const usePyramidStore = create<PyramidState>()((set) => ({
   setMainColor: (to: string) => set(() => ({ mainColor: to })),
   mainColorIsCycling: false,
   startMainColorCycle: () => set(() => ({ mainColorIsCycling: true })),
+  glitchEffect: false,
+  setGlitchEffect: (to: boolean) => set(() => ({ glitchEffect: to })),
 }))
 
 if (process.env.NODE_ENV === 'development') {
