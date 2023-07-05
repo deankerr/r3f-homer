@@ -1,6 +1,7 @@
 import { Box, OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { folder, useControls } from 'leva'
+import { damp3 } from 'maath/easing'
 import { Perf } from 'r3f-perf'
 import { useRef } from 'react'
 import * as THREE from 'three'
@@ -11,7 +12,8 @@ import { Effects, Lights } from '.'
 import { Ground, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
-const floatingYPos = 26
+const initCameraPos = { x: 0, y: 10, z: 80 }
+const initCameraTarget: [number, number, number] = [0, 10, 0]
 
 export function PyramidScene() {
   const setMainColor = usePyramidStore((state) => state.setMainColor)
@@ -33,8 +35,8 @@ export function PyramidScene() {
 
     camera: folder(
       {
-        pos: { value: { x: 0, y: 10, z: 80 }, step: 1 },
-        tar: { value: { x: 0, y: 15, z: 0 }, step: 1 },
+        pos: { value: initCameraPos, step: 1 },
+        tar: initCameraTarget,
       },
       { collapsed: true }
     ),
@@ -42,27 +44,21 @@ export function PyramidScene() {
 
   const floatingState = usePyramidStore((state) => state.floatingState)
 
-  useFrame((state, delta) => {
+  const targetPos = useRef<THREE.Vector3>(
+    new THREE.Vector3(...initCameraTarget)
+  )
+
+  useFrame((state) => {
     //* rotate camera
     if (config.rotateCam) {
       const angle = state.clock.elapsedTime
-      state.camera.position.x = Math.sin(angle / 2) * config.pos.z
-      state.camera.position.z = Math.cos(angle / 2) * config.pos.z
-      state.camera.lookAt(config.tar.x, config.tar.y, config.tar.z)
+      state.camera.position.x = Math.sin(angle / 2) * initCameraPos.z
+      state.camera.position.z = Math.cos(angle / 2) * initCameraPos.z
+      state.camera.lookAt(targetPos.current)
     }
-
     if (floatingState) {
-      const { pos, tar } = config
-
-      if (pos.y > 0) {
-        const y = pos.y - delta
-        setConfig({ pos: { ...pos, y } })
-      }
-
-      if (tar.y > 0) {
-        const y = tar.y - delta / 0.8
-        setConfig({ tar: { ...tar, y } })
-      }
+      damp3(state.camera.position, [0, 0, 0], 5)
+      damp3(targetPos.current, [0, 0, 0], 7)
     }
   })
 
@@ -107,9 +103,7 @@ export function PyramidScene() {
 
       {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}
 
-      {config.orbitControls && (
-        <OrbitControls target={[config.tar.x, config.tar.y, config.tar.z]} />
-      )}
+      {config.orbitControls && <OrbitControls target={initCameraTarget} />}
     </>
   )
 }
