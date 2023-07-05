@@ -32,16 +32,16 @@ export function Pyramid({ ...group }: Props) {
     { collapsed: true }
   )
 
-  const mainColor = usePyramidStore((state) => state.mainColor)
+  const mainColor = usePyramidStore(state => state.mainColor)
 
-  const [glitchEffect, setGlitchEffect] = usePyramidStore((state) => [
+  const [glitchEffect, setGlitchEffect] = usePyramidStore(state => [
     state.glitchEffect,
     state.setGlitchEffect,
   ])
   const timerRef = useRef<number>(0)
 
-  const floatingState = usePyramidStore((state) => state.floatingState)
-  const setFloatingState = usePyramidStore((state) => state.setFloatingState)
+  const floatingState = usePyramidStore(state => state.floatingState)
+  const setFloatingState = usePyramidStore(state => state.setFloatingState)
 
   function handleClick() {
     if (!glitchEffect) {

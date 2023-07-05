@@ -16,7 +16,7 @@ type Props = JSX.IntrinsicElements['group']
 
 export function Pearls(props: Props) {
   const ref = useRef<Group>(null!)
-  const homerState = useTaxiStore((state) => state.homerState)
+  const homerState = useTaxiStore(state => state.homerState)
 
   useFrame(() => {
     ref.current.rotation.y += 0.01

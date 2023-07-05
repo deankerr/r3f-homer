@@ -27,7 +27,7 @@ export function Head({ skinColor, ...group }: Props) {
   const headRef = useRef<Mesh>(null!)
   const headMaterialRef = useRef<MeshStandardMaterial>(null!)
 
-  const [homerState, setHomerState] = useTaxiStore((state) => [
+  const [homerState, setHomerState] = useTaxiStore(state => [
     state.homerState,
     state.setHomerState,
   ])

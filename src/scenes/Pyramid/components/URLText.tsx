@@ -21,7 +21,7 @@ export function URLText({ text }: Props) {
     { collapsed: true }
   )
 
-  const mainColor = usePyramidStore((state) => state.mainColor)
+  const mainColor = usePyramidStore(state => state.mainColor)
 
   return (
     <Float enabled={true}>

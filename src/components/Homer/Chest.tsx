@@ -7,7 +7,7 @@ import { Arm } from './Arm'
 type Props = JSX.IntrinsicElements['group'] & { skinColor: string }
 
 export function Chest({ skinColor, ...group }: Props) {
-  const [faceState, setHomerFace] = useTaxiStore((state) => [
+  const [faceState, setHomerFace] = useTaxiStore(state => [
     state.homerFace,
     state.setHomerFace,
   ])

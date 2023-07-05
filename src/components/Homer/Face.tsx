@@ -18,8 +18,8 @@ const demargeFacePosition = new Vector3(0, 0.3, 0)
 export function Face({ skinColor, ...group }: Props) {
   const ref = useRef<Group>(null!)
 
-  const homerState = useTaxiStore((state) => state.homerState)
-  const [faceState, setHomerFace] = useTaxiStore((state) => [
+  const homerState = useTaxiStore(state => state.homerState)
+  const [faceState, setHomerFace] = useTaxiStore(state => [
     state.homerFace,
     state.setHomerFace,
   ])

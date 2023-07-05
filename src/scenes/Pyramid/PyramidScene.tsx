@@ -16,7 +16,7 @@ const initCameraPos = { x: 0, y: 10, z: 80 }
 const initCameraTarget: [number, number, number] = [0, 10, 0]
 
 export function PyramidScene() {
-  const setMainColor = usePyramidStore((state) => state.setMainColor)
+  const setMainColor = usePyramidStore(state => state.setMainColor)
 
   const [config, setConfig] = useControls(() => ({
     main: folder({
@@ -42,13 +42,13 @@ export function PyramidScene() {
     ),
   }))
 
-  const floatingState = usePyramidStore((state) => state.floatingState)
+  const floatingState = usePyramidStore(state => state.floatingState)
 
   const targetPos = useRef<THREE.Vector3>(
     new THREE.Vector3(...initCameraTarget)
   )
 
-  useFrame((state) => {
+  useFrame(state => {
     //* rotate camera
     if (config.rotateCam) {
       const angle = state.clock.elapsedTime

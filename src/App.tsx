@@ -10,7 +10,7 @@ import { PyramidScene } from './scenes/Pyramid/PyramidScene'
 import { useTaxiStore } from './store'
 
 export default function App() {
-  const [canStartAudio, setCanStartAudio] = useTaxiStore((state) => [
+  const [canStartAudio, setCanStartAudio] = useTaxiStore(state => [
     state.canStartAudio,
     state.setCanStartAudio,
   ])

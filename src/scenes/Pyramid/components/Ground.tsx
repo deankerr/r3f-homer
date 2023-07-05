@@ -10,9 +10,9 @@ const size = 1000
 const step = 60
 
 export function Ground() {
-  const mainColor = usePyramidStore((state) => state.mainColor)
+  const mainColor = usePyramidStore(state => state.mainColor)
 
-  const floatingState = usePyramidStore((state) => state.floatingState)
+  const floatingState = usePyramidStore(state => state.floatingState)
   const groupRef = useRef<Group>(null!)
 
   useFrame((_, delta) => {

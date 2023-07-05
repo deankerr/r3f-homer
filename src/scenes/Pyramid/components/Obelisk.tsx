@@ -5,7 +5,7 @@ import { usePyramidStore } from '@/store'
 type Props = JSX.IntrinsicElements['group']
 
 export function Obelisk({ ...group }: Props) {
-  const mainColor = usePyramidStore((state) => state.mainColor)
+  const mainColor = usePyramidStore(state => state.mainColor)
 
   return (
     <group {...group}>

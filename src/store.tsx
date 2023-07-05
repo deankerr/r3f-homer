@@ -16,7 +16,7 @@ type State = {
 }
 
 export const useTaxiStore = create<State>()(
-  devtools((set) => ({
+  devtools(set => ({
     canStartAudio: false,
     setCanStartAudio: () => set(() => ({ canStartAudio: true })),
 
@@ -37,7 +37,7 @@ type PyramidState = {
   setFloatingState: (to: boolean) => void
 }
 
-export const usePyramidStore = create<PyramidState>()((set) => ({
+export const usePyramidStore = create<PyramidState>()(set => ({
   mainColor: 'orange',
   setMainColor: (to: string) => set(() => ({ mainColor: to })),
   glitchEffect: false,

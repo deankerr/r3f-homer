@@ -1,4 +1,3 @@
- 
 import { OrbitControls, Stats } from '@react-three/drei'
 import { useState } from 'react'
 

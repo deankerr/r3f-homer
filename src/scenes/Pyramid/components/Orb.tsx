@@ -43,7 +43,7 @@ export function Orb({ ...group }: Props) {
   })
 
   const mainColorIndex = useRef<number>(0)
-  const [mainColor, setMainColor] = usePyramidStore((state) => [
+  const [mainColor, setMainColor] = usePyramidStore(state => [
     state.mainColor,
     state.setMainColor,
   ])

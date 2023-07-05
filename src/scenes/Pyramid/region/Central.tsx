@@ -11,7 +11,7 @@ type Props = JSX.IntrinsicElements['group']
 const floatingPosition = new Vector3(0, 26, 0)
 
 export function Central({ ...group }: Props) {
-  const floatingState = usePyramidStore((state) => state.floatingState)
+  const floatingState = usePyramidStore(state => state.floatingState)
   const ref = useRef<Group>(null!)
 
   // useFrame(() => {

@@ -53,7 +53,7 @@ function DolphinAudio() {
 }
 
 export function Dolphin(props: JSX.IntrinsicElements['group']) {
-  const canStartAudio = useTaxiStore((state) => state.canStartAudio)
+  const canStartAudio = useTaxiStore(state => state.canStartAudio)
 
   const { nodes, materials } = useGLTF(
     'model/bottlenose_dolphin-transformed.glb'
