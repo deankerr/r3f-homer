@@ -1,6 +1,9 @@
-import { useMemo } from 'react'
+import { useFrame } from '@react-three/fiber'
+import { damp } from 'maath/easing'
+import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
+import { usePyramidStore } from '@/store'
 import { plotCircle } from '@/util'
 
 import { Shard } from '../components/'
@@ -11,9 +14,22 @@ const radius = 175
 const scaleMin = 2
 const scaleMax = 4
 
+const maxSpeed = 3
+
 type Props = JSX.IntrinsicElements['group']
 
 export function MiddleRim({ ...group }: Props) {
+  const ref = useRef<THREE.Group>(null!)
+  const speedRef = useRef<number>(0.01)
+
+  const floatingState = usePyramidStore(state => state.floatingState)
+  useFrame((_, delta) => {
+    if (floatingState) {
+      ref.current.rotation.y += speedRef.current * delta
+      damp(speedRef, 'current', maxSpeed, 60, delta)
+    }
+  })
+
   const components = useMemo(() => {
     const positions = plotCircle(amount, radius, 0)
 
@@ -27,5 +43,9 @@ export function MiddleRim({ ...group }: Props) {
     ))
   }, [])
 
-  return <group {...group}>{...components}</group>
+  return (
+    <group ref={ref} {...group}>
+      {...components}
+    </group>
+  )
 }

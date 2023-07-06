@@ -1,6 +1,9 @@
-import { useMemo } from 'react'
+import { useFrame } from '@react-three/fiber'
+import { damp } from 'maath/easing'
+import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
+import { usePyramidStore } from '@/store'
 import { plotCircle } from '@/util'
 
 import { Obelisk, Shard } from '../components/'
@@ -15,9 +18,22 @@ const obeliskAmount = 12
 const obeliskScaleMin = 3
 const obeliskScaleMax = 5
 
+const maxSpeed = 3
+
 type Props = JSX.IntrinsicElements['group']
 
 export function OuterRim({ ...group }: Props) {
+  const ref = useRef<THREE.Group>(null!)
+  const speedRef = useRef<number>(0.01)
+
+  const floatingState = usePyramidStore(state => state.floatingState)
+  useFrame((_, delta) => {
+    if (floatingState) {
+      ref.current.rotation.y -= speedRef.current * delta
+      damp(speedRef, 'current', maxSpeed, 60, delta)
+    }
+  })
+
   const shards = useMemo(() => {
     const positions = plotCircle(shardAmount, radius, 0)
 
@@ -45,7 +61,7 @@ export function OuterRim({ ...group }: Props) {
   }, [])
 
   return (
-    <group {...group}>
+    <group ref={ref} {...group}>
       {...shards}
       {...obelisks}
     </group>
