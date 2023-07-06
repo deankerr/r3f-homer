@@ -8,9 +8,6 @@ type State = {
   refresh: boolean
   toggleRefresh: () => void
 
-  scene: 'Homer' | 'Pyramid'
-  setScene: () => void
-
   canStartAudio: boolean
   setCanStartAudio: () => void
 
@@ -25,12 +22,6 @@ export const useTaxiStore = create<State>()(
   devtools(set => ({
     refresh: false,
     toggleRefresh: () => set(state => ({ refresh: !state.refresh })),
-
-    scene: 'Pyramid',
-    setScene: () =>
-      set(state => ({
-        scene: state.scene === 'Pyramid' ? 'Homer' : 'Pyramid',
-      })),
 
     canStartAudio: false,
     setCanStartAudio: () => set(() => ({ canStartAudio: true })),

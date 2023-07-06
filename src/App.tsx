@@ -18,8 +18,6 @@ export default function App() {
     if (!canStartAudio) setCanStartAudio()
   }
 
-  // const [scene, setScene] = useTaxiStore(state => [state.scene, state.setScene])
-  // useControls({ sceneToggle: { value: true, onChange: () => setScene() } })
   const [refresh, toggleRefresh] = useTaxiStore(state => [
     state.refresh,
     state.toggleRefresh,
@@ -29,8 +27,8 @@ export default function App() {
   return (
     <div className="h-screen bg-black" onClick={handleInteraction}>
       <Canvas camera={{ position: [0, 10, 12] }}>
-        {/* {scene === 'Homer' && <MainScene />} */}
         {<PyramidScene key={refresh ? 0 : 1} />}
+        {/* {scene === 'Homer' && <MainScene />} */}
         {/* <TestScene /> */}
         {/* <MaterialTestScene /> */}
       </Canvas>

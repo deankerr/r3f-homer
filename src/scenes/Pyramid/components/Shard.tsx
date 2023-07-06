@@ -1,8 +1,6 @@
-import { Cone, Edges, meshBounds } from '@react-three/drei'
+import { Edges } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { geometry } from 'maath'
-import { dampE } from 'maath/easing'
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
 import { usePyramidStore } from '@/store'
