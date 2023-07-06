@@ -3,16 +3,20 @@ import { useMemo } from 'react'
 
 import { plotCircle } from '@/util'
 
-import { Shard } from '.'
+import { Shard } from '../components'
 
 export function Spikes() {
-  const config = useControls('Spikes', {
-    rings: 8,
-    amountStart: 6,
-    amountStep: 2,
-    radiusStart: 60,
-    radiusStep: 40,
-  })
+  const config = useControls(
+    'Spikes',
+    {
+      rings: 8,
+      amountStart: 6,
+      amountStep: 2,
+      radiusStart: 90,
+      radiusStep: 50,
+    },
+    { collapsed: true }
+  )
 
   const meshes = useMemo(() => {
     const rings: [number, number, number][][] = []

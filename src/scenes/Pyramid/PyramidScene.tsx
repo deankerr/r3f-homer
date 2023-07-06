@@ -9,8 +9,8 @@ import * as THREE from 'three'
 import { useBastetStore } from '@/store'
 
 import { Effects, Lights } from '.'
-import { Ground, Spikes, URLText } from './components'
-import { Central, InnerRim, MiddleRim, OuterRim } from './region'
+import { Ground, URLText } from './components'
+import { Central, InnerRim, MiddleRim, OuterRim, Spikes } from './region'
 
 const initCameraPos = { x: 0, y: 7, z: 70 }
 const initCameraTarget: [number, number, number] = [0, 10, 0]

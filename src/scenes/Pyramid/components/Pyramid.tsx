@@ -11,7 +11,7 @@ export function Pyramid({ ...group }: Props) {
   const config = useControls(
     'pyramid outer',
     {
-      radius: { value: 23, min: 1, max: 200, step: 1 },
+      radius: { value: 30, min: 1, max: 200, step: 1 },
       transmissionSampler: true,
       backside: false,
       samples: { value: 3, min: 1, max: 32, step: 1 },
