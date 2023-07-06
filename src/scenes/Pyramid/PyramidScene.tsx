@@ -10,21 +10,20 @@ import { useBastetStore } from '@/store'
 
 import { Effects, Lights } from '.'
 import { Ground, URLText } from './components'
-import { Central, InnerRim, MiddleRim, OuterRim, Spikes } from './region'
+import { Central, MiddleRim, OuterRim, Spikes } from './region'
 
 const initCameraPos = { x: 0, y: 7, z: 70 }
 const initCameraTarget: [number, number, number] = [0, 10, 0]
 
 export function PyramidScene() {
-  const [setMainColor, reset] = useBastetStore(state => [
-    state.setMainColor,
-    state.reset,
-  ])
-
-  const [floatingState, setFloatingState] = useBastetStore(state => [
-    state.floatingState,
-    state.setFloatingState,
-  ])
+  const [setMainColor, reset, floatingState, setFloatingState] = useBastetStore(
+    state => [
+      state.setMainColor,
+      state.reset,
+      state.floatingState,
+      state.setFloatingState,
+    ]
+  )
 
   const [config, _setConfig] = useControls(() => ({
     main: folder({
@@ -64,7 +63,6 @@ export function PyramidScene() {
     if (config.rotateCam && !config.orbitControls) {
       const angle = state.clock.elapsedTime
       state.camera.position.x = Math.sin(angle / 2) * initCameraPos.z
-      state.camera.position.y = initCameraPos.y
       state.camera.position.z = Math.cos(angle / 2) * initCameraPos.z
       state.camera.lookAt(targetPos.current)
     }
@@ -90,10 +88,8 @@ export function PyramidScene() {
 
       <Central scale={1.0} />
       <Spikes />
-      {/* <InnerRim /> */}
       <MiddleRim />
       <OuterRim />
-      {/* <Shard position={[60, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} /> */}
 
       {/* stage */}
       <Stars radius={300} />
