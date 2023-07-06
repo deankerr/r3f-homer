@@ -34,7 +34,7 @@ export function Shard({ ...group }: Props) {
         position={[0, 5.2, 0]}
         rotation={[floatingState ? Math.PI / 2 : 0, 0, 0]}
       >
-        <meshStandardMaterial color="black" />
+        <meshPhongMaterial color="black" />
         <Edges threshold={15} color={mainColor} />
       </Cone>
     </group>

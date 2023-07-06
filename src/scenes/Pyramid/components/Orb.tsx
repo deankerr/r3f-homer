@@ -17,7 +17,7 @@ export function Orb({ ...group }: Props) {
       radius: { value: 5, min: 1, max: 200, step: 1 },
       transmissionSampler: true,
       backside: false,
-      samples: { value: 6, min: 1, max: 32, step: 1 },
+      samples: { value: 3, min: 1, max: 32, step: 1 },
       transmission: { value: 1, min: 0, max: 1 },
       roughness: { value: 0.0, min: 0, max: 1, step: 0.01 },
       thickness: { value: 1.5, min: 0, max: 10, step: 0.01 },
@@ -61,7 +61,7 @@ export function Orb({ ...group }: Props) {
       </Icosahedron>
 
       <Icosahedron args={[config.radius]} onClick={handleClick}>
-        <MeshTransmissionMaterial {...config} />
+        <MeshTransmissionMaterial {...config} resolution={64} />
         {/* <Edges threshold={15} color="orange" /> */}
       </Icosahedron>
     </group>

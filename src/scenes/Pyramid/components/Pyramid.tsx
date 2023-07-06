@@ -1,6 +1,7 @@
 import { Edges, MeshTransmissionMaterial } from '@react-three/drei'
 import { useControls } from 'leva'
 import { useRef } from 'react'
+import { Color } from 'three'
 
 import { usePyramidStore } from '@/store'
 
@@ -13,7 +14,7 @@ export function Pyramid({ ...group }: Props) {
       radius: { value: 23, min: 1, max: 200, step: 1 },
       transmissionSampler: true,
       backside: false,
-      samples: { value: 6, min: 1, max: 32, step: 1 },
+      samples: { value: 3, min: 1, max: 32, step: 1 },
       transmission: { value: 1, min: 0, max: 1 },
       roughness: { value: 0.0, min: 0, max: 1, step: 0.01 },
       thickness: { value: 3.5, min: 0, max: 10, step: 0.01 },
@@ -67,9 +68,11 @@ export function Pyramid({ ...group }: Props) {
       {/* outer */}
       <mesh>
         <octahedronGeometry args={[config.radius]} />
-        <MeshTransmissionMaterial {...config} />
+        <MeshTransmissionMaterial {...config} resolution={64} />
         <Edges threshold={15} color={mainColor} />
       </mesh>
     </group>
   )
 }
+
+const col = new Color('green')

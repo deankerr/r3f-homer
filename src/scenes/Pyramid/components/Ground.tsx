@@ -6,7 +6,7 @@ import { Group } from 'three'
 
 import { usePyramidStore } from '@/store'
 
-const planeSize = 1000
+const planeSize = 650
 const gridsquareSize = 60
 const descendY = -500
 const disappearAtY = -450
