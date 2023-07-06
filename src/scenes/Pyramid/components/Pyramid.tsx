@@ -3,6 +3,7 @@ import { useControls } from 'leva'
 import { useRef } from 'react'
 import { Color } from 'three'
 
+import { Cat } from '@/components/models/Cat'
 import { useBastetStore } from '@/store'
 
 type Props = JSX.IntrinsicElements['group']
