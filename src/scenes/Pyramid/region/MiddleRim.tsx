@@ -9,7 +9,7 @@ import { plotCircle } from '@/util'
 import { Shard } from '../components/'
 
 const amount = 30
-const radius = 175
+const radius = 300
 
 const scaleMin = 2
 const scaleMax = 4

@@ -8,7 +8,7 @@ import { plotCircle } from '@/util'
 
 import { Shard } from '../components/'
 
-const amount = 6
+const amount = 8
 const radius = 90
 
 const maxSpeed = 3
@@ -28,7 +28,7 @@ export function InnerRim(props: Props) {
   })
 
   const components = useMemo(() => {
-    const positions = plotCircle(amount, radius)
+    const positions = plotCircle(amount, radius, 7)
 
     return positions.map((position, index) => (
       <Shard

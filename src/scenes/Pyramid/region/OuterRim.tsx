@@ -8,11 +8,11 @@ import { plotCircle } from '@/util'
 
 import { Obelisk, Shard } from '../components/'
 
-const radius = 300
+const radius = 500
 
 const shardAmount = 120
-const shardScaleMin = 4
-const shardScaleMax = 6
+const shardScaleMin = 8
+const shardScaleMax = 10
 
 const obeliskAmount = 12
 const obeliskScaleMin = 3

@@ -6,8 +6,8 @@ import { Group } from 'three'
 
 import { useBastetStore } from '@/store'
 
-const planeSize = 650
-const gridsquareSize = 60
+const planeSize = 1000
+const gridsquareSize = 30
 const descendY = -500
 const disappearAtY = -450
 

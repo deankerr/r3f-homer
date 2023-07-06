@@ -53,7 +53,7 @@ export function Pyramid({ ...group }: Props) {
     timerRef.current = window.setTimeout(() => setGlitchEffect(false), 250)
 
     // transition to space
-    setFloatingState(!floatingState)
+    // setFloatingState(!floatingState)
   }
 
   return (

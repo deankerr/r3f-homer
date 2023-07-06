@@ -21,11 +21,20 @@ export function PyramidScene() {
     state.reset,
   ])
 
+  const [floatingState, setFloatingState] = useBastetStore(state => [
+    state.floatingState,
+    state.setFloatingState,
+  ])
+
   const [config, _setConfig] = useControls(() => ({
     main: folder({
       reset: { value: false, onChange: () => reset() },
       orbitControls: true,
       rotateCam: true,
+      floatingState: {
+        value: false,
+        onChange: (v: boolean) => setFloatingState(v),
+      },
       ground: true,
       effects: true,
       showPerf: true,
@@ -45,8 +54,6 @@ export function PyramidScene() {
       { collapsed: true }
     ),
   }))
-
-  const floatingState = useBastetStore(state => state.floatingState)
 
   const targetPos = useRef<THREE.Vector3>(
     new THREE.Vector3(...initCameraTarget)
