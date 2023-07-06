@@ -1,25 +1,22 @@
 import { useMemo } from 'react'
 
+import { plotCircle } from '@/util'
+
 import { Shard } from '../components/'
+
+const amount = 6
+const radius = 90
 
 type Props = JSX.IntrinsicElements['group']
 
 export function InnerRim({ ...group }: Props) {
-  const radius = 90
-  const step = 5
+  const components = useMemo(() => {
+    const positions = plotCircle(amount, radius)
 
-  const innerObjects = useMemo(() => {
-    const objects: JSX.Element[] = []
-    for (let i = -radius; i <= radius; i += step) {
-      const x = radius * Math.sin(((i * (2 * Math.PI)) / radius) * 2)
-      const z = radius * Math.cos(((i * (2 * Math.PI)) / radius) * 2)
-
-      objects.push(
-        <Shard position={[x, 0, z]} rotation={[0, 0, 0]} scale={1.5} />
-      )
-    }
-    return objects
+    return positions.map((position, index) => (
+      <Shard position={position} scale={1.5} key={index} />
+    ))
   }, [])
 
-  return <group {...group}>{...innerObjects}</group>
+  return <group {...group}>{...components}</group>
 }

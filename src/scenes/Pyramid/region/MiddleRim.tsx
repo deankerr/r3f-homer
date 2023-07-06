@@ -1,43 +1,31 @@
-import { useFrame } from '@react-three/fiber'
 import { useMemo } from 'react'
+import * as THREE from 'three'
 
-import { usePyramidStore } from '@/store'
+import { plotCircle } from '@/util'
 
 import { Shard } from '../components/'
+
+const amount = 30
+const radius = 175
+
+const scaleMin = 2
+const scaleMax = 4
 
 type Props = JSX.IntrinsicElements['group']
 
 export function MiddleRim({ ...group }: Props) {
-  const radius = 175
-  const step = 10
-  const scaleMin = 1
-  const scaleMax = 2
+  const components = useMemo(() => {
+    const positions = plotCircle(amount, radius)
 
-  const debris = useMemo(() => {
-    const objects: JSX.Element[] = []
-
-    // shard "hills"
-    for (let i = -radius; i < radius; i += step) {
-      const x = radius * Math.sin((i * (2 * Math.PI)) / (2 * radius))
-      const z = radius * Math.cos((i * (2 * Math.PI)) / (2 * radius))
-
-      const rotation: [number, number, number] = [
-        -Math.PI / 2,
-        0,
-        Math.random() * 2 * Math.PI,
-      ] // supine
-
-      const scale = Math.random() * (scaleMax - scaleMin) + scaleMin
-
-      const a = <Shard position={[x, 0, z]} rotation={rotation} scale={scale} />
-
-      objects.push(
-        <Shard position={[x, 0, z]} rotation={rotation} scale={scale} />
-      )
-    }
-
-    return objects
+    return positions.map((position, index) => (
+      <Shard
+        position={position}
+        rotation={[-Math.PI / 2, 0, Math.random() * 2 * Math.PI]}
+        scale={THREE.MathUtils.randFloat(scaleMin, scaleMax)}
+        key={index}
+      />
+    ))
   }, [])
 
-  return <group {...group}>{...debris}</group>
+  return <group {...group}>{...components}</group>
 }

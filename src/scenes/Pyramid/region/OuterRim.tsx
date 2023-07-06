@@ -1,62 +1,53 @@
 import { useMemo } from 'react'
+import * as THREE from 'three'
+
+import { plotCircle } from '@/util'
 
 import { Obelisk, Shard } from '../components/'
+
+const radius = 300
+
+const shardAmount = 120
+const shardScaleMin = 4
+const shardScaleMax = 6
+
+const obeliskAmount = 12
+const obeliskScaleMin = 3
+const obeliskScaleMax = 5
 
 type Props = JSX.IntrinsicElements['group']
 
 export function OuterRim({ ...group }: Props) {
-  const radius = 300
-  const hillsStep = 5
-  const hillScaleMin = 4
-  const hillScaleMax = 6
+  const shards = useMemo(() => {
+    const positions = plotCircle(shardAmount, radius)
 
-  const obeliskStep = 50
-  const obeliskScaleMin = 3
-  const obeliskScaleMax = 5
-
-  const edgeObjects = useMemo(() => {
-    const objects: JSX.Element[] = []
-
-    // shard "hills"
-    for (let i = -radius; i < radius; i += hillsStep) {
-      const x = radius * Math.sin((i * (2 * Math.PI)) / (2 * radius))
-      const z = radius * Math.cos((i * (2 * Math.PI)) / (2 * radius))
-
-      const rotation: [number, number, number] = [
-        -Math.PI / 2,
-        0,
-        Math.random() * 2 * Math.PI,
-      ] // supine
-
-      const scale = Math.random() * (hillScaleMax - hillScaleMin) + hillScaleMin
-
-      objects.push(
-        <Shard position={[x, 0, z]} rotation={rotation} scale={scale} />
-      )
-    }
-
-    // obelisks / erect shards
-    for (let i = -radius; i < radius; i += obeliskStep) {
-      const x = radius * Math.sin((i * (2 * Math.PI)) / (2 * radius))
-      const z = radius * Math.cos((i * (2 * Math.PI)) / (2 * radius))
-
-      const scale =
-        Math.random() * (obeliskScaleMax - obeliskScaleMin) + obeliskScaleMin
-
-      objects.push(
-        // <Shard position={[x, 0, z]} rotation={rotation} scale={scale} />
-        <Obelisk
-          position={[x, 0, z]}
-          rotation={[0, Math.random() * 2 * Math.PI, 0]}
-          scale={scale}
-        />
-      )
-    }
-
-    return objects
+    return positions.map((position, index) => (
+      <Shard
+        position={position}
+        rotation={[-Math.PI / 2, 0, Math.random() * 2 * Math.PI]}
+        scale={THREE.MathUtils.randFloat(shardScaleMin, shardScaleMax)}
+        key={index}
+      />
+    ))
   }, [])
 
-  return <group {...group}>{...edgeObjects}</group>
-}
+  const obelisks = useMemo(() => {
+    const positions = plotCircle(obeliskAmount, radius)
 
-// [0, Math.random() * 2 * Math.PI, 0] // erect
+    return positions.map((position, index) => (
+      <Obelisk
+        position={position}
+        rotation={[0, Math.random() * 2 * Math.PI, 0]}
+        scale={THREE.MathUtils.randFloat(obeliskScaleMin, obeliskScaleMax)}
+        key={index}
+      />
+    ))
+  }, [])
+
+  return (
+    <group {...group}>
+      {...shards}
+      {...obelisks}
+    </group>
+  )
+}

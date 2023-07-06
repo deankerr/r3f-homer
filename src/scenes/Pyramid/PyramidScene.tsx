@@ -9,7 +9,7 @@ import * as THREE from 'three'
 import { usePyramidStore, useTaxiStore } from '@/store'
 
 import { Effects, Lights } from '.'
-import { Ground, Shard, URLText } from './components'
+import { Ground, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
 const initCameraPos = { x: 0, y: 10, z: 80 }
