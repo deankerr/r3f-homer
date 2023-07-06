@@ -45,16 +45,19 @@ export function Pyramid({ ...group }: Props) {
   const floatingState = useBastetStore(state => state.floatingState)
   const setFloatingState = useBastetStore(state => state.setFloatingState)
 
-  function handleClick() {
-    if (!glitchEffect) {
-      // setGlitchEffect(true)
-    }
+  const nextMainColor = useBastetStore(state => state.nextMainColor)
 
-    window.clearTimeout(timerRef.current)
-    timerRef.current = window.setTimeout(() => setGlitchEffect(false), 250)
+  function handleClick() {
+    // if (!glitchEffect) {
+    // setGlitchEffect(true)
+    // }
+
+    // window.clearTimeout(timerRef.current)
+    // timerRef.current = window.setTimeout(() => setGlitchEffect(false), 250)
 
     // transition to space
     // setFloatingState(!floatingState)
+    nextMainColor()
   }
 
   return (

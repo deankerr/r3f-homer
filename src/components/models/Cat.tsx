@@ -7,7 +7,7 @@ Source: https://sketchfab.com/3d-models/egyptian-cat-figurine-edf17f47aed9423084
 Title: Egyptian cat figurine
 */
 import { useGLTF } from '@react-three/drei'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useMemo, useRef } from 'react'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
 
@@ -28,6 +28,12 @@ export function Cat({
     'model/egyptian_cat_figurine-transformed.glb'
   ) as GLTFResult
 
+  const tintedColor = useMemo(() => {
+    const tintMe = new THREE.Color(color)
+    tintMe.offsetHSL(0, 0, -0.3)
+    return tintMe
+  }, [color])
+
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -36,7 +42,7 @@ export function Cat({
         scale={1.582}
         position={[0, 0.07, 0]}
         rotation-y={-0.15}
-        material-color={color}
+        material-color={tintedColor}
       />
     </group>
   )

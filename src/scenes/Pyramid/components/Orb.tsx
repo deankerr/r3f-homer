@@ -8,8 +8,6 @@ import { useBastetStore } from '@/store'
 
 type Props = JSX.IntrinsicElements['group']
 
-const mainColorSteps = ['orange', 'violet', 'lime', 'cyan', 'magenta', 'red']
-
 export function Orb({ ...group }: Props) {
   const config = useControls(
     'orb outer',
@@ -42,16 +40,7 @@ export function Orb({ ...group }: Props) {
     ref.current.rotation.y -= delta
   })
 
-  const mainColorIndex = useRef<number>(0)
-  const [mainColor, setMainColor] = useBastetStore(state => [
-    state.mainColor,
-    state.setMainColor,
-  ])
-
-  function handleClick() {
-    mainColorIndex.current++
-    setMainColor(mainColorSteps[mainColorIndex.current % mainColorSteps.length])
-  }
+  const [mainColor] = useBastetStore(state => [state.mainColor])
 
   return (
     <group {...group} ref={ref}>
