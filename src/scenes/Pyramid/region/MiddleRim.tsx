@@ -3,7 +3,7 @@ import { damp } from 'maath/easing'
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
-import { usePyramidStore } from '@/store'
+import { useBastetStore } from '@/store'
 import { plotCircle } from '@/util'
 
 import { Shard } from '../components/'
@@ -22,7 +22,7 @@ export function MiddleRim({ ...group }: Props) {
   const ref = useRef<THREE.Group>(null!)
   const speedRef = useRef<number>(0.01)
 
-  const floatingState = usePyramidStore(state => state.floatingState)
+  const floatingState = useBastetStore(state => state.floatingState)
   useFrame((_, delta) => {
     if (floatingState) {
       ref.current.rotation.y += speedRef.current * delta

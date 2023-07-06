@@ -4,7 +4,7 @@ import { damp3 } from 'maath/easing'
 import { useRef } from 'react'
 import { Group } from 'three'
 
-import { usePyramidStore } from '@/store'
+import { useBastetStore } from '@/store'
 
 const planeSize = 650
 const gridsquareSize = 60
@@ -12,9 +12,9 @@ const descendY = -500
 const disappearAtY = -450
 
 export function Ground() {
-  const mainColor = usePyramidStore(state => state.mainColor)
+  const mainColor = useBastetStore(state => state.mainColor)
 
-  const floatingState = usePyramidStore(state => state.floatingState)
+  const floatingState = useBastetStore(state => state.floatingState)
   const groupRef = useRef<Group>(null!)
 
   useFrame((_, delta) => {

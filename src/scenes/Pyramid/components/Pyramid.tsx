@@ -3,7 +3,7 @@ import { useControls } from 'leva'
 import { useRef } from 'react'
 import { Color } from 'three'
 
-import { usePyramidStore } from '@/store'
+import { useBastetStore } from '@/store'
 
 type Props = JSX.IntrinsicElements['group']
 
@@ -33,16 +33,16 @@ export function Pyramid({ ...group }: Props) {
     { collapsed: true }
   )
 
-  const mainColor = usePyramidStore(state => state.mainColor)
+  const mainColor = useBastetStore(state => state.mainColor)
 
-  const [glitchEffect, setGlitchEffect] = usePyramidStore(state => [
+  const [glitchEffect, setGlitchEffect] = useBastetStore(state => [
     state.glitchEffect,
     state.setGlitchEffect,
   ])
   const timerRef = useRef<number>(0)
 
-  const floatingState = usePyramidStore(state => state.floatingState)
-  const setFloatingState = usePyramidStore(state => state.setFloatingState)
+  const floatingState = useBastetStore(state => state.floatingState)
+  const setFloatingState = useBastetStore(state => state.setFloatingState)
 
   function handleClick() {
     if (!glitchEffect) {

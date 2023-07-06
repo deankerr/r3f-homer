@@ -4,7 +4,7 @@ import { dampE } from 'maath/easing'
 import { useEffect, useMemo, useRef } from 'react'
 import { Euler, Group, Mesh, Vector3 } from 'three'
 
-import { usePyramidStore } from '@/store'
+import { useBastetStore } from '@/store'
 
 type Props = JSX.IntrinsicElements['mesh']
 
@@ -22,9 +22,9 @@ export function Shard2({ position, scale, rotation }: Props) {
     ref.current.rotation.copy(current)
   }, [])
 
-  const mainColor = usePyramidStore(state => state.mainColor)
+  const mainColor = useBastetStore(state => state.mainColor)
 
-  const floatingState = usePyramidStore(state => state.floatingState)
+  const floatingState = useBastetStore(state => state.floatingState)
   useFrame((_, delta) => {
     if (floatingState && rotationToCenter.current) {
       dampE(ref.current.rotation, rotationToCenter.current, 3, delta)

@@ -1,7 +1,7 @@
 import { Center, Edges, Float, Text3D } from '@react-three/drei'
 import { useControls } from 'leva'
 
-import { usePyramidStore } from '@/store'
+import { useBastetStore } from '@/store'
 
 type Props = JSX.IntrinsicElements['group'] & {
   text: string
@@ -21,7 +21,7 @@ export function URLText({ text }: Props) {
     { collapsed: true }
   )
 
-  const mainColor = usePyramidStore(state => state.mainColor)
+  const mainColor = useBastetStore(state => state.mainColor)
 
   return (
     <Float enabled={true}>

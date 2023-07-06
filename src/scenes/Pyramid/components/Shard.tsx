@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
-import { usePyramidStore } from '@/store'
+import { useBastetStore } from '@/store'
 
 const turnSpeed = 1 / 4
 const targetVec = new THREE.Vector3(0, 0, 0)
@@ -18,10 +18,10 @@ export function Shard(props: Props) {
     return geom
   }, [])
 
-  const mainColor = usePyramidStore(state => state.mainColor)
+  const mainColor = useBastetStore(state => state.mainColor)
   const ref = useRef<THREE.Mesh>(null!)
 
-  const floatingState = usePyramidStore(state => state.floatingState)
+  const floatingState = useBastetStore(state => state.floatingState)
 
   const targetQuaternionRef = useRef<THREE.Quaternion | null>(null)
 

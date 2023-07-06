@@ -1,6 +1,7 @@
 import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Leva, useControls } from 'leva'
+import { useEffect, useState } from 'react'
 
 import { MainScene } from './MainScene'
 import { MaterialTestScene } from './scenes/MaterialTestScene'
@@ -18,16 +19,12 @@ export default function App() {
     if (!canStartAudio) setCanStartAudio()
   }
 
-  const [refresh, toggleRefresh] = useTaxiStore(state => [
-    state.refresh,
-    state.toggleRefresh,
-  ])
-  useControls({ refresh: { value: refresh, onChange: () => toggleRefresh() } })
+  const resetKey = useResetKey()
 
   return (
     <div className="h-screen bg-black" onClick={handleInteraction}>
       <Canvas camera={{ position: [0, 10, 12] }}>
-        {<PyramidScene key={refresh ? 0 : 1} />}
+        {<PyramidScene key={resetKey} />}
         {/* {scene === 'Homer' && <MainScene />} */}
         {/* <TestScene /> */}
         {/* <MaterialTestScene /> */}
@@ -36,4 +33,20 @@ export default function App() {
       <Leva collapsed={false} />
     </div>
   )
+}
+
+const useResetKey = () => {
+  const [resetKey, setResetKey] = useState(Date.now())
+
+  const handler = (event: KeyboardEvent) => {
+    if (event.key === 'R') setResetKey(Date.now())
+  }
+
+  useEffect(() => {
+    document.addEventListener('keydown', handler)
+
+    return () => document.removeEventListener('keydown', handler)
+  }, [])
+
+  return resetKey
 }

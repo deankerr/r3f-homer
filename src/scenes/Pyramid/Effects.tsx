@@ -12,7 +12,7 @@ import { BlendFunction, GlitchEffect, GlitchMode } from 'postprocessing'
 import { Ref, forwardRef, useEffect, useLayoutEffect, useMemo } from 'react'
 import { Vector2 } from 'three'
 
-import { usePyramidStore } from '@/store'
+import { useBastetStore } from '@/store'
 
 const glitchStrength = new Vector2(0.5, 0.5)
 
@@ -40,7 +40,7 @@ export function Effects() {
   )
 
   //* Glitch
-  const glitchEffectActive = usePyramidStore(state => state.glitchEffect)
+  const glitchEffectActive = useBastetStore(state => state.glitchEffect)
 
   const glitch = (
     <FixedGlitch

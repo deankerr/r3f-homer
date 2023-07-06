@@ -34,7 +34,12 @@ export const useTaxiStore = create<State>()(
   }))
 )
 
-type PyramidState = {
+if (process.env.NODE_ENV === 'development') {
+  mountStoreDevtool('Store', useTaxiStore)
+}
+
+type BastetState = {
+  reset: () => void
   mainColor: string
   setMainColor: (to: string) => void
   glitchEffect: boolean
@@ -43,15 +48,18 @@ type PyramidState = {
   setFloatingState: (to: boolean) => void
 }
 
-export const usePyramidStore = create<PyramidState>()(set => ({
+const bastetInitialState = {
   mainColor: 'orange',
-  setMainColor: (to: string) => set(() => ({ mainColor: to })),
   glitchEffect: false,
-  setGlitchEffect: (to: boolean) => set(() => ({ glitchEffect: to })),
   floatingState: false,
+}
+
+export const useBastetStore = create<BastetState>()(set => ({
+  ...bastetInitialState,
+  reset: () => {
+    set(bastetInitialState)
+  },
+  setMainColor: (to: string) => set(() => ({ mainColor: to })),
+  setGlitchEffect: (to: boolean) => set(() => ({ glitchEffect: to })),
   setFloatingState: (to: boolean) => set(() => ({ floatingState: to })),
 }))
-
-if (process.env.NODE_ENV === 'development') {
-  mountStoreDevtool('Store', useTaxiStore)
-}

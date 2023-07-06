@@ -4,7 +4,7 @@ import { useControls } from 'leva'
 import { useRef } from 'react'
 import { Group } from 'three'
 
-import { usePyramidStore } from '@/store'
+import { useBastetStore } from '@/store'
 
 type Props = JSX.IntrinsicElements['group']
 
@@ -43,7 +43,7 @@ export function Orb({ ...group }: Props) {
   })
 
   const mainColorIndex = useRef<number>(0)
-  const [mainColor, setMainColor] = usePyramidStore(state => [
+  const [mainColor, setMainColor] = useBastetStore(state => [
     state.mainColor,
     state.setMainColor,
   ])

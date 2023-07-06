@@ -6,7 +6,7 @@ import { Perf } from 'r3f-perf'
 import { useRef } from 'react'
 import * as THREE from 'three'
 
-import { usePyramidStore, useTaxiStore } from '@/store'
+import { useBastetStore } from '@/store'
 
 import { Effects, Lights } from '.'
 import { Ground, URLText } from './components'
@@ -16,10 +16,14 @@ const initCameraPos = { x: 0, y: 10, z: 80 }
 const initCameraTarget: [number, number, number] = [0, 10, 0]
 
 export function PyramidScene() {
-  const setMainColor = usePyramidStore(state => state.setMainColor)
+  const [setMainColor, reset] = useBastetStore(state => [
+    state.setMainColor,
+    state.reset,
+  ])
 
-  const [config, setConfig] = useControls(() => ({
+  const [config, _setConfig] = useControls(() => ({
     main: folder({
+      reset: { value: false, onChange: () => reset() },
       orbitControls: true,
       rotateCam: true,
       ground: true,
@@ -42,7 +46,7 @@ export function PyramidScene() {
     ),
   }))
 
-  const floatingState = usePyramidStore(state => state.floatingState)
+  const floatingState = useBastetStore(state => state.floatingState)
 
   const targetPos = useRef<THREE.Vector3>(
     new THREE.Vector3(...initCameraTarget)
