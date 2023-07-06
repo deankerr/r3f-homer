@@ -55,7 +55,7 @@ type BastetState = {
 
 const bastetInitialState = {
   mainColor: 'orange',
-  mainColorSteps: ['orange', 'violet', 'lime', 'cyan', 'magenta', 'red'],
+  mainColorSteps: ['orange', 'violet', 'cyan', 'magenta', 'red'],
   mainColorIndex: 0,
   glitchEffect: false,
   floatingState: false,
