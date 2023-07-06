@@ -3,6 +3,7 @@ import * as THREE from 'three'
 
 import { plotCircle } from '@/util'
 
+import { useOrbitSwarm } from '..'
 import { Shard } from '../components/'
 
 const small = {
@@ -15,7 +16,7 @@ const small = {
 }
 
 const medium = {
-  radius: 300,
+  radius: 250,
   amount: 32,
   scale: [2, 4],
 }
@@ -28,43 +29,39 @@ const large = {
 
 export function Shards() {
   //* small
+  const smallRef = useRef<THREE.Group>(null!)
+  useOrbitSwarm(smallRef, 2, 1)
+
   const smallGroup = useMemo(() => {
-    const { maxRadius, minRadius, arms, amount, yAdjust } = small
-    const sharms: THREE.Vector3[][] = []
+    const { maxRadius, minRadius, arms, amount, scale, yAdjust } = small
     const range = (maxRadius - minRadius) / amount
+    const angle = (2 * Math.PI) / arms
+    const shards: JSX.Element[] = []
 
-    for (let iArm = 0; iArm < arms; iArm++) {
-      const arm: THREE.Vector3[] = []
-      const angle = (2 * Math.PI * iArm) / arms
-
+    for (let arm = 0; arm < arms; arm++) {
       for (let i = 0; i < amount; i++) {
         const radius = range * i + minRadius
-        arm.push(
-          new THREE.Vector3(
-            Math.sin(angle) * radius,
-            yAdjust,
-            Math.cos(angle) * radius
-          )
+        shards.push(
+          <Shard
+            position={[
+              Math.sin(angle * arm) * radius,
+              yAdjust,
+              Math.cos(angle * arm) * radius,
+            ]}
+            rotation={[-Math.PI / 2, 0, 0]}
+            scale={scale}
+            key={`s${arm}-${i}`}
+          />
         )
       }
-      sharms.push(arm)
     }
-
-    return (
-      <group>
-        {sharms.flat().map((vec3, i) => (
-          <Shard
-            position={vec3}
-            rotation={[-Math.PI / 2, 0, 0]}
-            scale={small.scale}
-            key={`s${i}`}
-          />
-        ))}
-      </group>
-    )
+    return <group ref={smallRef}>{shards}</group>
   }, [])
 
   //* medium
+  const mediumRef = useRef<THREE.Group>(null!)
+  useOrbitSwarm(mediumRef, 2, -1)
+
   const mediumGroup = useMemo(() => {
     const { amount, radius, scale } = medium
     const shards = plotCircle(amount, radius).map((position, i) => (
@@ -75,10 +72,13 @@ export function Shards() {
         key={`m${i}`}
       />
     ))
-    return <group>{shards}</group>
+    return <group ref={mediumRef}>{shards}</group>
   }, [])
 
   //* large
+  const largeRef = useRef<THREE.Group>(null!)
+  useOrbitSwarm(largeRef, 2, 1)
+
   const largeGroup = useMemo(() => {
     const { amount, radius, scale } = large
     const shards = plotCircle(amount, radius).map((position, i) => (
@@ -89,8 +89,7 @@ export function Shards() {
         key={`l${i}`}
       />
     ))
-
-    return <group>{shards}</group>
+    return <group ref={largeRef}>{shards}</group>
   }, [])
 
   return (
