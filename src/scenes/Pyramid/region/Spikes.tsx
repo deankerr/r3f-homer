@@ -1,8 +1,10 @@
 import { useControls } from 'leva'
-import { useMemo } from 'react'
+import { useMemo, useRef } from 'react'
+import * as THREE from 'three'
 
 import { plotCircle } from '@/util'
 
+import { useOrbitSwarm } from '..'
 import { Shard } from '../components'
 
 export function Spikes() {
@@ -18,6 +20,10 @@ export function Spikes() {
     { collapsed: true }
   )
 
+  const ref = useRef<THREE.Group>(null!)
+  useOrbitSwarm(ref, 1, 1)
+
+  //* Mesh construction
   const meshes = useMemo(() => {
     const rings: [number, number, number][][] = []
 
@@ -39,5 +45,9 @@ export function Spikes() {
     )
   }, [config])
 
-  return <group position={[0, 5.2, 0]}>{...meshes}</group>
+  return (
+    <group ref={ref} position={[0, 5.2, 0]}>
+      {...meshes}
+    </group>
+  )
 }

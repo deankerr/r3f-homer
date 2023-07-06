@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import { useBastetStore } from '@/store'
 import { plotCircle } from '@/util'
 
+import { useOrbitSwarm } from '..'
 import { Obelisk, Shard } from '../components/'
 
 const radius = 500
@@ -18,21 +19,14 @@ const obeliskAmount = 12
 const obeliskScaleMin = 3
 const obeliskScaleMax = 4
 
-const maxSpeed = 3
+const maxSpeed = 2
 
 type Props = JSX.IntrinsicElements['group']
 
 export function OuterRim({ ...group }: Props) {
   const ref = useRef<THREE.Group>(null!)
-  const speedRef = useRef<number>(0.01)
 
-  const floatingState = useBastetStore(state => state.floatingState)
-  useFrame((_, delta) => {
-    if (floatingState) {
-      ref.current.rotation.y -= speedRef.current * delta
-      damp(speedRef, 'current', maxSpeed, 60, delta)
-    }
-  })
+  useOrbitSwarm(ref, maxSpeed, 1)
 
   const shards = useMemo(() => {
     const positions = plotCircle(shardAmount, radius, 0)

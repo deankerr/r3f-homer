@@ -6,6 +6,7 @@ import * as THREE from 'three'
 import { useBastetStore } from '@/store'
 import { plotCircle } from '@/util'
 
+import { useOrbitSwarm } from '..'
 import { Shard } from '../components/'
 
 const amount = 30
@@ -14,21 +15,14 @@ const radius = 300
 const scaleMin = 2
 const scaleMax = 4
 
-const maxSpeed = 3
+const maxSpeed = 2
 
 type Props = JSX.IntrinsicElements['group']
 
 export function MiddleRim({ ...group }: Props) {
   const ref = useRef<THREE.Group>(null!)
-  const speedRef = useRef<number>(0.01)
 
-  const floatingState = useBastetStore(state => state.floatingState)
-  useFrame((_, delta) => {
-    if (floatingState) {
-      ref.current.rotation.y += speedRef.current * delta
-      damp(speedRef, 'current', maxSpeed, 60, delta)
-    }
-  })
+  useOrbitSwarm(ref, maxSpeed, -1)
 
   const components = useMemo(() => {
     const positions = plotCircle(amount, radius, 0)
