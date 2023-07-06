@@ -15,12 +15,12 @@ type Props = JSX.IntrinsicElements['group']
 
 export function MiddleRim({ ...group }: Props) {
   const components = useMemo(() => {
-    const positions = plotCircle(amount, radius)
+    const positions = plotCircle(amount, radius, 0)
 
     return positions.map((position, index) => (
       <Shard
         position={position}
-        rotation={[-Math.PI / 2, 0, Math.random() * 2 * Math.PI]}
+        rotation={[0, Math.random() * 2 * Math.PI, 0]}
         scale={THREE.MathUtils.randFloat(scaleMin, scaleMax)}
         key={index}
       />

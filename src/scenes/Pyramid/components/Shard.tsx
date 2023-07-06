@@ -1,42 +1,59 @@
-import { Cone, Edges } from '@react-three/drei'
+import { Cone, Edges, meshBounds } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useEffect, useRef } from 'react'
-import { Group, Mesh, Vector3 } from 'three'
+import { geometry } from 'maath'
+import { dampE } from 'maath/easing'
+import { useEffect, useMemo, useRef } from 'react'
+import * as THREE from 'three'
 
 import { usePyramidStore } from '@/store'
 
-type Props = JSX.IntrinsicElements['group']
+const turnSpeed = 1 / 4
+const targetVec = new THREE.Vector3(0, 0, 0)
 
-const pos0 = new Vector3(10, 10, 10)
+type Props = JSX.IntrinsicElements['mesh']
 
-export function Shard({ ...group }: Props) {
-  const ref = useRef<Group>(null!)
+export function Shard(props: Props) {
+  const geom = useMemo(() => {
+    const geom = new THREE.ConeGeometry(3, 10, 3, 1)
+    geom.rotateX(-Math.PI / 2)
+    geom.rotateY(Math.PI)
+    return geom
+  }, [])
 
   const mainColor = usePyramidStore(state => state.mainColor)
+  const ref = useRef<THREE.Mesh>(null!)
 
   const floatingState = usePyramidStore(state => state.floatingState)
-  // useFrame(() => {
-  //   if (floatingState) {
-  //     // const obj = ref.current
-  //     // obj.rotation.set(0, 0, 0, 'XYZ')
-  //     // const pos = obj.position
-  //   }
-  // })
 
-  if (floatingState && ref.current) {
-    ref.current.lookAt(0, 0, 0)
-  }
+  const targetQuaternionRef = useRef<THREE.Quaternion | null>(null)
+
+  useFrame((_, delta) => {
+    if (!ref.current) return
+    const mesh = ref.current
+
+    if (!targetQuaternionRef.current) {
+      const rotationMatrix = new THREE.Matrix4()
+      rotationMatrix.lookAt(targetVec, mesh.position, mesh.up)
+
+      const quat = new THREE.Quaternion()
+      quat.setFromRotationMatrix(rotationMatrix)
+      targetQuaternionRef.current = quat
+    }
+
+    if (targetQuaternionRef.current && floatingState) {
+      if (!mesh.quaternion.equals(targetQuaternionRef.current)) {
+        mesh.quaternion.rotateTowards(
+          targetQuaternionRef.current,
+          turnSpeed * delta
+        )
+      }
+    }
+  })
 
   return (
-    <group {...group} ref={ref}>
-      <Cone
-        args={[3, 10, 3, 1]}
-        position={[0, 5.2, 0]}
-        rotation={[floatingState ? Math.PI / 2 : 0, 0, 0]}
-      >
-        <meshPhongMaterial color="black" />
-        <Edges threshold={15} color={mainColor} />
-      </Cone>
-    </group>
+    <mesh geometry={geom} {...props} ref={ref}>
+      <meshStandardMaterial color="black" />
+      <Edges threshold={15} color={mainColor} />
+    </mesh>
   )
 }

@@ -11,10 +11,15 @@ type Props = JSX.IntrinsicElements['group']
 
 export function InnerRim({ ...group }: Props) {
   const components = useMemo(() => {
-    const positions = plotCircle(amount, radius)
+    const positions = plotCircle(amount, radius, 7.5)
 
     return positions.map((position, index) => (
-      <Shard position={position} scale={1.5} key={index} />
+      <Shard
+        position={position}
+        rotation={[-Math.PI / 2, 0, 0]}
+        scale={1.5}
+        key={index}
+      />
     ))
   }, [])
 

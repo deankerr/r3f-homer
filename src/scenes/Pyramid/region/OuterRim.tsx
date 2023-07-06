@@ -19,14 +19,14 @@ type Props = JSX.IntrinsicElements['group']
 
 export function OuterRim({ ...group }: Props) {
   const shards = useMemo(() => {
-    const positions = plotCircle(shardAmount, radius)
+    const positions = plotCircle(shardAmount, radius, 0)
 
     return positions.map((position, index) => (
       <Shard
         position={position}
-        rotation={[-Math.PI / 2, 0, Math.random() * 2 * Math.PI]}
+        rotation={[0, Math.random() * 2 * Math.PI, 0]}
         scale={THREE.MathUtils.randFloat(shardScaleMin, shardScaleMax)}
-        key={index}
+        key={`s+${index}`}
       />
     ))
   }, [])
@@ -39,7 +39,7 @@ export function OuterRim({ ...group }: Props) {
         position={position}
         rotation={[0, Math.random() * 2 * Math.PI, 0]}
         scale={THREE.MathUtils.randFloat(obeliskScaleMin, obeliskScaleMax)}
-        key={index}
+        key={`o+${index}`}
       />
     ))
   }, [])

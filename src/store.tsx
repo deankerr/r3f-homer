@@ -5,6 +5,9 @@ import { devtools } from 'zustand/middleware'
 type HomerState = 'idle' | 'faceRotating' | 'headMarging' | 'headDemarging'
 
 type State = {
+  refresh: boolean
+  toggleRefresh: () => void
+
   scene: 'Homer' | 'Pyramid'
   setScene: () => void
 
@@ -20,6 +23,9 @@ type State = {
 
 export const useTaxiStore = create<State>()(
   devtools(set => ({
+    refresh: false,
+    toggleRefresh: () => set(state => ({ refresh: !state.refresh })),
+
     scene: 'Pyramid',
     setScene: () =>
       set(state => ({

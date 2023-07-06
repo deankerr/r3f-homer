@@ -9,7 +9,7 @@ import * as THREE from 'three'
 import { usePyramidStore, useTaxiStore } from '@/store'
 
 import { Effects, Lights } from '.'
-import { Ground, URLText } from './components'
+import { Ground, Shard, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
 const initCameraPos = { x: 0, y: 10, z: 80 }
@@ -22,7 +22,7 @@ export function PyramidScene() {
     main: folder({
       orbitControls: true,
       rotateCam: true,
-      camAdvance: false,
+      ground: true,
       effects: true,
       showPerf: true,
       mainColor: {
@@ -80,11 +80,12 @@ export function PyramidScene() {
       <InnerRim />
       <MiddleRim />
       <OuterRim />
+      {/* <Shard position={[60, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} /> */}
 
       {/* stage */}
       <Stars radius={300} />
 
-      <Ground />
+      {config.ground && <Ground />}
       <Box
         args={[1500, 1500, 1500]}
         position={[0, 0, 0]}
