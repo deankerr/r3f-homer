@@ -11,12 +11,12 @@ import { Obelisk, Shard } from '../components/'
 const radius = 500
 
 const shardAmount = 120
-const shardScaleMin = 8
-const shardScaleMax = 10
+const shardScaleMin = 4
+const shardScaleMax = 6
 
 const obeliskAmount = 12
 const obeliskScaleMin = 3
-const obeliskScaleMax = 5
+const obeliskScaleMax = 4
 
 const maxSpeed = 3
 

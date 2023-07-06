@@ -9,10 +9,10 @@ import * as THREE from 'three'
 import { useBastetStore } from '@/store'
 
 import { Effects, Lights } from '.'
-import { Ground, URLText } from './components'
+import { Ground, Spikes, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
-const initCameraPos = { x: 0, y: 10, z: 80 }
+const initCameraPos = { x: 0, y: 7, z: 70 }
 const initCameraTarget: [number, number, number] = [0, 10, 0]
 
 export function PyramidScene() {
@@ -64,6 +64,7 @@ export function PyramidScene() {
     if (config.rotateCam && !config.orbitControls) {
       const angle = state.clock.elapsedTime
       state.camera.position.x = Math.sin(angle / 2) * initCameraPos.z
+      state.camera.position.y = initCameraPos.y
       state.camera.position.z = Math.cos(angle / 2) * initCameraPos.z
       state.camera.lookAt(targetPos.current)
     }
@@ -87,8 +88,9 @@ export function PyramidScene() {
         scale={1}
       />
 
-      <Central />
-      <InnerRim />
+      <Central scale={1.0} />
+      <Spikes />
+      {/* <InnerRim /> */}
       <MiddleRim />
       <OuterRim />
       {/* <Shard position={[60, 0, 0]} rotation={[-Math.PI / 2, 0, 0]} /> */}
@@ -115,7 +117,12 @@ export function PyramidScene() {
 
       {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}
 
-      {config.orbitControls && <OrbitControls target={initCameraTarget} />}
+      {config.orbitControls && (
+        <OrbitControls
+          position={[initCameraPos.x, initCameraPos.y, initCameraPos.z]}
+          target={initCameraTarget}
+        />
+      )}
     </>
   )
 }

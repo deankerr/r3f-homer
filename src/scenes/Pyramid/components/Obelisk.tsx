@@ -9,7 +9,7 @@ export function Obelisk({ ...group }: Props) {
 
   return (
     <group {...group}>
-      <Capsule args={[1.5, 10, 1, 4]} position={[0, 0, 0]}>
+      <Capsule args={[1.5, 16, 1, 4]} position={[0, 0, 0]}>
         <meshStandardMaterial color="black" />
         <Edges threshold={15} color={mainColor} />
       </Capsule>
