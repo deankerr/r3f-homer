@@ -6,10 +6,10 @@ import { Perf } from 'r3f-perf'
 import { useRef } from 'react'
 import * as THREE from 'three'
 
-import { usePyramidStore } from '@/store'
+import { usePyramidStore, useTaxiStore } from '@/store'
 
 import { Effects, Lights } from '.'
-import { Ground, URLText } from './components'
+import { Ground, Shard, URLText } from './components'
 import { Central, InnerRim, MiddleRim, OuterRim } from './region'
 
 const initCameraPos = { x: 0, y: 10, z: 80 }
@@ -20,7 +20,7 @@ export function PyramidScene() {
 
   const [config, setConfig] = useControls(() => ({
     main: folder({
-      orbitControls: false,
+      orbitControls: true,
       rotateCam: true,
       camAdvance: false,
       effects: true,
@@ -50,13 +50,13 @@ export function PyramidScene() {
 
   useFrame(state => {
     //* rotate camera
-    if (config.rotateCam) {
+    if (config.rotateCam && !config.orbitControls) {
       const angle = state.clock.elapsedTime
       state.camera.position.x = Math.sin(angle / 2) * initCameraPos.z
       state.camera.position.z = Math.cos(angle / 2) * initCameraPos.z
       state.camera.lookAt(targetPos.current)
     }
-    if (floatingState) {
+    if (floatingState && !config.orbitControls) {
       damp3(state.camera.position, [0, 0, 0], 5)
       damp3(targetPos.current, [0, 0, 0], 7)
     }

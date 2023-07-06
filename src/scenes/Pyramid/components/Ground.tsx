@@ -6,8 +6,10 @@ import { Group } from 'three'
 
 import { usePyramidStore } from '@/store'
 
-const size = 1000
-const step = 60
+const planeSize = 1000
+const gridsquareSize = 60
+const descendY = -500
+const disappearAtY = -450
 
 export function Ground() {
   const mainColor = usePyramidStore(state => state.mainColor)
@@ -17,22 +19,26 @@ export function Ground() {
 
   useFrame((_, delta) => {
     if (floatingState) {
-      damp3(groupRef.current.position, [0, -500, 0], 60, delta)
+      const group = groupRef.current
+      damp3(group.position, [0, descendY, 0], 60, delta)
+
+      if (group.position.y <= disappearAtY) {
+        group.position.setY(descendY)
+        group.visible = false
+      }
     }
   })
 
   return (
     <group ref={groupRef}>
       <gridHelper
-        args={[size, step, mainColor, mainColor]}
+        args={[planeSize, gridsquareSize, mainColor, mainColor]}
         position={[0, 0.5, 0]}
-        visible={true}
       />
       <Plane
-        args={[size, size]}
+        args={[planeSize, planeSize]}
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, 0, 0]}
-        visible={true}
       >
         <meshStandardMaterial color="black" />
       </Plane>

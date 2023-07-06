@@ -1,3 +1,4 @@
+import { useFrame } from '@react-three/fiber'
 import { useMemo } from 'react'
 
 import { usePyramidStore } from '@/store'
@@ -28,6 +29,8 @@ export function MiddleRim({ ...group }: Props) {
 
       const scale = Math.random() * (scaleMax - scaleMin) + scaleMin
 
+      const a = <Shard position={[x, 0, z]} rotation={rotation} scale={scale} />
+
       objects.push(
         <Shard position={[x, 0, z]} rotation={rotation} scale={scale} />
       )
@@ -38,5 +41,3 @@ export function MiddleRim({ ...group }: Props) {
 
   return <group {...group}>{...debris}</group>
 }
-
-// [0, Math.random() * 2 * Math.PI, 0] // erect

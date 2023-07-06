@@ -1,7 +1,6 @@
 import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
-import TakeControl from '@react-three/postprocessing'
-import { Leva } from 'leva'
+import { Leva, useControls } from 'leva'
 
 import { MainScene } from './MainScene'
 import { MaterialTestScene } from './scenes/MaterialTestScene'
@@ -19,16 +18,19 @@ export default function App() {
     if (!canStartAudio) setCanStartAudio()
   }
 
+  const [scene, setScene] = useTaxiStore(state => [state.scene, state.setScene])
+  useControls({ sceneToggle: { value: true, onChange: () => setScene() } })
+
   return (
     <div className="h-screen bg-black" onClick={handleInteraction}>
       <Canvas camera={{ position: [0, 10, 12] }}>
-        {/* <MainScene /> */}
+        {scene === 'Homer' && <MainScene />}
+        {scene === 'Pyramid' && <PyramidScene />}
         {/* <TestScene /> */}
-        <PyramidScene />
         {/* <MaterialTestScene /> */}
       </Canvas>
       <Loader />
-      <Leva collapsed={true} />
+      <Leva collapsed={false} />
     </div>
   )
 }

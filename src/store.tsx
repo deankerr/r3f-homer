@@ -5,6 +5,9 @@ import { devtools } from 'zustand/middleware'
 type HomerState = 'idle' | 'faceRotating' | 'headMarging' | 'headDemarging'
 
 type State = {
+  scene: 'Homer' | 'Pyramid'
+  setScene: () => void
+
   canStartAudio: boolean
   setCanStartAudio: () => void
 
@@ -17,6 +20,12 @@ type State = {
 
 export const useTaxiStore = create<State>()(
   devtools(set => ({
+    scene: 'Pyramid',
+    setScene: () =>
+      set(state => ({
+        scene: state.scene === 'Pyramid' ? 'Homer' : 'Pyramid',
+      })),
+
     canStartAudio: false,
     setCanStartAudio: () => set(() => ({ canStartAudio: true })),
 
