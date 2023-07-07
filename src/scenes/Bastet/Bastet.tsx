@@ -5,7 +5,7 @@ import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
 
 import { Effects, Lights } from '.'
-import { Ground, URLText } from './components'
+import { Floor, URLText } from './components'
 import { Shards, Temple } from './features'
 
 export function Bastet() {
@@ -13,7 +13,6 @@ export function Bastet() {
     orbitControls: true,
     rotateCam: true,
     floatingState: false,
-    ground: true,
     effects: true,
     showPerf: true,
     mainColor: 'orange',
@@ -47,17 +46,14 @@ export function Bastet() {
         text="DEAN.TAXI"
         position={[100, 60, -150]}
         rotation={[(1 * Math.PI) / 8, (2 * -Math.PI) / 8, Math.PI / 8]}
-        scale={1}
       />
 
-      <Temple scale={2.0} />
+      <Temple />
       <Shards />
-      {/* <InstanceShards /> */}
 
-      {/*  stage */}
       <Stars radius={300} />
 
-      {config.ground && <Ground />}
+      <Floor />
       <Box
         args={[1500, 1500, 1500]}
         position={[0, 0, 0]}

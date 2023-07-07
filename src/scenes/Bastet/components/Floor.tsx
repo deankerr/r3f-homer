@@ -9,32 +9,35 @@ import { useBastetStore } from '@/store'
 
 const planeSize = 1000
 const gridsquareSize = 30
-const descendY = -500
-const disappearAtY = -450
+// const descendY = -500
+// const disappearAtY = -450
 
 const luminanceOffset = -0.2
 
-export function Ground() {
+export function Floor() {
+  const ref = useRef<Group>(null!)
+
+  const config = useControls('main', {
+    floor: true,
+  })
+
   const mainColor = useBastetStore(state => state.mainColor)
   const color = new Color(mainColor).offsetHSL(0, 0, luminanceOffset)
 
-  const floatingState = useBastetStore(state => state.floatingState)
-  const groupRef = useRef<Group>(null!)
+  // useFrame((_, delta) => {
+  //   if (floatingState) {
+  //     const group = ref.current
+  //     damp3(group.position, [0, descendY, 0], 60, delta)
 
-  useFrame((_, delta) => {
-    if (floatingState) {
-      const group = groupRef.current
-      damp3(group.position, [0, descendY, 0], 60, delta)
-
-      if (group.position.y <= disappearAtY) {
-        group.position.setY(descendY)
-        group.visible = false
-      }
-    }
-  })
+  //     if (group.position.y <= disappearAtY) {
+  //       group.position.setY(descendY)
+  //       group.visible = false
+  //     }
+  //   }
+  // })
 
   return (
-    <group ref={groupRef}>
+    <group ref={ref} visible={config.floor}>
       <gridHelper
         args={[planeSize, gridsquareSize, color, color]}
         position={[0, 0.5, 0]}
@@ -43,7 +46,7 @@ export function Ground() {
         args={[planeSize, planeSize]}
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, 0, 0]}
-        visible={true}
+        // visible={false}
       >
         <meshStandardMaterial color="black" />
       </Plane>

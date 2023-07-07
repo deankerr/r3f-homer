@@ -1,4 +1,4 @@
-export * from './Ground'
+export * from './Floor'
 export * from './IShard'
 export * from './Obelisk'
 export * from './Orb'
