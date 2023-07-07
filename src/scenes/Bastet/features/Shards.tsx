@@ -1,11 +1,10 @@
-import { Edges, Instance, Instances } from '@react-three/drei'
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
 import { plotCircle } from '@/util'
 
 import { useOrbitSwarm } from '..'
-import { IShard } from '../components/'
+import { Shard } from '../components'
 
 const small = {
   maxRadius: 475,
@@ -28,7 +27,7 @@ const large = {
   scale: [4, 6],
 }
 
-export function InstanceShards() {
+export function Shards() {
   //* small
   const smallRef = useRef<THREE.Group>(null!)
   useOrbitSwarm(smallRef, [1, 1, 0])
@@ -43,7 +42,7 @@ export function InstanceShards() {
       for (let i = 0; i < amount; i++) {
         const radius = range * i + minRadius
         shards.push(
-          <IShard
+          <Shard
             position={[
               Math.sin(angle * arm) * radius,
               yAdjust,
@@ -66,7 +65,7 @@ export function InstanceShards() {
   const mediumGroup = useMemo(() => {
     const { amount, radius, scale } = medium
     const shards = plotCircle(amount, radius).map((position, i) => (
-      <IShard
+      <Shard
         position={position}
         rotation={[0, Math.random() * 2 * Math.PI, 0]}
         scale={THREE.MathUtils.randFloat(scale[0], scale[1])}
@@ -83,7 +82,7 @@ export function InstanceShards() {
   const largeGroup = useMemo(() => {
     const { amount, radius, scale } = large
     const shards = plotCircle(amount, radius).map((position, i) => (
-      <IShard
+      <Shard
         position={position}
         rotation={[0, Math.random() * 2 * Math.PI, 0]}
         scale={THREE.MathUtils.randFloat(scale[0], scale[1])}
@@ -93,20 +92,11 @@ export function InstanceShards() {
     return <group ref={largeRef}>{shards}</group>
   }, [])
 
-  const geom = useMemo(() => {
-    const geom = new THREE.ConeGeometry(3, 10, 3, 1)
-    geom.rotateX(-Math.PI / 2)
-    geom.rotateY(Math.PI)
-    return geom
-  }, [])
-
   return (
-    <Instances geometry={geom} rotation={[0, 3, 0]}>
-      <meshStandardMaterial color="black" />
-
+    <>
       {smallGroup}
       {mediumGroup}
       {largeGroup}
-    </Instances>
+    </>
   )
 }

@@ -2,12 +2,12 @@
   "exportall.config.folderListener": [
     "/src/components",
     "/src/components/shapes",
-    "/src/scenes/Pyramid",
-    "/src/scenes/Pyramid/region",
-    "/src/scenes/Pyramid/components"
+    "/src/scenes/Bastet",
+    "/src/scenes/Bastet/features",
+    "/src/scenes/Bastet/components"
   ],
   "exportall.config.relExclusion": [
-    "/src/scenes/Pyramid/region",
-    "/src/scenes/Pyramid/components"
+    "/src/scenes/Bastet/features",
+    "/src/scenes/Bastet/components"
   ]
 }

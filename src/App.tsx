@@ -4,9 +4,9 @@ import { Leva, useControls } from 'leva'
 import { useEffect, useState } from 'react'
 
 import { MainScene } from './MainScene'
+import { Bastet } from './scenes/Bastet'
 import { MaterialTestScene } from './scenes/MaterialTestScene'
 import { TestScene } from './scenes/ModelTestScene'
-import { PyramidScene } from './scenes/Pyramid/PyramidScene'
 import { useTaxiStore } from './store'
 
 export default function App() {
@@ -24,7 +24,7 @@ export default function App() {
   return (
     <div className="h-screen bg-black" onClick={handleInteraction}>
       <Canvas camera={{ position: [0, 10, 12] }}>
-        {<PyramidScene key={resetKey} />}
+        {<Bastet key={resetKey} />}
         {/* {scene === 'Homer' && <MainScene />} */}
         {/* <TestScene /> */}
         {/* <MaterialTestScene /> */}

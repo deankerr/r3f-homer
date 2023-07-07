@@ -1,3 +1,3 @@
-export * from './Central'
+export * from './Temple'
 export * from './InstanceShards'
 export * from './Shards'

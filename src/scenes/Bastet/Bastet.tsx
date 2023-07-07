@@ -1,48 +1,29 @@
 import { Box, OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { folder, useControls } from 'leva'
+import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
 
-import { useBastetStore } from '@/store'
-
 import { Effects, Lights } from '.'
 import { Ground, URLText } from './components'
-import { Central, Shards } from './region'
+import { Shards, Temple } from './features'
 
-export function PyramidScene() {
-  const [setMainColor, setFloatingState, reset] = useBastetStore(state => [
-    state.setMainColor,
-
-    state.setFloatingState,
-    state.reset,
-  ])
-
-  const config = useControls({
-    main: folder({
-      reset: { value: false, onChange: () => reset() },
-      orbitControls: true,
-      rotateCam: true,
-      floatingState: {
-        value: false,
-        onChange: (v: boolean) => setFloatingState(v),
-      },
-      ground: true,
-      effects: true,
-      showPerf: true,
-      mainColor: {
-        value: 'orange',
-        onChange: (mainColor: string) => {
-          setMainColor(mainColor)
-        },
-      },
-    }),
+export function Bastet() {
+  const config = useControls('main', {
+    orbitControls: true,
+    rotateCam: true,
+    floatingState: false,
+    ground: true,
+    effects: true,
+    showPerf: true,
+    mainColor: 'orange',
   })
 
+  //* camera
   const cameraProps = useControls(
     'camera',
     {
-      position: [0, 7, 120],
+      position: [90, 7, 90],
       target: [0, 10, 0],
     },
     { collapsed: true }
@@ -69,7 +50,7 @@ export function PyramidScene() {
         scale={1}
       />
 
-      <Central scale={2.0} />
+      <Temple scale={2.0} />
       <Shards />
       {/* <InstanceShards /> */}
 
