@@ -9,8 +9,8 @@ import { Shard } from '../components'
 const small = {
   maxRadius: 475,
   minRadius: 90,
-  arms: 16,
-  amount: 8,
+  arms: 10,
+  amount: 5,
   scale: 1,
   yAdjust: 5.2,
 }
@@ -23,7 +23,7 @@ const medium = {
 
 const large = {
   radius: 500,
-  amount: 104,
+  amount: 70,
   scale: [4, 6],
 }
 

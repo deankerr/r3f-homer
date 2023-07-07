@@ -12,9 +12,8 @@ export function Bastet() {
   const config = useControls('main', {
     orbitControls: true,
     rotateCam: true,
-    floatingState: false,
     effects: true,
-    showPerf: true,
+    r3fPerf: true,
     mainColor: 'orange',
   })
 
@@ -22,8 +21,8 @@ export function Bastet() {
   const cameraProps = useControls(
     'camera',
     {
-      position: [90, 7, 90],
-      target: [0, 10, 0],
+      position: [110, 12, 110],
+      target: [0, 12, 0],
     },
     { collapsed: true }
   )
@@ -42,35 +41,24 @@ export function Bastet() {
     <>
       <PerspectiveCamera makeDefault {...cameraProps} />
 
-      <URLText
-        text="DEAN.TAXI"
-        position={[100, 60, -150]}
-        rotation={[(1 * Math.PI) / 8, (2 * -Math.PI) / 8, Math.PI / 8]}
-      />
+      <URLText text="DEAN.TAXI" />
 
       <Temple />
       <Shards />
+      <Floor />
 
       <Stars radius={300} />
-
-      <Floor />
       <Box
         args={[1500, 1500, 1500]}
-        position={[0, 0, 0]}
         material-side={THREE.BackSide}
         material-color={0x000000}
-        visible={true}
       />
 
       <Lights />
 
-      {/* Utility */}
       {config.effects && <Effects />}
-
-      {/* <Stats /> */}
-      {config.showPerf && <Perf position="bottom-left" antialias={false} />}
-
       {config.orbitControls && <OrbitControls {...cameraProps} />}
+      {config.r3fPerf && <Perf position="bottom-left" antialias={false} />}
     </>
   )
 }
