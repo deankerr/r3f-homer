@@ -10,19 +10,21 @@ import { Shards, Temple } from './features'
 
 export function Bastet() {
   const config = useControls('main', {
-    orbitControls: true,
+    orbitControls: false,
     rotateCam: true,
     effects: true,
     r3fPerf: true,
     mainColor: 'orange',
+    skybox: true,
+    stars: true,
   })
 
   //* camera
   const cameraProps = useControls(
     'camera',
     {
-      position: [110, 12, 110],
-      target: [0, 12, 0],
+      position: [118, 18, 118],
+      target: [0, 14, 0],
     },
     { collapsed: true }
   )
@@ -47,11 +49,12 @@ export function Bastet() {
       <Shards />
       <Floor />
 
-      <Stars radius={300} />
+      {config.stars && <Stars radius={300} />}
       <Box
         args={[1500, 1500, 1500]}
         material-side={THREE.BackSide}
         material-color={0x000000}
+        visible={config.skybox}
       />
 
       <Lights />

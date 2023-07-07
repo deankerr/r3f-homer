@@ -1,3 +1,4 @@
+import { useControls } from 'leva'
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
@@ -28,6 +29,9 @@ const large = {
 }
 
 export function Shards() {
+  const config = useControls('main', {
+    shards: true,
+  })
   //* small
   const smallRef = useRef<THREE.Group>(null!)
   useOrbitSwarm(smallRef, [1, 1, 0])
@@ -93,10 +97,10 @@ export function Shards() {
   }, [])
 
   return (
-    <>
+    <group visible={config.shards}>
       {smallGroup}
       {mediumGroup}
       {largeGroup}
-    </>
+    </group>
   )
 }

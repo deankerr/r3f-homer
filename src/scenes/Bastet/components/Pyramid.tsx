@@ -6,7 +6,11 @@ import { useBastetStore } from '@/store'
 type Props = JSX.IntrinsicElements['group']
 
 export function Pyramid({ ...group }: Props) {
-  const config = useControls(
+  const config = useControls('main', {
+    pyramidInner: true,
+  })
+
+  const outerProps = useControls(
     'pyramid outer',
     {
       radius: { value: 30, min: 1, max: 200, step: 1 },
@@ -41,7 +45,7 @@ export function Pyramid({ ...group }: Props) {
   return (
     <group {...group} onClick={handleClick}>
       {/* inner */}
-      <mesh>
+      <mesh visible={config.pyramidInner}>
         <octahedronGeometry args={[15]} />
         <meshStandardMaterial color="black" />
         <Edges threshold={15} color={mainColor} />
@@ -49,8 +53,8 @@ export function Pyramid({ ...group }: Props) {
 
       {/* outer */}
       <mesh>
-        <octahedronGeometry args={[config.radius]} />
-        <MeshTransmissionMaterial {...config} resolution={64} />
+        <octahedronGeometry args={[outerProps.radius]} />
+        <MeshTransmissionMaterial {...outerProps} resolution={64} />
         <Edges threshold={15} color={mainColor} />
       </mesh>
     </group>
