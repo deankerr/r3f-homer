@@ -2,7 +2,7 @@ import { Plane } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { damp3 } from 'maath/easing'
 import { useRef } from 'react'
-import { Group } from 'three'
+import { Color, Group } from 'three'
 
 import { useBastetStore } from '@/store'
 
@@ -13,6 +13,7 @@ const disappearAtY = -450
 
 export function Ground() {
   const mainColor = useBastetStore(state => state.mainColor)
+  const color = new Color(mainColor).offsetHSL(0, 0, -0.45)
 
   const floatingState = useBastetStore(state => state.floatingState)
   const groupRef = useRef<Group>(null!)
@@ -32,7 +33,7 @@ export function Ground() {
   return (
     <group ref={groupRef}>
       <gridHelper
-        args={[planeSize, gridsquareSize, mainColor, mainColor]}
+        args={[planeSize, gridsquareSize, color, color]}
         position={[0, 0.5, 0]}
       />
       <Plane

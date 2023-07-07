@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { folder, useControls } from 'leva'
 import { damp3 } from 'maath/easing'
 import { Perf } from 'r3f-perf'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import * as THREE from 'three'
 
 import { useBastetStore } from '@/store'
@@ -32,7 +32,7 @@ export function PyramidScene() {
     ]
   )
 
-  const [config, _setConfig] = useControls(() => ({
+  const [config, setConfig] = useControls(() => ({
     main: folder({
       reset: { value: false, onChange: () => reset() },
       orbitControls: true,
@@ -94,8 +94,8 @@ export function PyramidScene() {
       />
 
       <Central scale={1.0} />
-      {/* <Shards /> */}
-      <InstanceShards />
+      <Shards />
+      {/* <InstanceShards /> */}
       {/* <Spikes /> */}
       {/* <MiddleRim /> */}
       {/* <OuterRim /> */}
