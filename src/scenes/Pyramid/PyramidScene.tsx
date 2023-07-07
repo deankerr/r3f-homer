@@ -1,6 +1,6 @@
 import { Box, OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { folder, useControls } from 'leva'
+import { Leva, folder, useControls } from 'leva'
 import { damp3 } from 'maath/easing'
 import { Perf } from 'r3f-perf'
 import { useRef } from 'react'
@@ -12,20 +12,20 @@ import { Effects, Lights } from '.'
 import { Ground, URLText } from './components'
 import { Central, Shards } from './region'
 
-const initCameraPos = { x: 0, y: 7, z: 70 }
+const initCameraPos = { x: 0, y: 7, z: 70 } // ! temp duped config
 const initCameraTarget: [number, number, number] = [0, 10, 0]
 
 export function PyramidScene() {
-  const [setMainColor, reset, floatingState, setFloatingState] = useBastetStore(
+  const [setMainColor, floatingState, setFloatingState, reset] = useBastetStore(
     state => [
       state.setMainColor,
-      state.reset,
       state.floatingState,
       state.setFloatingState,
+      state.reset,
     ]
   )
 
-  const [config, setConfig] = useControls(() => ({
+  const config = useControls({
     main: folder({
       reset: { value: false, onChange: () => reset() },
       orbitControls: true,
@@ -52,7 +52,7 @@ export function PyramidScene() {
       },
       { collapsed: true }
     ),
-  }))
+  })
 
   const targetPos = useRef<THREE.Vector3>(
     new THREE.Vector3(...initCameraTarget)
@@ -86,7 +86,7 @@ export function PyramidScene() {
         scale={1}
       />
 
-      <Central scale={1.0} />
+      <Central scale={2.0} />
       <Shards />
       {/* <InstanceShards /> */}
 
@@ -109,8 +109,6 @@ export function PyramidScene() {
 
       {/* <Stats /> */}
       {config.showPerf && <Perf position="bottom-left" antialias={false} />}
-
-      {/* <axesHelper args={[100]} position={[0, 20, 0]} /> */}
 
       {config.orbitControls && (
         <OrbitControls

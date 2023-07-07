@@ -1,5 +1,6 @@
 import { Plane } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
+import { useControls } from 'leva'
 import { damp3 } from 'maath/easing'
 import { useRef } from 'react'
 import { Color, Group } from 'three'
@@ -11,7 +12,7 @@ const gridsquareSize = 30
 const descendY = -500
 const disappearAtY = -450
 
-const luminanceOffset = -0.3
+const luminanceOffset = -0.2
 
 export function Ground() {
   const mainColor = useBastetStore(state => state.mainColor)

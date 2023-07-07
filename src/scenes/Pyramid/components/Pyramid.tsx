@@ -1,22 +1,9 @@
 import { Edges, MeshTransmissionMaterial } from '@react-three/drei'
 import { useControls } from 'leva'
-import { useRef } from 'react'
-import { Color } from 'three'
 
-import { Cat } from '@/components/models/Cat'
 import { useBastetStore } from '@/store'
 
 type Props = JSX.IntrinsicElements['group']
-
-type Tototo = {
-  name: string
-  age: number
-}
-
-const bog: Tototo = {
-  name: 'bpg',
-  age: 56,
-}
 
 export function Pyramid({ ...group }: Props) {
   const config = useControls(
@@ -45,28 +32,9 @@ export function Pyramid({ ...group }: Props) {
   )
 
   const mainColor = useBastetStore(state => state.mainColor)
-
-  const [glitchEffect, setGlitchEffect] = useBastetStore(state => [
-    state.glitchEffect,
-    state.setGlitchEffect,
-  ])
-  const timerRef = useRef<number>(0)
-
-  const floatingState = useBastetStore(state => state.floatingState)
-  const setFloatingState = useBastetStore(state => state.setFloatingState)
-
   const nextMainColor = useBastetStore(state => state.nextMainColor)
 
   function handleClick() {
-    // if (!glitchEffect) {
-    // setGlitchEffect(true)
-    // }
-
-    // window.clearTimeout(timerRef.current)
-    // timerRef.current = window.setTimeout(() => setGlitchEffect(false), 250)
-
-    // transition to space
-    // setFloatingState(!floatingState)
     nextMainColor()
   }
 
@@ -88,5 +56,3 @@ export function Pyramid({ ...group }: Props) {
     </group>
   )
 }
-
-const col = new Color('green')

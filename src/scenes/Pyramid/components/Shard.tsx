@@ -8,7 +8,7 @@ import { useBastetStore } from '@/store'
 const turnSpeed = 1 / 4
 const targetVec = new THREE.Vector3(0, 0, 0)
 
-const luminanceOffset = -0.3
+const luminanceOffset = -0.2
 
 type Props = JSX.IntrinsicElements['mesh']
 
