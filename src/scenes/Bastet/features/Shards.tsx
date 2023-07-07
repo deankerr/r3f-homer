@@ -25,7 +25,7 @@ const medium = {
 const large = {
   radius: 500,
   amount: 70,
-  scale: [4, 6],
+  scale: [6, 10],
 }
 
 export function Shards() {

@@ -1,40 +1,54 @@
-import { Box, OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import {
+  Box,
+  OrbitControls,
+  PerspectiveCamera,
+  Stars,
+  Stats,
+} from '@react-three/drei'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
+import { useEffect } from 'react'
 import * as THREE from 'three'
+
+import { useBastetStore } from '@/store'
 
 import { Effects, Lights } from '.'
 import { Floor, URLText } from './components'
 import { Shards, Temple } from './features'
 
 export function Bastet() {
+  const setMainColor = useBastetStore(state => state.setMainColor)
+
   const config = useControls('main', {
     orbitControls: false,
     rotateCam: true,
-    effects: true,
-    r3fPerf: true,
-    mainColor: 'orange',
-    skybox: true,
+    r3fPerf: false,
     stars: true,
+    mainColor: {
+      value: 'orange',
+      onChange: (value: string) => {
+        setMainColor(value)
+      },
+    },
   })
 
   //* camera
   const cameraProps = useControls(
     'camera',
     {
-      position: [118, 18, 118],
+      position: [124, 18, 124],
       target: [0, 14, 0],
     },
     { collapsed: true }
   )
 
-  //* rotate camera
   useFrame(state => {
     if (config.rotateCam && !config.orbitControls) {
+      // rotate
       const angle = state.clock.elapsedTime
-      state.camera.position.x = Math.sin(angle / 4) * cameraProps.position[2]
-      state.camera.position.z = Math.cos(angle / 4) * cameraProps.position[2]
+      state.camera.position.x = Math.sin(angle / 10) * cameraProps.position[2]
+      state.camera.position.z = Math.cos(angle / 10) * cameraProps.position[2]
       state.camera.lookAt(new THREE.Vector3(...cameraProps.target))
     }
   })
@@ -44,24 +58,23 @@ export function Bastet() {
       <PerspectiveCamera makeDefault {...cameraProps} />
 
       <URLText text="DEAN.TAXI" />
-
       <Temple />
       <Shards />
       <Floor />
 
       {config.stars && <Stars radius={300} />}
-      <Box
-        args={[1500, 1500, 1500]}
-        material-side={THREE.BackSide}
-        material-color={0x000000}
-        visible={config.skybox}
-      />
 
       <Lights />
 
-      {config.effects && <Effects />}
       {config.orbitControls && <OrbitControls {...cameraProps} />}
-      {config.r3fPerf && <Perf position="bottom-left" antialias={false} />}
+      {config.r3fPerf && (
+        <Perf
+          position="bottom-left"
+          antialias={false}
+          logsPerSecond={2}
+          chart={{ hz: 1, length: 30 }}
+        />
+      )}
     </>
   )
 }

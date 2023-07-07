@@ -20,7 +20,7 @@ export function Temple() {
   return (
     <group scale={2.0} ref={ref}>
       <Pyramid position={[0, 0.05, 0]} />
-      <Orb position={[0, 20, 0]} visible={config.orb} />
+      <Orb position={[0, 19, 0]} visible={config.orb} />
 
       <Cat
         position={[20, 0, 0]}

@@ -14,7 +14,7 @@ export function Pyramid({ ...group }: Props) {
     'pyramid outer',
     {
       radius: { value: 30, min: 1, max: 200, step: 1 },
-      transmissionSampler: true,
+      transmissionSampler: false,
       backside: false,
       samples: { value: 3, min: 1, max: 32, step: 1 },
       transmission: { value: 1, min: 0, max: 1 },
@@ -46,7 +46,7 @@ export function Pyramid({ ...group }: Props) {
     <group {...group} onClick={handleClick}>
       {/* inner */}
       <mesh visible={config.pyramidInner}>
-        <octahedronGeometry args={[15]} />
+        <octahedronGeometry args={[12]} />
         <meshStandardMaterial color="black" />
         <Edges threshold={15} color={mainColor} />
       </mesh>
@@ -54,7 +54,7 @@ export function Pyramid({ ...group }: Props) {
       {/* outer */}
       <mesh>
         <octahedronGeometry args={[outerProps.radius]} />
-        <MeshTransmissionMaterial {...outerProps} resolution={64} />
+        <MeshTransmissionMaterial {...outerProps} />
         <Edges threshold={15} color={mainColor} />
       </mesh>
     </group>
