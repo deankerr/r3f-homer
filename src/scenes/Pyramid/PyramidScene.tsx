@@ -1,9 +1,7 @@
 import { Box, OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { Leva, folder, useControls } from 'leva'
-import { damp3 } from 'maath/easing'
+import { folder, useControls } from 'leva'
 import { Perf } from 'r3f-perf'
-import { useRef } from 'react'
 import * as THREE from 'three'
 
 import { useBastetStore } from '@/store'
@@ -12,18 +10,13 @@ import { Effects, Lights } from '.'
 import { Ground, URLText } from './components'
 import { Central, Shards } from './region'
 
-const initCameraPos = { x: 0, y: 7, z: 70 } // ! temp duped config
-const initCameraTarget: [number, number, number] = [0, 10, 0]
-
 export function PyramidScene() {
-  const [setMainColor, floatingState, setFloatingState, reset] = useBastetStore(
-    state => [
-      state.setMainColor,
-      state.floatingState,
-      state.setFloatingState,
-      state.reset,
-    ]
-  )
+  const [setMainColor, setFloatingState, reset] = useBastetStore(state => [
+    state.setMainColor,
+
+    state.setFloatingState,
+    state.reset,
+  ])
 
   const config = useControls({
     main: folder({
@@ -44,40 +37,30 @@ export function PyramidScene() {
         },
       },
     }),
-
-    camera: folder(
-      {
-        pos: { value: initCameraPos, step: 1 },
-        tar: initCameraTarget,
-      },
-      { collapsed: true }
-    ),
   })
 
-  const targetPos = useRef<THREE.Vector3>(
-    new THREE.Vector3(...initCameraTarget)
+  const cameraProps = useControls(
+    'camera',
+    {
+      position: [0, 7, 120],
+      target: [0, 10, 0],
+    },
+    { collapsed: true }
   )
 
+  //* rotate camera
   useFrame(state => {
-    //* rotate camera
     if (config.rotateCam && !config.orbitControls) {
       const angle = state.clock.elapsedTime
-      state.camera.position.x = Math.sin(angle / 2) * initCameraPos.z
-      state.camera.position.z = Math.cos(angle / 2) * initCameraPos.z
-      state.camera.lookAt(targetPos.current)
-    }
-    if (floatingState && !config.orbitControls) {
-      damp3(state.camera.position, [0, 0, 0], 5)
-      damp3(targetPos.current, [0, 0, 0], 7)
+      state.camera.position.x = Math.sin(angle / 4) * cameraProps.position[2]
+      state.camera.position.z = Math.cos(angle / 4) * cameraProps.position[2]
+      state.camera.lookAt(new THREE.Vector3(...cameraProps.target))
     }
   })
 
   return (
     <>
-      <PerspectiveCamera
-        makeDefault
-        position={[config.pos.x, config.pos.y, config.pos.z]}
-      />
+      <PerspectiveCamera makeDefault {...cameraProps} />
 
       <URLText
         text="DEAN.TAXI"
@@ -110,12 +93,7 @@ export function PyramidScene() {
       {/* <Stats /> */}
       {config.showPerf && <Perf position="bottom-left" antialias={false} />}
 
-      {config.orbitControls && (
-        <OrbitControls
-          position={[initCameraPos.x, initCameraPos.y, initCameraPos.z]}
-          target={initCameraTarget}
-        />
-      )}
+      {config.orbitControls && <OrbitControls {...cameraProps} />}
     </>
   )
 }
