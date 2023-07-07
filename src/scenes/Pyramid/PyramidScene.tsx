@@ -10,7 +10,14 @@ import { useBastetStore } from '@/store'
 
 import { Effects, Lights } from '.'
 import { Ground, URLText } from './components'
-import { Central, MiddleRim, OuterRim, Shards, Spikes } from './region'
+import {
+  Central,
+  InstanceShards,
+  MiddleRim,
+  OuterRim,
+  Shards,
+  Spikes,
+} from './region'
 
 const initCameraPos = { x: 0, y: 7, z: 70 }
 const initCameraTarget: [number, number, number] = [0, 10, 0]
@@ -87,7 +94,8 @@ export function PyramidScene() {
       />
 
       <Central scale={1.0} />
-      <Shards />
+      {/* <Shards /> */}
+      <InstanceShards />
       {/* <Spikes /> */}
       {/* <MiddleRim /> */}
       {/* <OuterRim /> */}

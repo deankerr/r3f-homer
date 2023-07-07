@@ -1,4 +1,5 @@
 export * from './Ground'
+export * from './IShard'
 export * from './Obelisk'
 export * from './Orb'
 export * from './Pyramid'

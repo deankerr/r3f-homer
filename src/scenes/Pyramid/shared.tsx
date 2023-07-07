@@ -1,23 +1,37 @@
-import { ThreeElements, useFrame } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { damp } from 'maath/easing'
 import { MutableRefObject, useRef } from 'react'
 import * as THREE from 'three'
 
 import { useBastetStore } from '@/store'
 
+type OrbitStyle = [number, number, number]
+
 export function useOrbitSwarm(
   groupRef: MutableRefObject<THREE.Group>,
-  maxSpeed: number,
-  direction: number
+  orbitStyle: OrbitStyle
 ) {
+  const [orbitX, orbitY, orbitZ] = orbitStyle
   const floatingState = useBastetStore(state => state.floatingState)
 
-  const speed = useRef<number>(0.01)
+  const speed = useRef<OrbitStyle>([0.01, 0.01, 0.01])
 
   useFrame((_, delta) => {
     if (floatingState && groupRef.current) {
-      groupRef.current.rotation.y += speed.current * direction * delta
-      damp(speed, 'current', maxSpeed, 60)
+      const [x, y, z] = speed.current
+
+      if (x) {
+        groupRef.current.rotation.x += orbitX * x * delta
+        damp(speed.current, '0', 1.5, 1, delta)
+      }
+      if (y) {
+        groupRef.current.rotation.y += orbitY * y * delta
+        damp(speed.current, '1', 1.5, 1, delta)
+      }
+      if (z) {
+        groupRef.current.rotation.z += orbitZ * z * delta
+        damp(speed.current, '2', 1.5, 1, delta)
+      }
     }
   })
 }
