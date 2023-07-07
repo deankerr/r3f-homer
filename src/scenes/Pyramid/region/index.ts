@@ -1,6 +1,3 @@
 export * from './Central'
 export * from './InstanceShards'
-export * from './MiddleRim'
-export * from './OuterRim'
 export * from './Shards'
-export * from './Spikes'

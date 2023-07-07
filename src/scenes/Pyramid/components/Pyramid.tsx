@@ -8,6 +8,16 @@ import { useBastetStore } from '@/store'
 
 type Props = JSX.IntrinsicElements['group']
 
+type Tototo = {
+  name: string
+  age: number
+}
+
+const bog: Tototo = {
+  name: 'bpg',
+  age: 56,
+}
+
 export function Pyramid({ ...group }: Props) {
   const config = useControls(
     'pyramid outer',

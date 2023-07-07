@@ -3,21 +3,14 @@ import { useFrame } from '@react-three/fiber'
 import { folder, useControls } from 'leva'
 import { damp3 } from 'maath/easing'
 import { Perf } from 'r3f-perf'
-import { useEffect, useRef } from 'react'
+import { useRef } from 'react'
 import * as THREE from 'three'
 
 import { useBastetStore } from '@/store'
 
 import { Effects, Lights } from '.'
 import { Ground, URLText } from './components'
-import {
-  Central,
-  InstanceShards,
-  MiddleRim,
-  OuterRim,
-  Shards,
-  Spikes,
-} from './region'
+import { Central, Shards } from './region'
 
 const initCameraPos = { x: 0, y: 7, z: 70 }
 const initCameraTarget: [number, number, number] = [0, 10, 0]
@@ -96,11 +89,8 @@ export function PyramidScene() {
       <Central scale={1.0} />
       <Shards />
       {/* <InstanceShards /> */}
-      {/* <Spikes /> */}
-      {/* <MiddleRim /> */}
-      {/* <OuterRim /> */}
 
-      {/* stage */}
+      {/*  stage */}
       <Stars radius={300} />
 
       {config.ground && <Ground />}

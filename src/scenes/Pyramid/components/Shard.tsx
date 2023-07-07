@@ -1,7 +1,6 @@
 import { Edges } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useControls } from 'leva'
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
 import { useBastetStore } from '@/store'
@@ -9,7 +8,7 @@ import { useBastetStore } from '@/store'
 const turnSpeed = 1 / 4
 const targetVec = new THREE.Vector3(0, 0, 0)
 
-const luminanceOffset = -0.45
+const luminanceOffset = -0.3
 
 type Props = JSX.IntrinsicElements['mesh']
 
@@ -57,14 +56,8 @@ export function Shard(props: Props) {
 
   return (
     <mesh geometry={geom} {...props} ref={ref}>
-      <meshStandardMaterial color="black" />
-      <Edges threshold={15} color={color} visible={true} />
+      <meshStandardMaterial color={'black'} />
+      <Edges color={color} visible={true} />
     </mesh>
   )
 }
-
-/* 
-<Edges geometry={geom} threshold={15}>
-         <meshStandardMaterial color={'white'} /> 
-        </Edges>
-*/

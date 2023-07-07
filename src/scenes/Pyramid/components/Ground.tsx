@@ -11,9 +11,11 @@ const gridsquareSize = 30
 const descendY = -500
 const disappearAtY = -450
 
+const luminanceOffset = -0.3
+
 export function Ground() {
   const mainColor = useBastetStore(state => state.mainColor)
-  const color = new Color(mainColor).offsetHSL(0, 0, -0.45)
+  const color = new Color(mainColor).offsetHSL(0, 0, luminanceOffset)
 
   const floatingState = useBastetStore(state => state.floatingState)
   const groupRef = useRef<Group>(null!)
@@ -40,6 +42,7 @@ export function Ground() {
         args={[planeSize, planeSize]}
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, 0, 0]}
+        visible={true}
       >
         <meshStandardMaterial color="black" />
       </Plane>
