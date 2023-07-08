@@ -1,4 +1,3 @@
-import { GridMaterialType } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { damp } from 'maath/easing'
 import { MutableRefObject, useRef } from 'react'
@@ -37,46 +36,49 @@ export function useOrbitSwarm(
   })
 }
 
+const colorSpeed = 2
+const dimmedOffset = 0.2
+
+const mainColor1 = new THREE.Color('orange')
+const mainColor2 = new THREE.Color('violet')
+
+const dimmedColor1 = new THREE.Color('orange').offsetHSL(0, 0, -dimmedOffset)
+const dimmedColor2 = new THREE.Color('violet').offsetHSL(0, 0, -dimmedOffset)
+
 type MaterialWithColor = THREE.Material & { color: THREE.Color }
 
 export function useMaterialColorLerpAnimation(
   ref: React.MutableRefObject<MaterialWithColor>,
-  color1: string,
-  color2: string
+  colorType: 'main' | 'dimmed'
 ) {
-  const threeColor1 = new THREE.Color(color1)
-  const threeColor2 = new THREE.Color(color2)
+  const color1 = colorType === 'main' ? mainColor1 : dimmedColor1
+  const color2 = colorType === 'main' ? mainColor2 : dimmedColor2
 
   useFrame(state => {
     if (!ref.current) return
 
     ref.current.color.lerpColors(
-      threeColor1,
-      threeColor2,
-      Math.abs(Math.sin(state.clock.elapsedTime / 2))
+      color1,
+      color2,
+      Math.abs(Math.sin(state.clock.elapsedTime / colorSpeed))
     )
   })
 }
 
 // this is all really bad
 export function useGridColorLerpAnimation(
-  ref: React.MutableRefObject<THREE.Mesh>,
-  color1: string,
-  color2: string
+  ref: React.MutableRefObject<THREE.Mesh>
 ) {
-  const threeColor1 = new THREE.Color(color1)
-  const threeColor2 = new THREE.Color(color2)
-
   useFrame(state => {
     if (!ref.current) return
-    
+
     const material = ref.current.material as THREE.ShaderMaterial
     const cellColor = material.uniforms.sectionColor.value as THREE.Color
 
     cellColor.lerpColors(
-      threeColor1,
-      threeColor2,
-      Math.abs(Math.sin(state.clock.elapsedTime / 2))
+      dimmedColor1,
+      dimmedColor2,
+      Math.abs(Math.sin(state.clock.elapsedTime / colorSpeed))
     )
   })
 }

@@ -15,7 +15,7 @@ export function Orb({ ...group }: Props) {
   })
 
   const lineRef = useRef<THREE.LineBasicMaterial>(null!)
-  useMaterialColorLerpAnimation(lineRef, 'orange', 'violet')
+  useMaterialColorLerpAnimation(lineRef, 'main')
 
   return (
     <group {...group} ref={ref}>

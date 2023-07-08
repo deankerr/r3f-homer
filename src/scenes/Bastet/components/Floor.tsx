@@ -8,8 +8,6 @@ import { useGridColorLerpAnimation } from '..'
 const planeSize = 1000
 const cellSize = 40
 
-const luminanceOffset = -0.2
-
 export function Floor() {
   const ref = useRef<THREE.Mesh>(null!)
 
@@ -17,14 +15,14 @@ export function Floor() {
     floor: true,
   })
 
-  useGridColorLerpAnimation(ref, 'orange', 'violet')
+  useGridColorLerpAnimation(ref)
 
   return (
     <group visible={config.floor}>
       <Plane
         args={[planeSize, planeSize]}
         rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, -0.1, 0]}
+        position={[0, -0.15, 0]}
       >
         <meshStandardMaterial color="black" />
       </Plane>
@@ -35,7 +33,7 @@ export function Floor() {
         position={[0, 0, 0]}
         cellThickness={0}
         sectionSize={cellSize}
-        sectionThickness={1}
+        sectionThickness={1.1}
         fadeDistance={1000}
       />
     </group>

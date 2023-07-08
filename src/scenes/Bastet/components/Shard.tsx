@@ -10,8 +10,6 @@ import { useMaterialColorLerpAnimation } from '..'
 const turnSpeed = 1 / 4
 const targetVec = new THREE.Vector3(0, 0, 0)
 
-const luminanceOffset = -0.2
-
 type Props = JSX.IntrinsicElements['mesh']
 
 export function Shard(props: Props) {
@@ -24,10 +22,6 @@ export function Shard(props: Props) {
     geom.rotateY(Math.PI)
     return geom
   }, [])
-
-  //* Color
-  const mainColor = useBastetStore(state => state.mainColor)
-  const color = new THREE.Color(mainColor).offsetHSL(0, 0, luminanceOffset)
 
   const floatingState = useBastetStore(state => state.floatingState)
 
@@ -58,7 +52,7 @@ export function Shard(props: Props) {
 
   //* Line color animation
   const lineRef = useRef<THREE.LineBasicMaterial>(null!)
-  useMaterialColorLerpAnimation(lineRef, 'orange', 'violet')
+  useMaterialColorLerpAnimation(lineRef, 'dimmed')
 
   return (
     <mesh geometry={geom} {...props} ref={ref}>

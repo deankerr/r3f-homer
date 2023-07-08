@@ -41,8 +41,8 @@ export function Pyramid({ ...group }: Props) {
   const lineRef1 = useRef<THREE.LineBasicMaterial>(null!)
   const lineRef2 = useRef<THREE.LineBasicMaterial>(null!)
 
-  useMaterialColorLerpAnimation(lineRef1, 'orange', 'violet')
-  useMaterialColorLerpAnimation(lineRef2, 'orange', 'violet')
+  useMaterialColorLerpAnimation(lineRef1, 'main')
+  useMaterialColorLerpAnimation(lineRef2, 'main')
 
   return (
     <group {...group}>
