@@ -5,7 +5,7 @@ import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
 
 import { Lights } from '.'
-import { Floor, URLText } from './components'
+import { Floor, Obelisk, URLText } from './components'
 import { Obelisks, Shards, Starfield, Temple } from './features'
 
 export function Bastet() {
@@ -35,8 +35,13 @@ export function Bastet() {
     }
   })
 
+  const tesst = {
+    position: new THREE.Vector3(110, 3, 110),
+    target: new THREE.Vector3(100, 3, 100),
+  }
   return (
     <>
+      <Obelisk position={[100, 0, 100]} />
       <PerspectiveCamera makeDefault {...cameraProps} />
 
       <URLText text="DEAN.TAXI" />
@@ -49,7 +54,7 @@ export function Bastet() {
 
       <Lights />
 
-      {config.orbitControls && <OrbitControls {...cameraProps} />}
+      {config.orbitControls && <OrbitControls {...cameraProps} {...tesst} />}
       {config.r3fPerf && (
         <Perf
           position="bottom-left"
