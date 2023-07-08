@@ -4,7 +4,6 @@ import * as THREE from 'three'
 
 import { plotCircle } from '@/util'
 
-import { useOrbitSwarm } from '..'
 import { Shard } from '../components'
 
 const small = {
@@ -35,7 +34,6 @@ export function Shards() {
 
   //* small
   const smallRef = useRef<THREE.Group>(null!)
-  useOrbitSwarm(smallRef, [1, 1, 0])
 
   const smallGroup = useMemo(() => {
     const { maxRadius, minRadius, arms, amount, scale, yAdjust } = small
@@ -65,7 +63,6 @@ export function Shards() {
 
   //* medium
   const mediumRef = useRef<THREE.Group>(null!)
-  useOrbitSwarm(mediumRef, [1, 0, -1])
 
   const mediumGroup = useMemo(() => {
     const { amount, radius, scale } = medium
@@ -82,7 +79,6 @@ export function Shards() {
 
   //* large
   const largeRef = useRef<THREE.Group>(null!)
-  useOrbitSwarm(largeRef, [0, -1, 1])
 
   const largeGroup = useMemo(() => {
     const { amount, radius, scale } = large

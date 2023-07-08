@@ -1,4 +1,4 @@
-import { Center, Edges, Float, Text3D } from '@react-three/drei'
+import { Edges, Float, Text3D } from '@react-three/drei'
 import { useControls } from 'leva'
 
 import { useBastetStore } from '@/store'

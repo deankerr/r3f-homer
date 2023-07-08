@@ -1,19 +1,12 @@
-import {
-  Box,
-  OrbitControls,
-  PerspectiveCamera,
-  Stars,
-  Stats,
-} from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+import { OrbitControls, PerspectiveCamera, Stars } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
-import { useEffect } from 'react'
 import * as THREE from 'three'
 
 import { useBastetStore } from '@/store'
 
-import { Effects, Lights } from '.'
+import { Lights } from '.'
 import { Floor, URLText } from './components'
 import { Shards, Temple } from './features'
 
@@ -21,7 +14,7 @@ export function Bastet() {
   const setMainColor = useBastetStore(state => state.setMainColor)
 
   const config = useControls('main', {
-    orbitControls: true,
+    orbitControls: false,
     rotateCam: true,
     r3fPerf: false,
     stars: true,

@@ -1,40 +1,5 @@
 import { useFrame } from '@react-three/fiber'
-import { damp } from 'maath/easing'
-import { MutableRefObject, useRef } from 'react'
 import * as THREE from 'three'
-
-import { useBastetStore } from '@/store'
-
-type OrbitStyle = [number, number, number]
-
-export function useOrbitSwarm(
-  groupRef: MutableRefObject<THREE.Group>,
-  orbitStyle: OrbitStyle
-) {
-  const [orbitX, orbitY, orbitZ] = orbitStyle
-  const floatingState = useBastetStore(state => state.floatingState)
-
-  const speed = useRef<OrbitStyle>([0.01, 0.01, 0.01])
-
-  useFrame((_, delta) => {
-    if (floatingState && groupRef.current) {
-      const [x, y, z] = speed.current
-
-      if (x) {
-        groupRef.current.rotation.x += orbitX * x * delta
-        damp(speed.current, '0', 1.5, 1, delta)
-      }
-      if (y) {
-        groupRef.current.rotation.y += orbitY * y * delta
-        damp(speed.current, '1', 1.5, 1, delta)
-      }
-      if (z) {
-        groupRef.current.rotation.z += orbitZ * z * delta
-        damp(speed.current, '2', 1.5, 1, delta)
-      }
-    }
-  })
-}
 
 const colorSpeed = 2
 const dimmedOffset = 0.2
@@ -82,3 +47,84 @@ export function useGridColorLerpAnimation(
     )
   })
 }
+
+/* 
+//* how to turn towards a point
+const turnSpeed = 1 / 4
+const targetVec = new THREE.Vector3(0, 0, 0)
+
+  const targetQuaternionRef = useRef<THREE.Quaternion | null>(null)
+  useFrame((_, delta) => {
+    if (!ref.current) return
+    const mesh = ref.current
+
+    if (!targetQuaternionRef.current) {
+      const rotationMatrix = new THREE.Matrix4()
+      rotationMatrix.lookAt(targetVec, mesh.position, mesh.up)
+
+      const quat = new THREE.Quaternion()
+      quat.setFromRotationMatrix(rotationMatrix)
+      targetQuaternionRef.current = quat
+    }
+
+    if (targetQuaternionRef.current && floatingState) {
+      if (!mesh.quaternion.equals(targetQuaternionRef.current)) {
+        mesh.quaternion.rotateTowards(
+          targetQuaternionRef.current,
+          turnSpeed * delta
+        )
+      }
+    }
+  })
+
+*/
+
+/* 
+//* fixed bug?
+export const FixedGlitch = forwardRef<GlitchEffect, GlitchProps>(
+  function Glitch(
+    { active = true, ...props }: GlitchProps,
+    ref: Ref<GlitchEffect>
+  ) {
+    const invalidate = useThree(state => state.invalidate)
+    const delay = useVector2(props, 'delay')
+    const duration = useVector2(props, 'duration')
+    const strength = useVector2(props, 'strength')
+    const chromaticAberrationOffset = useVector2(
+      props,
+      'chromaticAberrationOffset'
+    )
+    const effect = useMemo(() => {
+      const eff = new GlitchEffect({
+        ...props,
+        delay,
+        duration,
+        strength,
+        chromaticAberrationOffset,
+      })
+      // console.log('create')
+      // debugger
+      return eff
+    }, [delay, duration, props, strength, chromaticAberrationOffset])
+    // console.log('effect', effect)
+    // console.log('render')
+    useLayoutEffect(() => {
+      effect.mode = active
+        ? props.mode || GlitchMode.SPORADIC
+        : GlitchMode.DISABLED
+      invalidate()
+    }, [active, effect, invalidate, props.mode])
+    useEffect(() => {
+      return () => {
+        // console.log('effect.dispose', effect)
+        // debugger
+        effect.dispose()
+        // console.log('dispose')
+      }
+    }, [effect])
+    return <primitive ref={ref} object={effect} />
+  }
+)
+
+
+*/
