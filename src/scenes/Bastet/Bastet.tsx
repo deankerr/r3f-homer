@@ -4,26 +4,16 @@ import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
 
-import { useBastetStore } from '@/store'
-
 import { Lights } from '.'
 import { Floor, URLText } from './components'
 import { Obelisks, Shards, Temple } from './features'
 
 export function Bastet() {
-  const setMainColor = useBastetStore(state => state.setMainColor)
-
   const config = useControls('main', {
     orbitControls: false,
     rotateCam: true,
     r3fPerf: false,
     stars: true,
-    mainColor: {
-      value: 'orange',
-      onChange: (value: string) => {
-        setMainColor(value)
-      },
-    },
   })
 
   //* camera

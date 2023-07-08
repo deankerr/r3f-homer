@@ -40,43 +40,13 @@ if (process.env.NODE_ENV === 'development') {
 
 type BastetState = {
   reset: () => void
-  mainColor: string
-  setMainColor: (to: string) => void
-
-  mainColorSteps: string[]
-  mainColorIndex: number
-  nextMainColor: () => void
-
-  glitchEffect: boolean
-  setGlitchEffect: (to: boolean) => void
-  floatingState: boolean
-  setFloatingState: (to: boolean) => void
 }
 
-const bastetInitialState = {
-  mainColor: 'orange',
-  mainColorSteps: ['orange', 'violet', 'cyan', 'magenta', 'red'],
-  mainColorIndex: 0,
-  glitchEffect: false,
-  floatingState: false,
-}
+const bastetInitialState = {}
 
 export const useBastetStore = create<BastetState>()(set => ({
   ...bastetInitialState,
   reset: () => {
     set(bastetInitialState)
   },
-
-  setMainColor: (to: string) => set(() => ({ mainColor: to })),
-
-  nextMainColor: () =>
-    set(state => {
-      const { mainColorIndex, mainColorSteps } = state
-      const index = mainColorIndex + 1
-      const color = mainColorSteps[index % mainColorSteps.length]
-      return { mainColorIndex: index, mainColor: color }
-    }),
-
-  setGlitchEffect: (to: boolean) => set(() => ({ glitchEffect: to })),
-  setFloatingState: (to: boolean) => set(() => ({ floatingState: to })),
 }))
