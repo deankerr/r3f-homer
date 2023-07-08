@@ -8,7 +8,7 @@ import { useBastetStore } from '@/store'
 
 import { Lights } from '.'
 import { Floor, URLText } from './components'
-import { Shards, Temple } from './features'
+import { Obelisks, Shards, Temple } from './features'
 
 export function Bastet() {
   const setMainColor = useBastetStore(state => state.setMainColor)
@@ -53,6 +53,7 @@ export function Bastet() {
       <URLText text="DEAN.TAXI" />
       <Temple />
       <Shards />
+      <Obelisks />
       <Floor />
 
       {config.stars && <Stars radius={300} />}

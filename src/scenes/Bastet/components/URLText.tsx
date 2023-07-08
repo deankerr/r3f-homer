@@ -1,7 +1,9 @@
 import { Edges, Float, Text3D } from '@react-three/drei'
 import { useControls } from 'leva'
+import { useRef } from 'react'
+import * as THREE from 'three'
 
-import { useBastetStore } from '@/store'
+import { useMaterialColorLerpAnimation } from '..'
 
 type Props = JSX.IntrinsicElements['group'] & {
   text: string
@@ -21,7 +23,8 @@ export function URLText({ text }: Props) {
     { collapsed: true }
   )
 
-  const mainColor = useBastetStore(state => state.mainColor)
+  const lineRef = useRef<THREE.LineBasicMaterial>(null!)
+  useMaterialColorLerpAnimation(lineRef, 'main')
 
   return (
     <Float enabled={true}>
@@ -34,7 +37,9 @@ export function URLText({ text }: Props) {
       >
         {text}
         <meshStandardMaterial />
-        <Edges scale={1.0} threshold={15} color={mainColor} />
+        <Edges>
+          <lineBasicMaterial ref={lineRef} color={'white'} />
+        </Edges>
       </Text3D>
     </Float>
   )
