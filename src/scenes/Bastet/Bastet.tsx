@@ -54,7 +54,7 @@ export function Bastet() {
 
       <Lights />
 
-      {config.orbitControls && <OrbitControls {...cameraProps} {...tesst} />}
+      {config.orbitControls && <OrbitControls {...cameraProps} />}
       {config.r3fPerf && (
         <Perf
           position="bottom-left"

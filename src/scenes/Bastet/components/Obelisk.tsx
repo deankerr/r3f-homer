@@ -21,35 +21,48 @@ export function Obelisk({ ...group }: Props) {
           <lineBasicMaterial ref={lineRef} color={'white'} />
         </Edges>
       </Capsule>
-      <group rotation-y={Math.PI / 4}>
-        {plotCircle(4, 0.7).map((pos, i) => (
-          <group position={pos} rotation-y={(Math.PI / 2) * i} key={i}>
-            <Glyphs rotation={[0, (Math.PI / 2) * i, 0]} />
-          </group>
-        ))}
-      </group>
+      <Glyphs />
     </group>
   )
 }
 
-type GlyphProps = JSX.IntrinsicElements['mesh']
-function Glyphs(d: GlyphProps) {
-  const props = {
+function Glyphs() {
+  return (
+    <group>
+      <TwoSides rotation-y={-Math.PI / 4} />
+      <TwoSides rotation-y={Math.PI / 4} />
+    </group>
+  )
+}
+
+type TwoSidesProps = JSX.IntrinsicElements['group']
+function TwoSides(props: TwoSidesProps) {
+  const font = {
     font: 'font/bigblue.json',
     material: new THREE.MeshBasicMaterial({ color: 'orange' }),
   }
+  const radius = 1.1
+  const adjust = 0.4
   const height = 6
-  const shift = 0.4
 
-  const sides: JSX.Element[] = []
-
-  for (let i = 0; i < 1; i++) {
-    sides.push()
-  }
   return (
-    <Text3D {...props} position={[-shift, height, shift]}>
-      {vertical('BAIET')}
-    </Text3D>
+    <group {...props}>
+      <Text3D
+        {...font}
+        position={[radius, height, adjust]}
+        rotation-y={Math.PI / 2}
+      >
+        {vertical('אהבה')}
+      </Text3D>
+
+      <Text3D
+        {...font}
+        position={[-radius, height, -adjust]}
+        rotation-y={-Math.PI / 2}
+      >
+        {vertical('ציפור')}
+      </Text3D>
+    </group>
   )
 }
 
