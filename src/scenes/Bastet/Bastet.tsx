@@ -10,7 +10,7 @@ import { Obelisks, Shards, Starfield, Temple } from './features'
 
 export function Bastet() {
   const config = useControls('main', {
-    orbitControls: false,
+    orbitControls: true,
     rotateCam: true,
     r3fPerf: false,
   })
