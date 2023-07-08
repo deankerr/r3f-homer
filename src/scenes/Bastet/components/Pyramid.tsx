@@ -1,13 +1,16 @@
 import { Edges, MeshTransmissionMaterial } from '@react-three/drei'
 import { useControls } from 'leva'
+import { useRef } from 'react'
+import * as THREE from 'three'
 
-import { useBastetStore } from '@/store'
+import { useMaterialColorLerpAnimation } from '..'
 
 type Props = JSX.IntrinsicElements['group']
 
 export function Pyramid({ ...group }: Props) {
   const config = useControls('main', {
     pyramidInner: true,
+    pyramidOuter: true,
   })
 
   const outerProps = useControls(
@@ -35,27 +38,30 @@ export function Pyramid({ ...group }: Props) {
     { collapsed: true }
   )
 
-  const mainColor = useBastetStore(state => state.mainColor)
-  const nextMainColor = useBastetStore(state => state.nextMainColor)
+  const lineRef1 = useRef<THREE.LineBasicMaterial>(null!)
+  const lineRef2 = useRef<THREE.LineBasicMaterial>(null!)
 
-  function handleClick() {
-    nextMainColor()
-  }
+  useMaterialColorLerpAnimation(lineRef1, 'orange', 'violet')
+  useMaterialColorLerpAnimation(lineRef2, 'orange', 'violet')
 
   return (
-    <group {...group} onClick={handleClick}>
+    <group {...group}>
       {/* inner */}
       <mesh visible={config.pyramidInner}>
         <octahedronGeometry args={[12]} />
         <meshStandardMaterial color="black" />
-        <Edges threshold={15} color={mainColor} />
+        <Edges>
+          <lineBasicMaterial ref={lineRef1} color={'white'} />
+        </Edges>
       </mesh>
 
       {/* outer */}
-      <mesh>
+      <mesh visible={config.pyramidOuter}>
         <octahedronGeometry args={[outerProps.radius]} />
         <MeshTransmissionMaterial {...outerProps} />
-        <Edges threshold={15} color={mainColor} />
+        <Edges>
+          <lineBasicMaterial ref={lineRef2} color={'white'} />
+        </Edges>
       </mesh>
     </group>
   )

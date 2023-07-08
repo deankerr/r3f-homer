@@ -1,9 +1,9 @@
-import { Edges, Icosahedron, MeshTransmissionMaterial } from '@react-three/drei'
+import { Edges, Icosahedron } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Group } from 'three'
 
-import { useBastetStore } from '@/store'
+import { useMaterialColorLerpAnimation } from '..'
 
 type Props = JSX.IntrinsicElements['group']
 
@@ -14,13 +14,16 @@ export function Orb({ ...group }: Props) {
     ref.current.rotation.y -= delta
   })
 
-  const [mainColor] = useBastetStore(state => [state.mainColor])
+  const lineRef = useRef<THREE.LineBasicMaterial>(null!)
+  useMaterialColorLerpAnimation(lineRef, 'orange', 'violet')
 
   return (
     <group {...group} ref={ref}>
       <Icosahedron args={[2.7]}>
         <meshStandardMaterial color="black" />
-        <Edges threshold={15} color={mainColor} />
+        <Edges>
+          <lineBasicMaterial ref={lineRef} color={'white'} />
+        </Edges>
       </Icosahedron>
     </group>
   )

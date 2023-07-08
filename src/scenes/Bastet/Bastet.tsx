@@ -21,7 +21,7 @@ export function Bastet() {
   const setMainColor = useBastetStore(state => state.setMainColor)
 
   const config = useControls('main', {
-    orbitControls: false,
+    orbitControls: true,
     rotateCam: true,
     r3fPerf: false,
     stars: true,

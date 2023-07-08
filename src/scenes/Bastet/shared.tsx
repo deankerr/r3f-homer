@@ -35,3 +35,24 @@ export function useOrbitSwarm(
     }
   })
 }
+
+type MaterialWithColor = THREE.Material & { color: THREE.Color }
+
+export function useMaterialColorLerpAnimation(
+  ref: React.MutableRefObject<MaterialWithColor>,
+  color1: string,
+  color2: string
+) {
+  const threeColor1 = new THREE.Color(color1)
+  const threeColor2 = new THREE.Color(color2)
+
+  useFrame(state => {
+    if (!ref.current) return
+
+    ref.current.color.lerpColors(
+      threeColor1,
+      threeColor2,
+      Math.abs(Math.sin(state.clock.elapsedTime / 2))
+    )
+  })
+}

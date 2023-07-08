@@ -5,6 +5,8 @@ import * as THREE from 'three'
 
 import { useBastetStore } from '@/store'
 
+import { useMaterialColorLerpAnimation } from '..'
+
 const turnSpeed = 1 / 4
 const targetVec = new THREE.Vector3(0, 0, 0)
 
@@ -54,10 +56,16 @@ export function Shard(props: Props) {
     }
   })
 
+  //* Line color animation
+  const lineRef = useRef<THREE.LineBasicMaterial>(null!)
+  useMaterialColorLerpAnimation(lineRef, 'orange', 'violet')
+
   return (
     <mesh geometry={geom} {...props} ref={ref}>
       <meshStandardMaterial color={'black'} />
-      <Edges color={color} visible={true} />
+      <Edges>
+        <lineBasicMaterial ref={lineRef} color={'white'} />
+      </Edges>
     </mesh>
   )
 }

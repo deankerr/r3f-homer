@@ -32,6 +32,7 @@ export function Shards() {
   const config = useControls('main', {
     shards: true,
   })
+
   //* small
   const smallRef = useRef<THREE.Group>(null!)
   useOrbitSwarm(smallRef, [1, 1, 0])
