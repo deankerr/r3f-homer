@@ -6,14 +6,13 @@ import * as THREE from 'three'
 
 import { Lights } from '.'
 import { Floor, URLText } from './components'
-import { Obelisks, Shards, Temple } from './features'
+import { Obelisks, Shards, Starfield, Temple } from './features'
 
 export function Bastet() {
   const config = useControls('main', {
     orbitControls: false,
     rotateCam: true,
     r3fPerf: false,
-    stars: true,
   })
 
   //* camera
@@ -44,9 +43,9 @@ export function Bastet() {
       <Temple />
       <Shards />
       <Obelisks />
-      <Floor />
 
-      {config.stars && <Stars radius={300} />}
+      <Floor />
+      <Starfield />
 
       <Lights />
 
