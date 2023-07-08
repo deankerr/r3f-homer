@@ -1,12 +1,9 @@
 import { Grid, Plane } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
-import { damp3 } from 'maath/easing'
 import { useRef } from 'react'
-import { Color, Group } from 'three'
 import * as THREE from 'three'
 
-import { useBastetStore } from '@/store'
+import { useGridColorLerpAnimation } from '..'
 
 const planeSize = 1000
 const cellSize = 40
@@ -20,21 +17,7 @@ export function Floor() {
     floor: true,
   })
 
-  const color1 = new THREE.Color('orange')
-  const color2 = new THREE.Color('violet')
-
-  useFrame(state => {
-    if (!ref.current) return
-    // this is probably bad?
-    const mat = ref.current.material as THREE.ShaderMaterial
-    const cellColor = mat.uniforms.sectionColor.value as THREE.Color
-
-    cellColor.lerpColors(
-      color1,
-      color2,
-      Math.abs(Math.sin(state.clock.elapsedTime / 2))
-    )
-  })
+  useGridColorLerpAnimation(ref, 'orange', 'violet')
 
   return (
     <group visible={config.floor}>

@@ -1,3 +1,4 @@
+import { GridMaterialType } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { damp } from 'maath/easing'
 import { MutableRefObject, useRef } from 'react'
@@ -50,6 +51,29 @@ export function useMaterialColorLerpAnimation(
     if (!ref.current) return
 
     ref.current.color.lerpColors(
+      threeColor1,
+      threeColor2,
+      Math.abs(Math.sin(state.clock.elapsedTime / 2))
+    )
+  })
+}
+
+// this is all really bad
+export function useGridColorLerpAnimation(
+  ref: React.MutableRefObject<THREE.Mesh>,
+  color1: string,
+  color2: string
+) {
+  const threeColor1 = new THREE.Color(color1)
+  const threeColor2 = new THREE.Color(color2)
+
+  useFrame(state => {
+    if (!ref.current) return
+    
+    const material = ref.current.material as THREE.ShaderMaterial
+    const cellColor = material.uniforms.sectionColor.value as THREE.Color
+
+    cellColor.lerpColors(
       threeColor1,
       threeColor2,
       Math.abs(Math.sin(state.clock.elapsedTime / 2))
