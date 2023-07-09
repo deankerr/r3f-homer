@@ -39,7 +39,7 @@ export function Bastet() {
 
   return (
     <>
-      <PerspectiveCamera makeDefault {...cameraProps} />
+      <PerspectiveCamera fov={60} far={3000} makeDefault {...cameraProps} />
 
       <URLText text="DEAN.TAXI" />
       <Temple />

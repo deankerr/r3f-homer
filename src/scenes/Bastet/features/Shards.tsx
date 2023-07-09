@@ -1,3 +1,4 @@
+import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
@@ -8,29 +9,33 @@ import { Shard } from '../components'
 
 const small = {
   maxRadius: 475,
-  minRadius: 90,
+  minRadius: 120,
   arms: 10,
   amount: 5,
   scale: 1,
   yAdjust: 5.2,
+  orbit: 0.1,
 }
 
 const medium = {
   radius: 250,
   amount: 15,
-  scale: [2, 4],
+  scale: [4, 5],
+  orbit: 0.04,
 }
 
 const large = {
-  radius: 500,
-  amount: 40,
-  scale: [6, 10],
+  radius: 750,
+  amount: 30,
+  scale: [6, 8],
+  orbit: 0.05,
 }
 
 const xLarge = {
   radius: 1000,
-  amount: 80,
-  scale: [10, 15],
+  amount: 50,
+  scale: [9, 13],
+  orbit: 0.06,
 }
 
 export function Shards() {
@@ -60,6 +65,7 @@ export function Shards() {
             rotation={[-Math.PI / 2, 0, 0]}
             scale={scale}
             key={`s${arm}-${i}`}
+            visible={false}
           />
         )
       }
@@ -85,7 +91,6 @@ export function Shards() {
 
   //* large
   const largeRef = useRef<THREE.Group>(null!)
-
   const largeGroup = useMemo(() => {
     const { amount, radius, scale } = large
     const shards = plotCircle(amount, radius).map((position, i) => (
@@ -99,6 +104,8 @@ export function Shards() {
     return <group ref={largeRef}>{shards}</group>
   }, [])
 
+  //* xLarge
+  const xLargeRef = useRef<THREE.Group>(null!)
   const xLargeGroup = useMemo(() => {
     const { amount, radius, scale } = xLarge
     const shards = plotCircle(amount, radius).map((position, i) => (
@@ -109,8 +116,16 @@ export function Shards() {
         key={`l${i}`}
       />
     ))
-    return <group ref={largeRef}>{shards}</group>
+    return <group ref={xLargeRef}>{shards}</group>
   }, [])
+
+  //* Orbits
+  useFrame((_, delta) => {
+    smallRef.current.rotation.y += small.orbit * delta
+    mediumRef.current.rotation.y += medium.orbit * delta
+    largeRef.current.rotation.y += large.orbit * delta
+    xLargeRef.current.rotation.y += xLarge.orbit * delta
+  })
 
   return (
     <group visible={config.shards}>
