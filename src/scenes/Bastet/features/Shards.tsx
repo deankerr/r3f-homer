@@ -17,14 +17,20 @@ const small = {
 
 const medium = {
   radius: 250,
-  amount: 32,
+  amount: 15,
   scale: [2, 4],
 }
 
 const large = {
   radius: 500,
-  amount: 70,
+  amount: 40,
   scale: [6, 10],
+}
+
+const xLarge = {
+  radius: 1000,
+  amount: 80,
+  scale: [10, 15],
 }
 
 export function Shards() {
@@ -93,11 +99,25 @@ export function Shards() {
     return <group ref={largeRef}>{shards}</group>
   }, [])
 
+  const xLargeGroup = useMemo(() => {
+    const { amount, radius, scale } = xLarge
+    const shards = plotCircle(amount, radius).map((position, i) => (
+      <Shard
+        position={position}
+        rotation={[0, Math.random() * 2 * Math.PI, 0]}
+        scale={THREE.MathUtils.randFloat(scale[0], scale[1])}
+        key={`l${i}`}
+      />
+    ))
+    return <group ref={largeRef}>{shards}</group>
+  }, [])
+
   return (
     <group visible={config.shards}>
       {smallGroup}
       {mediumGroup}
       {largeGroup}
+      {xLargeGroup}
     </group>
   )
 }

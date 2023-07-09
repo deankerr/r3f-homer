@@ -1,5 +1,5 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
@@ -34,6 +34,8 @@ export function Bastet() {
       state.camera.lookAt(new THREE.Vector3(...cameraProps.target))
     }
   })
+
+  console.log(useThree(state => state.camera).toJSON())
 
   return (
     <>

@@ -12,7 +12,7 @@ export function Starfield() {
 
   return (
     <group ref={ref}>
-      <Stars radius={400} factor={12} />
+      <Stars radius={600} factor={12} />
     </group>
   )
 }

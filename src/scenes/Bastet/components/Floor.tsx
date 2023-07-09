@@ -5,7 +5,7 @@ import * as THREE from 'three'
 
 import { useGridColorLerpAnimation } from '..'
 
-const planeSize = 1000
+const planeSize = 2000
 const cellSize = 40
 
 export function Floor() {
@@ -19,21 +19,24 @@ export function Floor() {
 
   return (
     <group visible={config.floor}>
-      <Plane
+      {/* <Plane
         args={[planeSize, planeSize]}
         rotation={[-Math.PI / 2, 0, 0]}
         position={[0, -0.15, 0]}
       >
         <meshStandardMaterial color="black" />
-      </Plane>
+      </Plane> */}
 
       <Grid
         ref={ref}
         args={[planeSize, planeSize]}
         position={[0, 0, 0]}
-        cellThickness={0}
-        sectionSize={cellSize}
-        sectionThickness={1.1}
+        cellSize={60}
+        // cellColor={'red'}
+        cellThickness={0.5}
+        sectionSize={180}
+        sectionColor={'blue'}
+        sectionThickness={0.6}
         fadeDistance={1000}
       />
     </group>
