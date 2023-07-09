@@ -1,7 +1,8 @@
 import { useFrame } from '@react-three/fiber'
+import { useRef } from 'react'
 import * as THREE from 'three'
 
-const colorSpeed = 2
+const colorSpeed = 20
 const dimmedOffset = 0.2
 
 const mainColor1 = new THREE.Color('orange')
@@ -12,6 +13,8 @@ const dimmedColor2 = new THREE.Color('violet').offsetHSL(0, 0, -dimmedOffset)
 
 type MaterialWithColor = THREE.Material & { color: THREE.Color }
 
+const testHSL = { h: 0, s: 0, l: 0 }
+const testTarget = { h: 0, s: 0, l: 0 }
 export function useMaterialColorLerpAnimation(
   ref: React.MutableRefObject<MaterialWithColor>,
   colorType: 'main' | 'dimmed'
@@ -19,14 +22,30 @@ export function useMaterialColorLerpAnimation(
   const color1 = colorType === 'main' ? mainColor1 : dimmedColor1
   const color2 = colorType === 'main' ? mainColor2 : dimmedColor2
 
-  useFrame(state => {
+  const target = useRef(color2)
+  const time = useRef(0)
+
+  useFrame((state, delta) => {
     if (!ref.current) return
 
-    ref.current.color.lerpColors(
-      color1,
-      color2,
-      Math.abs(Math.sin(state.clock.elapsedTime / colorSpeed))
-    )
+    const t = Math.abs(Math.sin(state.clock.elapsedTime / colorSpeed))
+    ref.current.color.lerpColors(color1, color2, t)
+
+    // console.log(
+    //   logHSL(color1),
+    //   logHSL(ref.current.color),
+    //   logHSL(color2),
+    //   Number(t).toFixed(2)
+    // )
+    // const t = time.current
+    // time.current += t * t * t * delta * 1
+    // console.log(time.current)
+    // ref.current.color.lerpHSL(target.current, time.current)
+
+    // if (time.current >= 1) {
+    //   time.current = 0
+    //   target.current = target.current.equals(color1) ? color2 : color1
+    // }
   })
 }
 
@@ -48,6 +67,13 @@ export function useGridColorLerpAnimation(
   })
 }
 
+function logHSL(color: THREE.Color) {
+  const hsl = { h: 0, s: 0, l: 0 }
+  color.getHSL(hsl)
+  return `(${Number(hsl.h).toFixed(2)},${Number(hsl.s).toFixed(2)},${Number(
+    hsl.s
+  ).toFixed(2)})`
+}
 /* 
 //* how to turn towards a point
 const turnSpeed = 1 / 4

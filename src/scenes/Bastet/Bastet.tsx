@@ -35,7 +35,7 @@ export function Bastet() {
     }
   })
 
-  console.log(useThree(state => state.camera).toJSON())
+  // console.log(useThree(state => state.camera).toJSON())
 
   return (
     <>
