@@ -1,4 +1,5 @@
 export * from './Bastet'
 export * from './Effects'
 export * from './Lights'
+export * from './Ring'
 export * from './shared'
