@@ -1,12 +1,11 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
 
 import { Lights, Ring } from '.'
-import { Floor, Obelisk, Shard, URLText } from './components'
-import { Obelisks, Shards, Starfield, Temple } from './features'
+import { Floor, Obelisk, Shard, Starfield, Temple, URLText } from './components'
 
 export function Bastet() {
   const config = useControls('main', {
@@ -43,27 +42,42 @@ export function Bastet() {
 
       <URLText text="DEAN.TAXI" />
       <Temple />
-      {/* <Shards /> */}
-      {/* <Obelisks /> */}
 
       <Ring
         Body={Shard}
-        radius={100}
-        amount={8}
-        orbit={0.1}
+        radius={250}
+        amount={16}
+        orbit={0.04}
         spread={10}
-        size={[1, 6]}
+        size={[4, 5]}
       />
 
       <Ring
         Body={Obelisk}
-        radius={300}
-        amount={8}
-        orbit={0.2}
-        spread={10}
-        size={[1, 6]}
+        radius={500}
+        amount={10}
+        orbit={0.07}
+        spread={1}
+        size={[5, 7]}
       />
 
+      <Ring
+        Body={Shard}
+        radius={750}
+        amount={30}
+        orbit={0.05}
+        spread={30}
+        size={[6, 8]}
+      />
+
+      <Ring
+        Body={Shard}
+        radius={1000}
+        amount={50}
+        orbit={0.06}
+        spread={60}
+        size={[9, 13]}
+      />
       <Floor />
       <Starfield />
 

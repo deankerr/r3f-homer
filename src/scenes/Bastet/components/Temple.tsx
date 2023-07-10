@@ -4,7 +4,7 @@ import { Group } from 'three'
 
 import { Cat } from '@/components/models/Cat'
 
-import { Orb, Pyramid } from '../components'
+import { Orb, Pyramid } from '.'
 
 export function Temple() {
   const ref = useRef<Group>(null!)
