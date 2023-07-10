@@ -5,7 +5,7 @@ import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
 
 import { Lights, Ring } from '.'
-import { Floor, Shard, URLText } from './components'
+import { Floor, Obelisk, Shard, URLText } from './components'
 import { Obelisks, Shards, Starfield, Temple } from './features'
 
 export function Bastet() {
@@ -43,15 +43,24 @@ export function Bastet() {
 
       <URLText text="DEAN.TAXI" />
       <Temple />
-      <Shards />
-      <Obelisks />
+      {/* <Shards /> */}
+      {/* <Obelisks /> */}
 
       <Ring
-        of={() => <Shard />}
+        Body={Shard}
         radius={100}
         amount={8}
         orbit={0.1}
-        spread={[1, 1]}
+        spread={10}
+        size={[1, 6]}
+      />
+
+      <Ring
+        Body={Obelisk}
+        radius={300}
+        amount={8}
+        orbit={0.2}
+        spread={10}
         size={[1, 6]}
       />
 

@@ -7,7 +7,7 @@ import { useMaterialColorLerpAnimation } from '..'
 
 type Props = JSX.IntrinsicElements['group']
 
-export function Obelisk({ ...group }: Props) {
+export function Obelisk() {
   const ref = useRef<THREE.Group>(null!)
 
   const lineRef = useRef<THREE.LineBasicMaterial>(null!)
@@ -26,7 +26,7 @@ export function Obelisk({ ...group }: Props) {
   })
 
   return (
-    <group {...group} ref={ref}>
+    <group ref={ref}>
       <Capsule args={[1.5, 16, 1, 4]}>
         <meshStandardMaterial color="black" />
 
