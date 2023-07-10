@@ -9,7 +9,7 @@ type Props = JSX.IntrinsicElements['mesh']
 
 const rotateSpeedRange = [0, 0.15] as const
 
-export function Shard(props: Props) {
+export function Shard() {
   const ref = useRef<THREE.Mesh>(null!)
 
   //* Align geometry
@@ -40,7 +40,7 @@ export function Shard(props: Props) {
   })
 
   return (
-    <mesh geometry={geom} {...props} ref={ref}>
+    <mesh geometry={geom} ref={ref}>
       <meshStandardMaterial color={'black'} />
       <Edges>
         <lineBasicMaterial ref={lineRef} color={'white'} />

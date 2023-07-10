@@ -1,49 +1,42 @@
+import { useFrame } from '@react-three/fiber'
+import { useMemo, useRef } from 'react'
 import { Group, MathUtils } from 'three'
 
 import { ringPositions } from '@/util'
 
-import { Shard } from './components'
-import { useRef } from 'react'
-import { useFrame } from '@react-three/fiber'
-
 type Props = {
-  children?: React.ReactNode
-  radius: number 
+  of: () => JSX.Element
   amount: number
+  radius: number
   orbit: number
   spread: [number, number]
-  scale: [number, number]
+  size: [number, number]
 }
 
 export function Ring(props: Props) {
-  const { radius, amount, orbit, spread, scale, children } = props
+  const { radius, amount, orbit, spread, size, of } = props
   const ref = useRef<Group>(null!)
 
-  //* Orbit
-  // useFrame((_, delta) => {
-    
+  const Body = of
+  const [scaleMin, scaleMax] = size
 
-  return (
-    <group>
-      {ringPositions(radius, amount).map((position, i) => (
-        <group ref={ref} position={position} scale={scale[0]} key={i}>
-          {children}
+  const elements = useMemo(() => {
+    console.log('Ring: useMemo')
+
+    return ringPositions(radius, amount).map((position, i) => {
+      const scale = MathUtils.randFloat(scaleMin, scaleMax)
+      return (
+        <group position={position} scale={scale} key={i}>
+          <Body />
         </group>
-      ))}
-    </group>
-  )
+      )
+    })
+  }, [radius, amount, scaleMin, scaleMax, Body])
+
+  //* Orbit
+  useFrame((_, delta) => {
+    ref.current.rotation.y += orbit * delta
+  })
+
+  return <group ref={ref}>{elements}</group>
 }
-
-/* 
-  <Ring radius={500} amount={30} orbit={0.1} spread={[1, 2]} scale={[1,2]}>
-    <Shard>
-  </Ring>
-
-
-  <Shard
-        position={position}
-        rotation={[0, Math.random() * 2 * Math.PI, 0]}
-        scale={MathUtils.randFloat(...scale)}
-        key={`l${i}`}
-      />
-*/

@@ -4,8 +4,8 @@ import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
 
-import { Lights } from '.'
-import { Floor, URLText } from './components'
+import { Lights, Ring } from '.'
+import { Floor, Shard, URLText } from './components'
 import { Obelisks, Shards, Starfield, Temple } from './features'
 
 export function Bastet() {
@@ -46,6 +46,15 @@ export function Bastet() {
       <Shards />
       <Obelisks />
 
+      <Ring
+        of={() => <Shard />}
+        radius={100}
+        amount={8}
+        orbit={0.1}
+        spread={[1, 1]}
+        size={[1, 6]}
+      />
+
       <Floor />
       <Starfield />
 
@@ -64,3 +73,6 @@ export function Bastet() {
   )
 }
 
+/* 
+ <Bodies body={Shard} size={[1, 2]} 
+*/

@@ -121,18 +121,24 @@ export function Shards() {
 
   //* Orbits
   useFrame((_, delta) => {
-    smallRef.current.rotation.y += small.orbit * delta
-    mediumRef.current.rotation.y += medium.orbit * delta
+    // smallRef.current.rotation.y += small.orbit * delta
+    // mediumRef.current.rotation.y += medium.orbit * delta
     largeRef.current.rotation.y += large.orbit * delta
     xLargeRef.current.rotation.y += xLarge.orbit * delta
   })
 
   return (
     <group visible={config.shards}>
-      {smallGroup}
-      {mediumGroup}
+      {/* {smallGroup} */}
+      {/* {mediumGroup} */}
       {largeGroup}
       {xLargeGroup}
     </group>
   )
+}
+
+type Props2 = {
+  amount: number
+  scaleRange: [number, number]
+  // rotation?
 }
