@@ -1,29 +1,29 @@
 import { Capsule, Edges, Text3D } from '@react-three/drei'
 import { Euler, useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
-import * as THREE from 'three'
+import { Group, LineBasicMaterial, MathUtils, MeshBasicMaterial } from 'three'
 
 import { useMaterialColorLerpAnimation } from '..'
 
 const initialTilt = Math.PI / 8
 
 export function Obelisk() {
-  const ref = useRef<THREE.Group>(null!)
+  const ref = useRef<Group>(null!)
 
-  const lineRef = useRef<THREE.LineBasicMaterial>(null!)
+  const lineRef = useRef<LineBasicMaterial>(null!)
   useMaterialColorLerpAnimation(lineRef, 'dimmed')
 
   //* initial alignment
   const rotation = useMemo(() => {
-    const x = THREE.MathUtils.randFloat(-initialTilt, initialTilt)
-    const z = THREE.MathUtils.randFloat(-initialTilt, initialTilt)
+    const x = MathUtils.randFloat(-initialTilt, initialTilt)
+    const z = MathUtils.randFloat(-initialTilt, initialTilt)
     return [x, 0, z] as Euler
   }, [])
 
   //* Rotation
   const rotate = useMemo(() => {
     return {
-      y: THREE.MathUtils.randFloat(0.1, 0.2),
+      y: MathUtils.randFloat(0.1, 0.2),
     }
   }, [])
 
@@ -47,16 +47,18 @@ export function Obelisk() {
 }
 
 const radius = 1
-const adjust = 0.4
+const adjust = 0.45
 const height = 6
+const chars = 5
 
 function Glyphs() {
   const props = {
     font: 'font/bigblue.json',
-    material: new THREE.MeshBasicMaterial({ color: 'orange' }),
+    lineHeight: 2,
+    material: new MeshBasicMaterial({ color: 'orange' }),
   }
 
-  const text = useMemo(() => getSideText(), [])
+  const text = useMemo(() => getSideText(chars), [])
 
   return (
     <group rotation-y={Math.PI / 4}>
@@ -88,15 +90,19 @@ function Glyphs() {
   )
 }
 
-const t1 = ['אהבה', 'שכחב', 'לאמץ', 'מעבר']
-const t2 = ['ТИПИ', 'БУЛИ', 'ΠΟΛΗ', 'МΣУΔ']
-const t3 = ['ΥΞΣΤ', 'ΓΎΏΧ', 'ΩΜΨΔ', 'ΖΠΗΘ']
-const t4 = ['ДЕЖЗ', 'ΘΚΛΜ', 'ךכלם', 'ЏАБВ']
+const textData = [
+  'אהבהשכחבלאמץמעברךכלם',
+  'ТИПИБУЛИΠΟΛΗМΣУΔДЕЖЗ',
+  'ΥΞΣΤΓΎΏΧΩΜΨΔΖΠΗΘЏАБВ',
+]
 
-function getSideText() {
-  return [t1, t2, t3, t4].map(t => {
-    const n = THREE.MathUtils.randInt(0, t.length - 1)
-    return verticalize(t[n])
+function getSideText(chars: number) {
+  const rows = textData.length - 1
+  const cols = textData[0].length - 1
+
+  return [...textData, textData[MathUtils.randInt(0, rows)]].map(t => {
+    const n = MathUtils.randInt(0, cols - chars)
+    return verticalize(t.slice(n, n + chars))
   })
 }
 
