@@ -13,9 +13,9 @@ export function URLText({ text }: Props) {
   const { x, y, z, rotationX, rotationY, rotationZ } = useControls(
     'URL 3D Text',
     {
-      x: { value: 80, min: -500, max: 500, step: 1 },
+      x: { value: 75, min: -500, max: 500, step: 1 },
       y: { value: 50, min: 0, max: 200, step: 1 },
-      z: { value: -120, min: -500, max: 500, step: 1 },
+      z: { value: -255, min: -500, max: 500, step: 1 },
       rotationX: { value: 0.4, min: -Math.PI, max: Math.PI, step: 0.1 },
       rotationY: { value: -0.7, min: -Math.PI, max: Math.PI, step: 0.1 },
       rotationZ: { value: 0.3, min: -Math.PI, max: Math.PI, step: 0.1 },
@@ -30,7 +30,7 @@ export function URLText({ text }: Props) {
     <Float enabled={true}>
       <Text3D
         font={'font/bigblue.json'}
-        size={6}
+        size={12}
         height={10}
         position={[x, y, z]}
         rotation={[rotationX, rotationY, rotationZ]}

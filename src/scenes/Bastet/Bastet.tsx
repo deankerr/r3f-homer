@@ -11,7 +11,7 @@ export function Bastet() {
   const config = useControls('main', {
     orbitControls: true,
     rotateCam: true,
-    r3fPerf: false,
+    r3fPerf: true,
   })
 
   //* camera
@@ -45,38 +45,38 @@ export function Bastet() {
 
       <Ring
         Body={Shard}
-        radius={250}
-        amount={16}
+        radius={400}
+        amount={32}
         orbit={0.04}
-        spread={10}
+        spread={30}
         size={[4, 5]}
       />
 
       <Ring
         Body={Obelisk}
-        radius={500}
+        radius={600}
         amount={10}
-        orbit={0.07}
+        orbit={0.03}
         spread={1}
-        size={[5, 7]}
-      />
-
-      <Ring
-        Body={Shard}
-        radius={750}
-        amount={30}
-        orbit={0.05}
-        spread={30}
-        size={[6, 8]}
+        size={[7, 7]}
       />
 
       <Ring
         Body={Shard}
         radius={1000}
-        amount={50}
-        orbit={0.06}
-        spread={60}
-        size={[9, 13]}
+        amount={100}
+        orbit={0.08}
+        spread={300}
+        size={[6, 8]}
+      />
+
+      <Ring
+        Body={Shard}
+        radius={1500}
+        amount={200}
+        orbit={0.04}
+        spread={200}
+        size={[15, 20]}
       />
       <Floor />
       <Starfield />
@@ -95,7 +95,3 @@ export function Bastet() {
     </>
   )
 }
-
-/* 
- <Bodies body={Shard} size={[1, 2]} 
-*/

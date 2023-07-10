@@ -25,7 +25,7 @@ export function Pyramid({ ...group }: Props) {
       thickness: { value: 3.5, min: 0, max: 10, step: 0.01 },
       ior: { value: 1.5, min: 1, max: 5, step: 0.01 },
       chromaticAberration: { value: 0.5, min: 0, max: 1 },
-      anisotropy: { value: 0.1, min: 0, max: 1, step: 0.01 },
+      anisotropy: { value: 0.01, min: 0, max: 1, step: 0.01 },
       distortion: { value: 0.3, min: 0, max: 1, step: 0.01 },
       distortionScale: { value: 0.3, min: 0.01, max: 1, step: 0.01 },
       temporalDistortion: { value: 0.5, min: 0, max: 1, step: 0.01 },
@@ -48,7 +48,7 @@ export function Pyramid({ ...group }: Props) {
     <group {...group}>
       {/* inner */}
       <mesh visible={config.pyramidInner}>
-        <octahedronGeometry args={[12]} />
+        <octahedronGeometry args={[10]} />
         <meshStandardMaterial color="black" />
         <Edges>
           <lineBasicMaterial ref={lineRef1} color={'white'} />

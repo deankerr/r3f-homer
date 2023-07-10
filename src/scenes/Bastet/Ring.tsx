@@ -23,7 +23,7 @@ export function Ring(props: Props) {
     return ringPositions(radius, amount).map((position, i) => {
       const scale = MathUtils.randFloat(scaleMin, scaleMax)
       position.x += MathUtils.randFloat(-spread, spread) / 2
-      position.y += MathUtils.randFloat(-spread, spread)
+      position.y += MathUtils.randFloat(-spread, spread) * 2
       position.z += MathUtils.randFloat(-spread, spread) / 2
       return (
         <group position={position} scale={scale} key={i}>
