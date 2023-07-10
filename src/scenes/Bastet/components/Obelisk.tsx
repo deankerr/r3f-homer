@@ -1,11 +1,11 @@
 import { Capsule, Edges, Text3D } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { Euler, useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
 import * as THREE from 'three'
 
 import { useMaterialColorLerpAnimation } from '..'
 
-type Props = JSX.IntrinsicElements['group']
+const initialTilt = Math.PI / 8
 
 export function Obelisk() {
   const ref = useRef<THREE.Group>(null!)
@@ -13,20 +13,26 @@ export function Obelisk() {
   const lineRef = useRef<THREE.LineBasicMaterial>(null!)
   useMaterialColorLerpAnimation(lineRef, 'dimmed')
 
+  //* initial alignment
+  const rotation = useMemo(() => {
+    const x = THREE.MathUtils.randFloat(-initialTilt, initialTilt)
+    const z = THREE.MathUtils.randFloat(-initialTilt, initialTilt)
+    return [x, 0, z] as Euler
+  }, [])
+
+  //* Rotation
   const rotate = useMemo(() => {
     return {
-      x: THREE.MathUtils.randFloat(0, 0.01),
       y: THREE.MathUtils.randFloat(0.1, 0.2),
     }
   }, [])
 
   useFrame((_, delta) => {
-    ref.current.rotation.x += rotate.x * delta
     ref.current.rotation.y += rotate.y * delta
   })
 
   return (
-    <group ref={ref}>
+    <group rotation={rotation} ref={ref}>
       <Capsule args={[1.5, 16, 1, 4]}>
         <meshStandardMaterial color="black" />
 
