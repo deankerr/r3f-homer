@@ -13,8 +13,8 @@ export function URLText({ text }: Props) {
   const { x, y, z, rotationX, rotationY, rotationZ } = useControls(
     'URL 3D Text',
     {
-      x: { value: 75, min: -500, max: 500, step: 1 },
-      y: { value: 50, min: 0, max: 200, step: 1 },
+      x: { value: 100, min: -500, max: 500, step: 1 },
+      y: { value: 125, min: 0, max: 200, step: 1 },
       z: { value: -255, min: -500, max: 500, step: 1 },
       rotationX: { value: 0.4, min: -Math.PI, max: Math.PI, step: 0.1 },
       rotationY: { value: -0.7, min: -Math.PI, max: Math.PI, step: 0.1 },
@@ -38,7 +38,7 @@ export function URLText({ text }: Props) {
         {text}
         <meshStandardMaterial />
         <Edges>
-          <lineBasicMaterial ref={lineRef} color={'white'} />
+          <lineBasicMaterial ref={lineRef} color={'orange'} />
         </Edges>
       </Text3D>
     </Float>

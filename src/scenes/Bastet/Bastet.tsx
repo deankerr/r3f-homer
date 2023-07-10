@@ -5,7 +5,14 @@ import { Perf } from 'r3f-perf'
 import * as THREE from 'three'
 
 import { Lights, Ring } from '.'
-import { Floor, Obelisk, Shard, Starfield, Temple, URLText } from './components'
+import {
+  GridPlane,
+  Obelisk,
+  Shard,
+  Starfield,
+  Temple,
+  URLText,
+} from './components'
 
 export function Bastet() {
   const config = useControls('main', {
@@ -33,8 +40,6 @@ export function Bastet() {
       state.camera.lookAt(new THREE.Vector3(...cameraProps.target))
     }
   })
-
-  // console.log(useThree(state => state.camera).toJSON())
 
   return (
     <>
@@ -75,10 +80,10 @@ export function Bastet() {
         radius={1500}
         amount={200}
         orbit={0.04}
-        spread={200}
+        spread={400}
         size={[15, 20]}
       />
-      <Floor />
+
       <Starfield />
 
       <Lights />

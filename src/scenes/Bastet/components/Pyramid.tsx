@@ -3,6 +3,7 @@ import { useControls } from 'leva'
 import { useRef } from 'react'
 import * as THREE from 'three'
 
+import { GridPlane } from '.'
 import { useMaterialColorLerpAnimation } from '..'
 
 type Props = JSX.IntrinsicElements['group']
@@ -63,6 +64,7 @@ export function Pyramid({ ...group }: Props) {
           <lineBasicMaterial ref={lineRef2} color={'white'} />
         </Edges>
       </mesh>
+      <GridPlane />
     </group>
   )
 }

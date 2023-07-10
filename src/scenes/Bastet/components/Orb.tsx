@@ -11,7 +11,7 @@ export function Orb({ ...group }: Props) {
   const ref = useRef<Group>(null!)
 
   useFrame((_, delta) => {
-    ref.current.rotation.y -= delta
+    ref.current.rotation.y += delta
   })
 
   const lineRef = useRef<THREE.LineBasicMaterial>(null!)

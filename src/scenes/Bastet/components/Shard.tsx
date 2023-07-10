@@ -1,35 +1,40 @@
 import { Edges } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { Euler, useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
-import * as THREE from 'three'
+import { ConeGeometry, LineBasicMaterial, MathUtils, Mesh } from 'three'
 
 import { useMaterialColorLerpAnimation } from '..'
-
-type Props = JSX.IntrinsicElements['mesh']
 
 const rotateSpeedRange = [0, 0.15] as const
 
 export function Shard() {
-  const ref = useRef<THREE.Mesh>(null!)
+  const ref = useRef<Mesh>(null!)
 
   //* Align geometry
   const geom = useMemo(() => {
-    const geom = new THREE.ConeGeometry(3, 10, 3, 1)
+    const geom = new ConeGeometry(3, 10, 3, 1)
     geom.rotateX(-Math.PI / 2)
     geom.rotateY(Math.PI)
     return geom
   }, [])
 
+  //* initial alignment
+  const rotation = useMemo(() => {
+    const x = MathUtils.randFloat(0, Math.PI * 2)
+    const z = MathUtils.randFloat(0, Math.PI * 2)
+    return [x, 0, z] as Euler
+  }, [])
+
   //* Line color animation
-  const lineRef = useRef<THREE.LineBasicMaterial>(null!)
+  const lineRef = useRef<LineBasicMaterial>(null!)
   useMaterialColorLerpAnimation(lineRef, 'dimmed')
 
   //* random rotation
   const rotate = useMemo(() => {
     return {
-      x: THREE.MathUtils.randFloat(...rotateSpeedRange),
-      y: THREE.MathUtils.randFloat(...rotateSpeedRange),
-      z: THREE.MathUtils.randFloat(...rotateSpeedRange),
+      x: MathUtils.randFloat(...rotateSpeedRange),
+      y: MathUtils.randFloat(...rotateSpeedRange),
+      z: MathUtils.randFloat(...rotateSpeedRange),
     }
   }, [])
 

@@ -1,4 +1,4 @@
-export * from './Floor'
+export * from './GridPlane'
 export * from './Obelisk'
 export * from './Orb'
 export * from './Pyramid'
