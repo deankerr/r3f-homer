@@ -23,7 +23,7 @@ export default function App() {
 
   return (
     <div className="h-screen bg-black" onClick={handleInteraction}>
-      <Canvas camera={{ position: [0, 10, 12] }}>
+      <Canvas>
         <color attach="background" args={['#000']} />
         {<Bastet key={resetKey} />}
         {/* {scene === 'Homer' && <MainScene />} */}

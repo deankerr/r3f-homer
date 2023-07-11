@@ -37,3 +37,17 @@ export function spiralPositions(radius: number, amount: number) {
 
   return positions
 }
+
+/* 
+
+  useFrame(state => {
+    if (config.rotateCam && !config.orbitControls) {
+      // rotate
+      const angle = state.clock.elapsedTime
+      state.camera.position.x = Math.sin(angle / 10) * cameraProps.position[2]
+      state.camera.position.z = Math.cos(angle / 10) * cameraProps.position[2]
+      state.camera.lookAt(new THREE.Vector3(...cameraProps.target))
+    }
+  })
+
+*/

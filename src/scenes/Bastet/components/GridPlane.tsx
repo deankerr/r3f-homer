@@ -28,7 +28,7 @@ export function GridPlane() {
         cellThickness={0.5}
         sectionSize={50}
         sectionColor={'blue'}
-        sectionThickness={0.6}
+        sectionThickness={1}
         fadeDistance={1000}
       />
     </group>

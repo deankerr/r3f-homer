@@ -1,23 +1,13 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
-import * as THREE from 'three'
 
 import { Lights, Ring } from '.'
-import {
-  GridPlane,
-  Obelisk,
-  Shard,
-  Starfield,
-  Temple,
-  URLText,
-} from './components'
+import { Obelisk, Shard, Starfield, Temple, URLText } from './components'
 
 export function Bastet() {
   const config = useControls('main', {
     orbitControls: true,
-    rotateCam: true,
     r3fPerf: true,
   })
 
@@ -25,25 +15,20 @@ export function Bastet() {
   const cameraProps = useControls(
     'camera',
     {
-      position: [124, 18, 124],
-      target: [0, 14, 0],
+      position: [200, 18, 0],
+      target: [0, 0, 0],
     },
     { collapsed: true }
   )
 
-  useFrame(state => {
-    if (config.rotateCam && !config.orbitControls) {
-      // rotate
-      const angle = state.clock.elapsedTime
-      state.camera.position.x = Math.sin(angle / 10) * cameraProps.position[2]
-      state.camera.position.z = Math.cos(angle / 10) * cameraProps.position[2]
-      state.camera.lookAt(new THREE.Vector3(...cameraProps.target))
-    }
-  })
-
   return (
     <>
-      <PerspectiveCamera fov={60} far={3000} makeDefault {...cameraProps} />
+      <PerspectiveCamera
+        fov={50}
+        far={3000}
+        position={cameraProps.position}
+        makeDefault
+      />
 
       <URLText text="DEAN.TAXI" />
       <Temple />
@@ -88,7 +73,7 @@ export function Bastet() {
 
       <Lights />
 
-      {config.orbitControls && <OrbitControls {...cameraProps} />}
+      <OrbitControls target={cameraProps.target} />
       {config.r3fPerf && (
         <Perf
           position="bottom-left"

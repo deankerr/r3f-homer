@@ -45,7 +45,7 @@ export function Shard() {
   })
 
   return (
-    <mesh geometry={geom} ref={ref}>
+    <mesh geometry={geom} rotation={rotation} ref={ref}>
       <meshStandardMaterial color={'black'} />
       <Edges>
         <lineBasicMaterial ref={lineRef} color={'white'} />
