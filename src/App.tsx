@@ -4,7 +4,7 @@ import { Leva, useControls } from 'leva'
 import { useEffect, useState } from 'react'
 
 import { MainScene } from './MainScene'
-import { Bastet } from './scenes/Bastet'
+import { Rehetep } from './scenes/Bastet'
 import { MaterialTestScene } from './scenes/MaterialTestScene'
 import { TestScene } from './scenes/ModelTestScene'
 import { useTaxiStore } from './store'
@@ -25,7 +25,7 @@ export default function App() {
     <div className="h-screen bg-black" onClick={handleInteraction}>
       <Canvas>
         <color attach="background" args={['#000']} />
-        {<Bastet key={resetKey} />}
+        {<Rehetep key={resetKey} />}
         {/* {scene === 'Homer' && <MainScene />} */}
         {/* <TestScene /> */}
         {/* <MaterialTestScene /> */}

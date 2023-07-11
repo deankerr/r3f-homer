@@ -38,15 +38,15 @@ if (process.env.NODE_ENV === 'development') {
   mountStoreDevtool('Store', useTaxiStore)
 }
 
-type BastetState = {
-  reset: () => void
-}
+// type BastetState = {
+//   reset: () => void
+// }
 
-const bastetInitialState = {}
+// const bastetInitialState = {}
 
-export const useBastetStore = create<BastetState>()(set => ({
-  ...bastetInitialState,
-  reset: () => {
-    set(bastetInitialState)
-  },
-}))
+// export const useBastetStore = create<BastetState>()(set => ({
+//   ...bastetInitialState,
+//   reset: () => {
+//     set(bastetInitialState)
+//   },
+// }))

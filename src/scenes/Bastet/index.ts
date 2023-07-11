@@ -1,4 +1,4 @@
-export * from './Bastet'
+export * from './Rehetep'
 export * from './Camera'
 export * from './Effects'
 export * from './Lights'
