@@ -31,7 +31,7 @@ export default function App() {
         {/* <MaterialTestScene /> */}
       </Canvas>
       <Loader />
-      <Leva collapsed={true} />
+      <Leva collapsed={true} hidden={true} />
     </div>
   )
 }

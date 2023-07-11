@@ -10,7 +10,7 @@ export function Temple() {
   const ref = useRef<Group>(null!)
 
   const config = useControls('main', {
-    orb: true,
+    orb: false,
   })
 
   useFrame((_, delta) => {

@@ -30,6 +30,7 @@ export function GridPlane() {
         sectionColor={'blue'}
         sectionThickness={1}
         fadeDistance={1000}
+        side={THREE.DoubleSide}
       />
     </group>
   )

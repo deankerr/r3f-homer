@@ -5,7 +5,7 @@ import { ConeGeometry, LineBasicMaterial, MathUtils, Mesh } from 'three'
 
 import { useMaterialColorLerpAnimation } from '..'
 
-const rotateSpeedRange = [0, 0.15] as const
+const rotateSpeedRange = [0.15, 0.3] as const
 
 export function Shard() {
   const ref = useRef<Mesh>(null!)
