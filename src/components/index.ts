@@ -1,7 +1,0 @@
-export * from './AudioReady'
-export * from './BigText'
-export * from './Homer'
-export * from './models'
-export * from './Orbit'
-export * from './shapes'
-export * from './Starfield'

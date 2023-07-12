@@ -1,14 +1,9 @@
 import { OrbitControls, Stats } from '@react-three/drei'
 import { useState } from 'react'
 
-import {
-  BigText,
-  Cone,
-  Dodecahedron,
-  Homer,
-  Orbit,
-  Starfield,
-} from './components'
+import { Orbit } from '.'
+import { Homer } from './Homer'
+import { BigText, Cone, Dodecahedron, Starfield } from './components'
 import {
   Bust,
   Dolphin,
@@ -21,9 +16,9 @@ import {
   Sun,
   Taxi,
   Toilet,
-} from './components/models'
+} from './models'
 
-export function MainScene() {
+export function Homer3D() {
   const [showSky, setShowSky] = useState(false)
   return (
     <>

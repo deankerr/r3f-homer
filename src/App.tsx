@@ -3,10 +3,8 @@ import { Canvas } from '@react-three/fiber'
 import { Leva, useControls } from 'leva'
 import { useEffect, useState } from 'react'
 
-import { MainScene } from './MainScene'
-import { Rehetep } from './scenes/Bastet'
-import { MaterialTestScene } from './scenes/MaterialTestScene'
-import { TestScene } from './scenes/ModelTestScene'
+import { Homer3D } from './scenes/Homer3D'
+import { Rehetep } from './scenes/Rehetep'
 import { useTaxiStore } from './store'
 
 export default function App() {
@@ -25,8 +23,8 @@ export default function App() {
     <div className="h-screen bg-black" onClick={handleInteraction}>
       <Canvas>
         <color attach="background" args={['#000']} />
-        {<Rehetep key={resetKey} />}
-        {/* {scene === 'Homer' && <MainScene />} */}
+        {/* {<Rehetep key={resetKey} />} */}
+        <Homer3D />
         {/* <TestScene /> */}
         {/* <MaterialTestScene /> */}
       </Canvas>

@@ -1,13 +1,4 @@
 {
-  "exportall.config.folderListener": [
-    "/src/components",
-    "/src/components/shapes",
-    "/src/scenes/Bastet",
-    "/src/scenes/Bastet/features",
-    "/src/scenes/Bastet/components"
-  ],
-  "exportall.config.relExclusion": [
-    "/src/scenes/Bastet/features",
-    "/src/scenes/Bastet/components"
-  ]
+  "exportall.config.folderListener": [],
+  "exportall.config.relExclusion": []
 }

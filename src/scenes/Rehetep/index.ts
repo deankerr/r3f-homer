@@ -1,6 +1,6 @@
-export * from './Rehetep'
 export * from './Camera'
 export * from './Effects'
 export * from './Lights'
+export * from './Rehetep'
 export * from './Ring'
 export * from './shared'
