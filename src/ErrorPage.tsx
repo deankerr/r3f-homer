@@ -6,8 +6,8 @@ export default function ErrorPage() {
 
   return (
     <div>
-      <h1>{'Oh no!'}</h1>
-      <p>An error has occured:</p>
+      <h1 className="font-serif text-3xl">&quot;Oh no!&quot;</h1>
+      <p>An error has regretfully occured:</p>
       <p>
         <i>
           {isRouteErrorResponse(error)
