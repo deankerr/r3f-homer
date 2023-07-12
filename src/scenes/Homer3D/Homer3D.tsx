@@ -1,4 +1,4 @@
-import { OrbitControls, Stats } from '@react-three/drei'
+import { OrbitControls, PerspectiveCamera, Stats } from '@react-three/drei'
 import { useState } from 'react'
 
 import { Orbit } from '.'
@@ -22,6 +22,7 @@ export function Homer3D() {
   const [showSky, setShowSky] = useState(false)
   return (
     <>
+      <PerspectiveCamera position={[0, 10, 12]} makeDefault />
       <Starfield rotate={true} />
       <BigText text="DEAN.TAXI" position={[-2, 10, -50]} />
 
