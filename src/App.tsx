@@ -2,6 +2,7 @@ import { Loader } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Leva, useControls } from 'leva'
 import { useEffect, useState } from 'react'
+import { Outlet } from 'react-router-dom'
 
 import { Homer3D } from './scenes/Homer3D'
 import { Rehetep } from './scenes/Rehetep'
@@ -24,9 +25,10 @@ export default function App() {
       <Canvas>
         <color attach="background" args={['#000']} />
         {/* {<Rehetep key={resetKey} />} */}
-        <Homer3D />
+        {/* <Homer3D /> */}
         {/* <TestScene /> */}
         {/* <MaterialTestScene /> */}
+        <Outlet />
       </Canvas>
       <Loader />
       <Leva collapsed={true} hidden={true} />
