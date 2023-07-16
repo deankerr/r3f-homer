@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import App from './App'
 import ErrorPage from './ErrorPage'
 import './index.css'
+import { Believe } from './scenes/Believe'
 import { Homer3D } from './scenes/Homer3D'
 import { Rehetep } from './scenes/Rehetep'
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
         path: 'rehetep',
         element: <Rehetep />,
       },
+      {
+        path: 'believe',
+        element: <Believe />,
+      },
     ],
   },
 ])
@@ -34,4 +39,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   </React.StrictMode>
 )
 
-inject()
+if (process.env.NODE_ENV !== 'development') {
+  inject()
+}

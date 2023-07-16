@@ -37,5 +37,3 @@ export const useTaxiStore = create<State>()(
 if (process.env.NODE_ENV === 'development') {
   mountStoreDevtool('Store', useTaxiStore)
 }
-
-console.log(process.env.NODE_ENV)

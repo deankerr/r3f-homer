@@ -6,6 +6,8 @@ import { Outlet } from 'react-router-dom'
 
 import { useTaxiStore } from './store'
 
+const showControls = process.env.NODE_ENV !== 'development'
+
 export default function App() {
   const [canStartAudio, setCanStartAudio] = useTaxiStore(state => [
     state.canStartAudio,
@@ -25,7 +27,7 @@ export default function App() {
         <Outlet />
       </Canvas>
       <Loader />
-      <Leva collapsed={true} hidden={true} />
+      <Leva collapsed={true} hidden={showControls} />
     </div>
   )
 }
