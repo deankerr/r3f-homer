@@ -5,6 +5,9 @@ import ErrorPage from './ErrorPage'
 import { Layout } from './Layout'
 import { LoadingScene } from './scenes/LoadingScene'
 
+console.log('proc', process.env)
+console.log('ver', process.env.VERCEL_ENV)
+
 export default function App() {
   return <RouterProvider router={router} fallbackElement={<LoadingScene />} />
 }
@@ -39,5 +42,3 @@ const router = createBrowserRouter([
 function Home() {
   return <Text>Welcome Home</Text>
 }
-
-console.log(process.env)
