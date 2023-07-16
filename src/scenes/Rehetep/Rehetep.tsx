@@ -5,7 +5,7 @@ import { Lights, Ring } from '.'
 import { Camera } from '.'
 import { Obelisk, Shard, Starfield, Temple, URLText } from './components'
 
-export default function Rehetep() {
+export function Component() {
   const config = useControls('main', {
     r3fPerf: false,
   })
@@ -67,3 +67,4 @@ export default function Rehetep() {
     </>
   )
 }
+Component.displayName = 'Rehetep'

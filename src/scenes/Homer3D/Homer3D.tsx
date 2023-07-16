@@ -18,7 +18,7 @@ import {
   Toilet,
 } from './models'
 
-export default function Homer3D() {
+export function Component() {
   const [showSky, setShowSky] = useState(false)
   return (
     <>
@@ -72,7 +72,7 @@ export default function Homer3D() {
     </>
   )
 }
-
+Component.displayName = 'Homer3D'
 /* 
 
       <Cloud position={[0, -10, 0]} />

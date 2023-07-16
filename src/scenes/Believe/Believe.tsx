@@ -12,7 +12,7 @@ declare module '@react-three/fiber' {
   }
 }
 
-export default function Believe() {
+export function Component() {
   const camera = useThree(state => state.camera)
 
   const cameraControlsRef = useRef<CameraControls>(null!)
@@ -30,6 +30,7 @@ export default function Believe() {
     </>
   )
 }
+Component.displayName = 'Believe'
 
 const Background = () => {
   const width = 1000
