@@ -5,13 +5,10 @@ import ErrorPage from './ErrorPage'
 import { Layout } from './Layout'
 import { LoadingScene } from './scenes/LoadingScene'
 
-// declare global {
-//   __VERCEL_ENV__: string
-// }
 declare const __VERCEL_ENV__: string
 
-console.log('proc', process.env.NODE_ENV)
 console.log('ver', __VERCEL_ENV__)
+console.log('proc', process.env.NODE_ENV)
 console.log('ref', process.env.VERCEL_GIT_COMMIT_REF)
 
 export default function App() {
