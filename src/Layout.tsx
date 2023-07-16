@@ -1,8 +1,8 @@
 import { Canvas } from '@react-three/fiber'
 import { Leva } from 'leva'
-import { useEffect, useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
+import { LoadingScene } from './scenes/LoadingScene'
 import { useTaxiStore } from './store'
 
 const showControls = process.env.NODE_ENV !== 'development'
@@ -16,14 +16,13 @@ export const Layout = () => {
     if (!canStartAudio) setCanStartAudio()
   }
 
-  // const resetKey = useResetKey()
-
   return (
     <div className="h-screen" onClick={handleInteraction}>
       <SceneNavigation />
       <Leva collapsed={true} hidden={showControls} />
       <Canvas>
         <color attach="background" args={['#000']} />
+        <LoadingScene />
         <Outlet />
       </Canvas>
     </div>
@@ -43,28 +42,25 @@ const SceneNavigation = () => {
 const SceneLink = ({ to }: { to: string }) => {
   return (
     <Link to={'/' + to.toLowerCase()}>
-      <div
-        onClick={() => console.log('nav', to)}
-        className="mx-1 inline-block rounded-full border-2 border-fuchsia-400 bg-black bg-opacity-40 px-2 uppercase text-fuchsia-400"
-      >
+      <div className="mx-1 inline-block rounded-full border-2 border-fuchsia-400 bg-black bg-opacity-40 px-2 uppercase text-fuchsia-400">
         {to}
       </div>
     </Link>
   )
 }
 
-const useResetKey = () => {
-  const [resetKey, setResetKey] = useState(Date.now())
+// const useResetKey = () => {
+//   const [resetKey, setResetKey] = useState(Date.now())
 
-  const handler = (event: KeyboardEvent) => {
-    if (event.key === 'R') setResetKey(Date.now())
-  }
+//   const handler = (event: KeyboardEvent) => {
+//     if (event.key === 'R') setResetKey(Date.now())
+//   }
 
-  useEffect(() => {
-    document.addEventListener('keydown', handler)
+//   useEffect(() => {
+//     document.addEventListener('keydown', handler)
 
-    return () => document.removeEventListener('keydown', handler)
-  }, [])
+//     return () => document.removeEventListener('keydown', handler)
+//   }, [])
 
-  return resetKey
-}
+//   return resetKey
+// }
