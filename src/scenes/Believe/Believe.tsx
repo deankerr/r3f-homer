@@ -12,7 +12,7 @@ declare module '@react-three/fiber' {
   }
 }
 
-export function Believe() {
+export default function Believe() {
   const camera = useThree(state => state.camera)
 
   const cameraControlsRef = useRef<CameraControls>(null!)

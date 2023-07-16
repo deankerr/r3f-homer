@@ -6,9 +6,10 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import App from './App'
 import ErrorPage from './ErrorPage'
 import './index.css'
-import { Believe } from './scenes/Believe'
-import { Homer3D } from './scenes/Homer3D'
-import { Rehetep } from './scenes/Rehetep'
+
+const Homer3D = React.lazy(() => import('./scenes/Homer3D/Homer3D'))
+const Believe = React.lazy(() => import('./scenes/Believe/Believe'))
+const Rehetep = React.lazy(() => import('./scenes/Rehetep/Rehetep'))
 
 const router = createBrowserRouter([
   {
@@ -16,18 +17,37 @@ const router = createBrowserRouter([
     element: <App />,
     errorElement: <ErrorPage />,
     children: [
-      { index: true, element: <Rehetep /> },
+      {
+        index: true,
+        element: (
+          <React.Suspense>
+            <Rehetep />
+          </React.Suspense>
+        ),
+      },
       {
         path: 'homer',
-        element: <Homer3D />,
+        element: (
+          <React.Suspense>
+            <Homer3D />
+          </React.Suspense>
+        ),
       },
       {
         path: 'rehetep',
-        element: <Rehetep />,
+        element: (
+          <React.Suspense>
+            <Rehetep />
+          </React.Suspense>
+        ),
       },
       {
         path: 'believe',
-        element: <Believe />,
+        element: (
+          <React.Suspense>
+            <Believe />
+          </React.Suspense>
+        ),
       },
     ],
   },

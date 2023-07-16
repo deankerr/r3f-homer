@@ -18,7 +18,7 @@ import {
   Toilet,
 } from './models'
 
-export function Homer3D() {
+export default function Homer3D() {
   const [showSky, setShowSky] = useState(false)
   return (
     <>

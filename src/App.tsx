@@ -26,7 +26,7 @@ export default function App() {
         <color attach="background" args={['#000']} />
         <Outlet />
       </Canvas>
-      <Loader />
+      {/* <Loader /> */}
       <Leva collapsed={true} hidden={showControls} />
     </div>
   )
