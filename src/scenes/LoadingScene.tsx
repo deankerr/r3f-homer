@@ -4,14 +4,14 @@ import { useRef } from 'react'
 import { useNavigation } from 'react-router-dom'
 import { Group } from 'three'
 
-const test = true
 const speed = 0.01
 
 export const LoadingScene = () => {
-  const loading = useNavigation().state === 'loading' || test === true
+  const loading = useNavigation().state === 'loading'
 
   const starsRef = useRef<Group>(null!)
   useFrame(() => {
+    if (!loading) return
     starsRef.current.rotation.y += speed
   })
 

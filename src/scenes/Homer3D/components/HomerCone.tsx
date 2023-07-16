@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { Group } from 'three'
 
-export function Cone(props: JSX.IntrinsicElements['group']) {
+export function HomerCone(props: JSX.IntrinsicElements['group']) {
   const ref = useRef<Group>(null!)
 
   useFrame(() => {

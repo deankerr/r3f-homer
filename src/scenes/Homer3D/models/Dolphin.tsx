@@ -7,13 +7,8 @@ Source: https://sketchfab.com/3d-models/model-61a-bottlenose-dolphin-2ec20f15b08
 Title: Model 61A - Bottlenose Dolphin
 */
 import { useGLTF } from '@react-three/drei'
-import { PositionalAudio } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
-import { Suspense, useRef } from 'react'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
-
-import { useTaxiStore } from '@/store'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -27,40 +22,12 @@ type GLTFResult = GLTF & {
   }
 }
 
-const clickFreq = 10
-
-function DolphinAudio() {
-  const ref = useRef<THREE.PositionalAudio>(null!)
-  const timeToClickRef = useRef<number>(0)
-
-  useFrame((state, dt) => {
-    timeToClickRef.current -= dt
-    if (timeToClickRef.current <= 0) {
-      ref.current.play()
-      timeToClickRef.current = clickFreq
-    }
-  })
-
-  return (
-    <PositionalAudio
-      ref={ref}
-      url="sounds/dolphin_clicks.ogg"
-      distance={10}
-      loop={false}
-      load
-    />
-  )
-}
-
 export function Dolphin(props: JSX.IntrinsicElements['group']) {
-  const canStartAudio = useTaxiStore(state => state.canStartAudio)
-
   const { nodes, materials } = useGLTF(
     'model/bottlenose_dolphin-transformed.glb'
   ) as GLTFResult
   return (
     <group {...props}>
-      <Suspense>{canStartAudio && <DolphinAudio />}</Suspense>
       <group name="Sketchfab_Scene">
         <primitive object={nodes.GLTF_created_0_rootJoint} />
         <skinnedMesh
