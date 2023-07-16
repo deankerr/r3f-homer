@@ -5,8 +5,9 @@ import ErrorPage from './ErrorPage'
 import { Layout } from './Layout'
 import { LoadingScene } from './scenes/LoadingScene'
 
-console.log('proc', process.env)
+console.log('proc', process.env.NODE_ENV)
 console.log('ver', process.env.VERCEL_ENV)
+console.log('ref', process.env.VERCEL_GIT_COMMIT_REF)
 
 export default function App() {
   return <RouterProvider router={router} fallbackElement={<LoadingScene />} />
