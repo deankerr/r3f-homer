@@ -5,7 +5,7 @@ import ErrorPage from './ErrorPage'
 import { Layout } from './Layout'
 
 export default function App() {
-  return <RouterProvider router={router} fallbackElement={<Fallback />} />
+  return <RouterProvider router={router} fallbackElement={<Preload />} />
 }
 
 const router = createBrowserRouter([
@@ -39,7 +39,14 @@ function Home() {
   return <Text>Welcome Home</Text>
 }
 
-function Fallback() {
-  console.log('init')
-  return <div>NOW LOADING</div>
+export function Preload() {
+  return (
+    <div className="flex h-full items-center justify-center">
+      <img
+        src="taxi-icon.svg"
+        alt="Taxi Loading"
+        className="max-h-screen animate-pulse"
+      />
+    </div>
+  )
 }
