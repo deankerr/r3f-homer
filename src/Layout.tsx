@@ -34,6 +34,7 @@ const SceneNavigation = () => {
       <SceneLink to="Rehetep" />
       <SceneLink to="Homer" />
       <SceneLink to="Believe" devOnly />
+      <SceneLink to="Hexxagon" devOnly />
     </div>
   )
 }
