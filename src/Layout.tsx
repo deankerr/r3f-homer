@@ -2,7 +2,6 @@ import { Canvas } from '@react-three/fiber'
 import { Leva } from 'leva'
 import { Link, Outlet } from 'react-router-dom'
 
-import { Preload } from './App'
 import { LoadingScene } from './scenes/LoadingScene'
 import { useTaxiStore } from './store'
 
@@ -19,14 +18,13 @@ export const Layout = () => {
 
   return (
     <div className="h-screen" onClick={handleInteraction}>
-      <Preload />
-      {/* <SceneNavigation />
+      <SceneNavigation />
       <Leva collapsed={true} hidden={showControls} />
       <Canvas>
         <color attach="background" args={['#000']} />
         <LoadingScene />
         <Outlet />
-      </Canvas> */}
+      </Canvas>
     </div>
   )
 }
