@@ -7,36 +7,74 @@ import {
 } from '@react-three/drei'
 import { useControls } from 'leva'
 import { useMemo } from 'react'
-import { BackSide, Texture, Vector2, Vector3 } from 'three'
+import {
+  BackSide,
+  DoubleSide,
+  MathUtils,
+  Texture,
+  Vector2,
+  Vector3,
+} from 'three'
 
 export function Component() {
-  const { mat, norm } = useControls({ mat: 14, norm: 11 })
+  const { matCapN, normalN, useMatCap, useNormal } = useControls({
+    useMatCap: true,
+    matCapN: {
+      value: MathUtils.randInt(1, matPaths.length) - 1,
+      min: 0,
+      max: matPaths.length - 1,
+      step: 1,
+    },
+    useNormal: true,
+    normalN: {
+      value: MathUtils.randInt(1, normPaths.length) - 1,
+      min: 0,
+      max: normPaths.length - 1,
+      step: 1,
+    },
+  })
 
-  const height = 8
-  const width = 8
+  const matcaps = useTexture(matPaths)
+  const norms = useTexture(normPaths)
 
-  const hexes: Vector3[] = []
-  for (let i = 0; i < width; i++) {
-    for (let j = 0; j < height; j++) {
-      const yOffset = i % 2 === 0 ? 0 : 2.5
-      hexes.push(new Vector3(i * 6, j * 5 + yOffset, 0))
-    }
-  }
+  /* 
+  q: y axies
+  r: x axis (diagonal top left to bottom right)
+  */
+
+  const hexCoord = useMemo(() => {
+    const hList = [5, 6, 7, 8, 9, 8, 7, 6, 5]
+    const xOffset = 6.75
+    const yOffset = 5.2
+
+    return hList.map((colHeight, i) => {
+      const q = i - Math.floor(hList.length / 2)
+
+      return [...new Array<Vector3>(colHeight)].map((_, j) => {
+        const r = j - Math.floor(colHeight / 2)
+        const yStep = i % 2 === 0 ? 0 : 2.6
+
+        return new Vector3(q * xOffset, r * yOffset + yStep, 0)
+      })
+    })
+  }, [])
 
   return (
     <>
       {/* <OrthographicCamera makeDefault position={[0, 0, -10]} /> */}
+      {/* <Environment preset="studio" /> */}
       <PerspectiveCamera makeDefault position={[0, 10, 20]} />
-      <Environment preset="studio" />
       <CameraControls />
 
-      {/* 
-      {hexes.map((pos, i) => (
-        <Hex key={i} position={pos} />
-      ))} */}
-
-      <HexBlock xOffset={5} mat={mat} norm={norm} flat={true} />
-      <HexBlock xOffset={-20} mat={mat} norm={norm} flat={false} />
+      {hexCoord.flat().map((pos, i) => (
+        <Hex
+          position={pos}
+          matcap={matcaps[matCapN]}
+          normalMap={norms[normalN]}
+          flatShading={true}
+          key={i}
+        />
+      ))}
 
       <axesHelper />
       {/* <ambientLight /> */}
@@ -46,48 +84,10 @@ export function Component() {
 }
 Component.displayName = 'Hexxagon'
 
-type HexBlockProps = {
-  xOffset: number
-  mat: number
-  norm: number
-  flat: boolean
-}
-function HexBlock(props: HexBlockProps) {
-  const { xOffset, mat, norm, flat } = props
-
-  const matcaps = useTexture(matPaths)
-  const norms = useTexture(normPaths)
-
-  const height = 8
-  const width = 8
-
-  const hexes: Vector3[] = []
-  for (let i = 0; i < width; i++) {
-    for (let j = 0; j < height; j++) {
-      const yOffset = i % 2 === 0 ? 0 : 2.5
-      hexes.push(new Vector3(i * 6 + xOffset, j * 5 + yOffset, 0))
-    }
-  }
-
-  return (
-    <group position-x={xOffset} position-y={-10}>
-      {hexes.map((pos, i) => (
-        <Hex
-          key={i}
-          position={pos}
-          matcap={matcaps[mat]}
-          normalMap={norms[norm]}
-          flatShading={flat}
-        />
-      ))}
-    </group>
-  )
-}
-
 type HexProps = {
   position: Vector3
-  matcap: Texture
-  normalMap: Texture
+  matcap: Texture | null
+  normalMap: Texture | null
   flatShading: boolean
 }
 function Hex({ position, ...props }: HexProps) {
@@ -99,7 +99,6 @@ function Hex({ position, ...props }: HexProps) {
         [1.25, 5],
         [0, 5],
       ].map(p => new Vector2(...p)),
-
     []
   )
 
@@ -117,7 +116,7 @@ function Hex({ position, ...props }: HexProps) {
         // flatShading={flat}
         // normalMap={norms[norm]}
         {...props}
-        side={BackSide}
+        side={DoubleSide}
       />
     </mesh>
   )

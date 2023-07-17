@@ -18,7 +18,7 @@ export const Layout = () => {
   return (
     <div className="h-screen" onClick={handleInteraction}>
       <SceneNavigation />
-      <Leva collapsed={true} hidden={!__DEV__} />
+      <Leva collapsed={false} hidden={!__DEV__} />
       <Canvas>
         <color attach="background" args={['#000']} />
         <LoadingScene />
