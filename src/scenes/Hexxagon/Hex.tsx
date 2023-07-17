@@ -16,11 +16,11 @@ type Props = JSX.IntrinsicElements['mesh'] & CellData
 export function Hex(props: Props) {
   const { position, q, r, ...meshProps } = props
 
-  const { hexLabels } = useControls({ hexLabels: true })
+  const { hexLabels } = useControls({ hexLabels: false })
 
   return (
     <group position={position}>
-      <mesh {...meshProps} />
+      <mesh {...meshProps} receiveShadow />
 
       <Text
         position-y={6}

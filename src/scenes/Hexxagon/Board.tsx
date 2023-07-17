@@ -1,12 +1,21 @@
+import { useLoader } from '@react-three/fiber'
+import { useControls } from 'leva'
 import { forwardRef, useMemo } from 'react'
 import {
+  BackSide,
   DoubleSide,
+  FrontSide,
   Group,
   LatheGeometry,
+  Material,
   MeshMatcapMaterial,
+  MeshPhysicalMaterial,
+  MeshStandardMaterial,
+  Texture,
   Vector2,
   Vector3,
 } from 'three'
+import { RGBELoader } from 'three-stdlib'
 
 import { CellData, Hex } from './Hex'
 import { useMatcap, useNormalMap } from './Textures'
@@ -56,17 +65,53 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
     () =>
       new MeshMatcapMaterial({
         matcap,
-        normalMap,
+        // normalMap,
         flatShading: true,
         side: DoubleSide,
       }),
-    [matcap, normalMap]
+    [matcap]
   )
+
+  // const envMap = useLoader<Texture>(RGBELoader, "industrial_sunset_puresky_1k.hdr")
+  const materialPhysical = useMemo(() => {
+    return new MeshPhysicalMaterial({
+      side: BackSide,
+      color: 'purple',
+      roughness: 0.1,
+      metalness: 0.5,
+      flatShading: true,
+    })
+  }, [])
+
+  const materialStandard = useMemo(() => {
+    return new MeshStandardMaterial({
+      side: BackSide,
+      color: 'hotpink',
+      roughness: 0.1,
+      metalness: 0.5,
+      flatShading: true,
+    })
+  }, [])
+
+  const mats = {
+    matcap: materialMatcap,
+    physical: materialPhysical,
+    standard: materialStandard,
+  } as Record<string, Material>
+
+  const config = useControls({
+    material: { options: ['matcap', 'physical', 'standard'] },
+  })
 
   return (
     <group scale={[widthRatio, 1, 1]} ref={ref}>
       {boardData.flat().map((cell, i) => (
-        <Hex geometry={geometry} material={materialMatcap} {...cell} key={i} />
+        <Hex
+          geometry={geometry}
+          material={mats[config.material]}
+          {...cell}
+          key={i}
+        />
       ))}
     </group>
   )

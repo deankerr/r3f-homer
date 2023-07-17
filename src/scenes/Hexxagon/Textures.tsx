@@ -20,7 +20,7 @@ export function useMatcap() {
 export function useNormalMap() {
   const { normalMap: n } = useControls({
     normalMap: {
-      value: MathUtils.randInt(-1, normalPaths.length) - 1,
+      value: -1,
       min: -1,
       max: normalPaths.length - 1,
       step: 1,
@@ -31,7 +31,7 @@ export function useNormalMap() {
   return useMemo(() => normalMaps[n], [n, normalMaps])
 }
 
-const matcapPaths = [
+const matcapPathsAll = [
   'matcaps/64/0A0A0A_A9A9A9_525252_747474-64px.png',
   'matcaps/64/0C0CC3_04049F_040483_04045C-64px.png',
   'matcaps/64/0C430C_257D25_439A43_3C683C-64px.png',
@@ -702,4 +702,36 @@ const normalPaths = [
   'normals/Wall3_normalmap.jpg', // fine wood
   // 'normals/Worn Temple Wall.jpg',
   'normals/wrinkle-normal.jpg',
+]
+
+const matcapPaths = [
+  'matcaps/64/5F1827_9B4A60_1F0404_340406-64px.png',
+  'matcaps/64/6E2E36_D3A1A0_BD7175_C78C8B-64px.png',
+  'matcaps/64/8A3B3D_DA5F62_461F20_BC7F81-64px.png',
+  'matcaps/64/8C5945_D4C0B6_C3A49C_430504-64px.png',
+  'matcaps/64/8F4277_361530_BF538E_52274C-64px.png',
+  'matcaps/64/9D282A_38191D_DFC6CD_D6495A-64px.png',
+  'matcaps/64/9F1A27_F1AF7F_CD5845_D08441-64px.png',
+  'matcaps/64/812E39_551C24_381117_9E3C49-64px.png',
+  'matcaps/64/910E5A_E127C3_CF1CA3_C1158F-64px.png',
+  'matcaps/64/9650CA_46236A_7239A6_633492-64px.png',
+  'matcaps/64/68049F_C90DE6_A404CF_B304DC-64px.png',
+  'matcaps/64/89204B_17080D_DA4377_F780B5-64px.png',
+  'matcaps/64/98332E_4A100D_691A16_A85A5B-64px.png',
+  'matcaps/64/AB2C2C_EBB4B3_561212_DE8484-64px.png',
+  'matcaps/64/AC171C_FA8593_E84854_D3464E-64px.png',
+  'matcaps/64/BD5345_460F11_732622_EDB7B1-64px.png',
+  'matcaps/64/C21338_920C24_E71C54_F34A7D-64px.png',
+  'matcaps/64/C33829_48171A_752523_942923-64px.png',
+  'matcaps/64/D04444_AF2F2F_8B2424_9B2C2C-64px.png',
+  'matcaps/64/3E2335_D36A1B_8E4A2E_2842A5-64px.png',
+  'matcaps/64/7B5254_E9DCC7_B19986_C8AC91-64px.png',
+  'matcaps/64/422509_C89536_824512_0A0604-64px.png',
+  'matcaps/64/36220C_C6C391_8C844A_8B7B4C-64px.png',
+  'matcaps/64/2A2D21_555742_898974_6C745B-64px.png',
+  'matcaps/64/74A192_041B0D_194C33_235B4C-64px.png',
+  'matcaps/64/181F1F_475057_616566_525C62-64px.png',
+  'matcaps/64/593E2C_E5D8A9_BC9F79_9F8A68-64px.png',
+  'matcaps/64/ED5087_FAC3D0_1C0B0C_FC84CC-64px.png',
+  'matcaps/64/EE4128_FC8E82_9A0704_BF0F05-64px.png',
 ]
