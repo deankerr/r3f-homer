@@ -3,6 +3,7 @@ import {
   Environment,
   OrthographicCamera,
   PerspectiveCamera,
+  Plane,
   useTexture,
 } from '@react-three/drei'
 import { useControls } from 'leva'
@@ -18,11 +19,22 @@ import {
   Vector3,
 } from 'three'
 
+/* 
+[3, 2],
+[2, 2],
+[1.25, 5],
+[0, 5]
+*/
+
+// 2 border - 4 slope - 10 pit
+const radius = 16
+const ratio = 1
+
 const hexPoints = [
-  [3, 2],
-  [2, 2],
-  [1.25, 5],
-  [0, 5],
+  [radius, 0],
+  [radius - 2, 0],
+  [radius - 4 - 2, 10],
+  [0, 10],
 ].map(p => new Vector2(...p))
 
 export function Component() {
@@ -46,10 +58,9 @@ export function Component() {
   const norms = useTexture(normPaths)
 
   const geometry = useMemo(() => {
-    const geom = new LatheGeometry(hexPoints, 6)
-    geom.rotateY(-Math.PI / 2)
-    geom.rotateX(-Math.PI / 2)
-    geom.scale(1.5, 1, 1)
+    const geom = new LatheGeometry(hexPoints, 6, Math.PI / 2)
+    geom.rotateX(Math.PI / 2)
+    // geom.scale(ratio, 1, 1)
     return geom
   }, [])
 
@@ -63,88 +74,61 @@ export function Component() {
       }),
     [flatShading, matCapN, matcaps, normalN, norms]
   )
+
   /* 
   q: y axies
   r: x axis (diagonal top left to bottom right)
   */
 
+  console.log(geometry)
   const hexCoord = useMemo(() => {
     const heightList = [5, 6, 7, 8, 9, 8, 7, 6, 5]
-    const xOffset = 6.75
-    const yOffset = 5.2
+    const width = 2 * radius
+    const height = Math.sqrt(3) * radius
 
     return heightList.map((colHeight, i) => {
       const q = i - Math.floor(heightList.length / 2)
+      const x = 0.75 * width * q
 
       return [...new Array<Vector3>(colHeight)].map((_, j) => {
         const r = j - Math.floor(colHeight / 2)
-        const yStep = i % 2 === 0 ? 0 : 2.6
+        const alternate = (i % 2) * (height / 2)
+        const y = height * r + alternate
 
-        return new Vector3(q * xOffset, r * yOffset + yStep, 0)
+        return new Vector3(x, y, 0)
       })
     })
   }, [])
+  console.log(hexCoord)
 
   return (
     <>
       {/* <OrthographicCamera makeDefault position={[0, 0, -10]} /> */}
       {/* <Environment preset="studio" /> */}
-      <PerspectiveCamera makeDefault position={[0, 10, 20]} />
+      <PerspectiveCamera makeDefault position={[0, 0, -20]} />
       <CameraControls />
 
-      {/* {hexCoord.flat().map((pos, i) => (
-        <Hex
-          position={pos}
-          matcap={matcaps[matCapN]}
-          normalMap={norms[normalN]}
-          flatShading={true}
-          key={i}
-        />
-      ))} */}
       {hexCoord.flat().map((pos, i) => (
         <mesh position={pos} geometry={geometry} material={material} key={i} />
       ))}
 
-      <axesHelper />
-      {/* <ambientLight /> */}
+      <axesHelper args={[radius]} />
+
       <pointLight position={[15, 10, 15]} intensity={0.5} />
     </>
   )
 }
 Component.displayName = 'Hexxagon'
 
-type HexProps = {
-  position: Vector3
-  matcap: Texture
-  normalMap: Texture
-  flatShading: boolean
-}
-function Hex({ position, flatShading, normalMap, matcap }: HexProps) {
-  console.log(normalMap)
-  return (
-    <mesh
-      rotation-x={-Math.PI / 2}
-      rotation-y={-Math.PI / 2}
-      scale={[1, 1, 1.5]}
-      position={position}
-    >
-      <latheGeometry args={[hexPoints, 6]} />
-
-      <meshMatcapMaterial
-        matcap={matcap}
-        flatShading={flatShading}
-        side={DoubleSide}
-      />
-    </mesh>
-  )
-}
-
-// function Hex2() {}
 /* 
 good
 'matcaps/64/D64480_E27497_EA9BB1_CD156F-64px.png',
 17, 18 - plain metal
-156 168 173 269 284 326 336 341 466 470 513 550 551 591
+pink/purple 156 168 173 269 284 292 326 336 341 466 470 513 550 551 591
+
+white gold 235+5
+emeraldy 189+4 197+4
+bronze plates 19+5
  */
 
 // norm 7 11 16 18
@@ -793,30 +777,30 @@ const matPaths = [
 ]
 
 const normPaths = [
-  'normals/02.jpg',
-  'normals/242-normal.jpg',
+  // 'normals/02.jpg', 0
+  // 'normals/242-normal.jpg', 1
   'normals/243-normal.jpg',
   'normals/295-normal.jpg',
   'normals/879-normal.jpg',
   'normals/1324-normal.jpg',
-  'normals/2563-normal.jpg',
+  // 'normals/2563-normal.jpg', 6
   'normals/4918-normal.jpg',
-  'normals/6624-normal.jpg',
-  'normals/7146-normal.jpg',
-  'normals/99232450425c8132b17dbccf65da365a.jpg',
+  // 'normals/6624-normal.jpg', 8
+  // 'normals/7146-normal.jpg',9
+  // 'normals/99232450425c8132b17dbccf65da365a.jpg', 10
   'normals/brick-normal.jpg',
-  'normals/cr_wallpaper1_NRM.jpg',
-  'normals/fig29.png',
-  'normals/floor2_ddn.jpg',
-  'normals/forestfloornrmii7.jpg',
+  // 'normals/cr_wallpaper1_NRM.jpg',12
+  // 'normals/fig29.png', 13
+  'normals/floor2_ddn.jpg', // try spinning? 14
+  'normals/forestfloornrmii7.jpg', // wood 15
   'normals/metal1_normalmap.jpg',
-  'normals/normal.jpg',
+  'normals/normal.jpg', // 17
   'normals/normalmap_tile_even.jpg',
-  'normals/normalmap1.jpg',
-  'normals/Rock_01_local.jpg',
-  'normals/stage7.jpg',
-  'normals/stone_wall_normal_map.jpg',
-  'normals/Wall3_normalmap.jpg',
-  'normals/Worn Temple Wall.jpg',
+  // 'normals/normalmap1.jpg', 19
+  // 'normals/Rock_01_local.jpg', 20
+  'normals/stage7.jpg', // wood
+  'normals/stone_wall_normal_map.jpg', // try spinning? 22
+  'normals/Wall3_normalmap.jpg', // fine wood
+  // 'normals/Worn Temple Wall.jpg',
   'normals/wrinkle-normal.jpg',
 ]
