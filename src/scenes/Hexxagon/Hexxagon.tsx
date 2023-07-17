@@ -10,45 +10,71 @@ import { useMemo } from 'react'
 import {
   BackSide,
   DoubleSide,
+  LatheGeometry,
   MathUtils,
+  MeshMatcapMaterial,
   Texture,
   Vector2,
   Vector3,
 } from 'three'
 
+const hexPoints = [
+  [3, 2],
+  [2, 2],
+  [1.25, 5],
+  [0, 5],
+].map(p => new Vector2(...p))
+
 export function Component() {
-  const { matCapN, normalN, useMatCap, useNormal } = useControls({
-    useMatCap: true,
+  const { matCapN, normalN, flatShading } = useControls({
     matCapN: {
       value: MathUtils.randInt(1, matPaths.length) - 1,
       min: 0,
       max: matPaths.length - 1,
       step: 1,
     },
-    useNormal: true,
     normalN: {
       value: MathUtils.randInt(1, normPaths.length) - 1,
-      min: 0,
+      min: -1,
       max: normPaths.length - 1,
       step: 1,
     },
+    flatShading: true,
   })
 
   const matcaps = useTexture(matPaths)
   const norms = useTexture(normPaths)
 
+  const geometry = useMemo(() => {
+    const geom = new LatheGeometry(hexPoints, 6)
+    geom.rotateY(-Math.PI / 2)
+    geom.rotateX(-Math.PI / 2)
+    geom.scale(1.5, 1, 1)
+    return geom
+  }, [])
+
+  const material = useMemo(
+    () =>
+      new MeshMatcapMaterial({
+        matcap: matcaps[matCapN],
+        normalMap: norms[normalN],
+        flatShading,
+        side: DoubleSide,
+      }),
+    [flatShading, matCapN, matcaps, normalN, norms]
+  )
   /* 
   q: y axies
   r: x axis (diagonal top left to bottom right)
   */
 
   const hexCoord = useMemo(() => {
-    const hList = [5, 6, 7, 8, 9, 8, 7, 6, 5]
+    const heightList = [5, 6, 7, 8, 9, 8, 7, 6, 5]
     const xOffset = 6.75
     const yOffset = 5.2
 
-    return hList.map((colHeight, i) => {
-      const q = i - Math.floor(hList.length / 2)
+    return heightList.map((colHeight, i) => {
+      const q = i - Math.floor(heightList.length / 2)
 
       return [...new Array<Vector3>(colHeight)].map((_, j) => {
         const r = j - Math.floor(colHeight / 2)
@@ -66,7 +92,7 @@ export function Component() {
       <PerspectiveCamera makeDefault position={[0, 10, 20]} />
       <CameraControls />
 
-      {hexCoord.flat().map((pos, i) => (
+      {/* {hexCoord.flat().map((pos, i) => (
         <Hex
           position={pos}
           matcap={matcaps[matCapN]}
@@ -74,6 +100,9 @@ export function Component() {
           flatShading={true}
           key={i}
         />
+      ))} */}
+      {hexCoord.flat().map((pos, i) => (
+        <mesh position={pos} geometry={geometry} material={material} key={i} />
       ))}
 
       <axesHelper />
@@ -86,22 +115,12 @@ Component.displayName = 'Hexxagon'
 
 type HexProps = {
   position: Vector3
-  matcap: Texture | null
-  normalMap: Texture | null
+  matcap: Texture
+  normalMap: Texture
   flatShading: boolean
 }
-function Hex({ position, ...props }: HexProps) {
-  const points = useMemo(
-    () =>
-      [
-        [3, 2],
-        [2, 2],
-        [1.25, 5],
-        [0, 5],
-      ].map(p => new Vector2(...p)),
-    []
-  )
-
+function Hex({ position, flatShading, normalMap, matcap }: HexProps) {
+  console.log(normalMap)
   return (
     <mesh
       rotation-x={-Math.PI / 2}
@@ -109,18 +128,18 @@ function Hex({ position, ...props }: HexProps) {
       scale={[1, 1, 1.5]}
       position={position}
     >
-      <latheGeometry args={[points, 6]} />
+      <latheGeometry args={[hexPoints, 6]} />
 
       <meshMatcapMaterial
-        // matcap={matcaps[mat]}
-        // flatShading={flat}
-        // normalMap={norms[norm]}
-        {...props}
+        matcap={matcap}
+        flatShading={flatShading}
         side={DoubleSide}
       />
     </mesh>
   )
 }
+
+// function Hex2() {}
 /* 
 good
 'matcaps/64/D64480_E27497_EA9BB1_CD156F-64px.png',
