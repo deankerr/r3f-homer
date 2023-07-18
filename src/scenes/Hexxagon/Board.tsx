@@ -1,12 +1,5 @@
 import { forwardRef, useMemo } from 'react'
-import {
-  DoubleSide,
-  Group,
-  LatheGeometry,
-  MeshMatcapMaterial,
-  Vector2,
-  Vector3,
-} from 'three'
+import { DoubleSide, Group, MeshMatcapMaterial, Vector3 } from 'three'
 
 import { CellData, Hex } from './Hex'
 import { useMatcap } from './Textures'
@@ -15,17 +8,11 @@ import { useMatcap } from './Textures'
 const columns = [5, 6, 7, 8, 9, 8, 7, 6, 5]
 
 // hex
-const radius = 16
-const width = 2 * radius
-const height = Math.sqrt(3) * radius
-const widthRatio = 2
+const hexRadius = 8
+const hexWidth = 2 * hexRadius
+const hexHeight = Math.sqrt(3) * hexRadius
 
-const hexPoints = [
-  [radius, 0], // outer
-  [14, 0], // border
-  [10, 10], //  slope
-  [0, 10], // pit
-].map(p => new Vector2(...p))
+const boardScale = [0.2, 0.1, 0.1] as const
 
 type Props = JSX.IntrinsicElements['group']
 export const Board = forwardRef<Group, Props>((props, ref) => {
@@ -33,23 +20,17 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
   const boardData = useMemo(() => {
     return columns.map((columnSize, i) => {
       const q = i - Math.floor(columns.length / 2)
-      const x = 0.75 * width * q
+      const x = 0.75 * hexWidth * q
 
       return [...new Array<CellData>(columnSize)].map((_, j) => {
         const r = j - Math.floor(columnSize / 2)
-        const alternate = (i % 2) * (height / 2)
-        const y = height * r + alternate
+        const alternate = (i % 2) * (hexHeight / 2)
+        const y = hexHeight * r + alternate
 
         return { position: new Vector3(x, y, 0), q, r }
       })
     })
   }, [])
-
-  // geometry
-  const geometry = useMemo(
-    () => new LatheGeometry(hexPoints, 6, -Math.PI / 2).rotateX(-Math.PI / 2),
-    []
-  )
 
   // material
   const matcap = useMatcap()
@@ -64,9 +45,9 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
   )
 
   return (
-    <group ref={ref} scale={[0.2, 0.1, 0.1]}>
+    <group ref={ref} scale={boardScale}>
       {boardData.flat().map((cell, j) => (
-        <Hex geometry={geometry} material={material} {...cell} key={j} />
+        <Hex material={material} {...cell} key={j} />
       ))}
     </group>
   )

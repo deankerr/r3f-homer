@@ -1,8 +1,20 @@
 import { Text } from '@react-three/drei'
 import { useControls } from 'leva'
-import { Vector3 } from 'three'
+import { LatheGeometry, Vector2, Vector3 } from 'three'
 
-const fontSize = 6
+// geometry
+const hexShape = [
+  [8, 0], // outer
+  [7, 0], // border
+  [5, 5], //  slope
+  [0, 5], // pit
+].map(p => new Vector2(...p))
+
+const geometry = new LatheGeometry(hexShape, 6, -Math.PI / 2).rotateX(
+  -Math.PI / 2
+)
+
+const labelFontSize = 4
 
 export type CellData = {
   position: Vector3
@@ -20,20 +32,20 @@ export function Hex(props: Props) {
 
   return (
     <group position={position}>
-      <mesh {...meshProps} receiveShadow />
+      <mesh {...meshProps} geometry={geometry} />
 
       <Text
-        position-y={6}
+        position-y={3}
         material-color={'red'}
-        fontSize={fontSize}
+        fontSize={labelFontSize}
         visible={hexLabels}
       >{`${q}`}</Text>
 
       <Text
-        position-x={5}
-        position-y={-5}
+        position-x={3}
+        position-y={-3}
         material-color={'blue'}
-        fontSize={fontSize}
+        fontSize={labelFontSize}
         visible={hexLabels}
       >{`${r}`}</Text>
     </group>
