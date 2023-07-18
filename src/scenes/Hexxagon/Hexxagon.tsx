@@ -11,7 +11,7 @@ import {
 import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
-import { Group } from 'three'
+import { DoubleSide, Group } from 'three'
 
 import { Board } from './Board'
 import { Board2 } from './Board2'
@@ -26,7 +26,7 @@ export function Component() {
   useEffect(() => {
     if (cameraRef.current && boardRef.current) {
       // void cameraRef.current.setLookAt(0, 0, 50, 0, 0, 0)
-      void cameraRef.current.fitToBox(boardRef.current, false)
+      // void cameraRef.current.fitToBox(boardRef.current, false)
     }
   }, [])
 
@@ -39,14 +39,14 @@ export function Component() {
     <>
       <CameraControls ref={cameraRef} />
 
-      <Board ref={boardRef} />
+      <Board ref={boardRef} position={[0, -16, 0]} />
       <Board2 />
 
       <group ref={starsRef}>{/* <Stars radius={200} factor={5} /> */}</group>
 
       {/* <axesHelper args={[20]} /> */}
       <pointLight position={[40, 0, 40]} intensity={2} />
-      <Grid visible={config.grid} infiniteGrid={true} />
+      <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} />
       {/* <hemisphereLight intensity={0.35} position={[40, 0, 40]}  /> */}
       {config.stats && <Stats />}
     </>

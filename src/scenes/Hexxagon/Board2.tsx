@@ -1,15 +1,18 @@
-import { create } from 'domain'
 import { useMemo } from 'react'
 import { DoubleSide, MeshMatcapMaterial, Vector3 } from 'three'
 
+import { Hex2 } from './Hex2'
 import { useMatcap } from './Textures'
 
-export function Board2() {
-  const size = 2
+const size = 4
 
+const scale = [0.1, 0.1, 0.1] as const
+
+export function Board2() {
   const hexMap = new Map([[new Vector3(0, 0, 0), createCell(0, 0, 0)]])
 
-  const vecs = inRange(new Vector3(0, 0, 0), 3)
+  const vecs = inRange(new Vector3(0, 0, 0), size)
+  console.log(vecs)
 
   // material
   const matcap = useMatcap()
@@ -23,9 +26,13 @@ export function Board2() {
     [matcap]
   )
 
-  console.log(vecs)
-
-  return <>{/* component */}</>
+  return (
+    <group scale={scale}>
+      {vecs.map((position, i) => (
+        <Hex2 vector={position} key={i} material={material} />
+      ))}
+    </group>
+  )
 }
 
 const directions = [
@@ -58,11 +65,11 @@ function inRange(origin: Vector3, range: number) {
   for (let x = -range; x <= range; x++) {
     for (
       let y = Math.max(-range, -x - range);
-      y <= Math.min(range, -x - range);
+      y <= Math.min(range, -x + range);
       y++
     ) {
       const z = -x - y
-      results.push(new Vector3(x, y, z))
+      results.push(new Vector3(x, y, z).add(origin))
     }
   }
   return results

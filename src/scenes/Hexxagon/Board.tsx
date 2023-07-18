@@ -45,7 +45,7 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
   )
 
   return (
-    <group ref={ref} scale={boardScale}>
+    <group ref={ref} scale={boardScale} {...props}>
       {boardData.flat().map((cell, j) => (
         <Hex material={material} {...cell} key={j} />
       ))}
