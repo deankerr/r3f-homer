@@ -1,9 +1,47 @@
 import { useTexture } from '@react-three/drei'
+import { useControls } from 'leva'
 
 export function useMatcap() {
-  const path = 'matcaps/64/3E2335_D36A1B_8E4A2E_2842A5-64px.png' //light gold w/ purple ref
+  const path = 'matcaps/board/3E2335_D36A1B_8E4A2E_2842A5-64px.png' //light gold w/ purple ref
   return useTexture(path)
 }
+
+export function useNormal(label: string, value = 0) {
+  const { normal } = useControls(label, {
+    normal: { value, min: 0, max: normalPaths.length - 1, step: 1 },
+  })
+
+  const texture = useTexture(normalPaths[normal])
+  return texture
+}
+const normalPaths = [
+  'normals/1324-normal.jpg',
+  'normals/2563-normal.jpg',
+  'normals/4918-normal.jpg',
+  'normals/6624-normal.jpg',
+  'normals/7146-normal.jpg',
+  'normals/99232450425c8132b17dbccf65da365a.jpg',
+  'normals/brick-normal.jpg',
+  'normals/cr_wallpaper1_NRM.jpg',
+  'normals/fig29.png',
+  'normals/floor2_ddn.jpg',
+  'normals/forestfloornrmii7.jpg',
+  'normals/metal1_normalmap.jpg',
+  'normals/normal.jpg',
+  'normals/normalmap_tile_even.jpg',
+  'normals/normalmap1.jpg',
+  'normals/Rock_01_local.jpg',
+  'normals/stage7.jpg',
+  'normals/stone_wall_normal_map.jpg',
+  'normals/Wall3_normalmap.jpg',
+  'normals/Worn Temple Wall.jpg',
+  'normals/wrinkle-normal.jpg',
+  'normals/02.jpg',
+  'normals/242-normal.jpg',
+  'normals/243-normal.jpg',
+  'normals/295-normal.jpg',
+  'normals/879-normal.jpg',
+]
 
 // 'matcaps/64/hexboard/pink/C21338_920C24_E71C54_F34A7D-64px.png', //bubblegum pink
 // 'matcaps/64/hexboard/pink/910E5A_E127C3_CF1CA3_C1158F-64px.png', //lilac
@@ -25,3 +63,17 @@ export function useMatcap() {
 // 'matcaps/64/hexboard/other/3E2335_D36A1B_8E4A2E_2842A5-64px.png', //light gold w/ purple ref
 // 'matcaps/64/hexboard/other/7B5254_E9DCC7_B19986_C8AC91-64px.png', // bright fold w/ purple ref
 // 'matcaps/64/hexboard/other/593E2C_E5D8A9_BC9F79_9F8A68-64px.png', // very cloud cream (try uprez)
+
+// '773012_AE5124_4D1908_340F04-512px.png', // wood
+
+// '72625B_F0DFD0_D9BAA5_C3A595-512px.png', // silver
+// '6E7181_D1CFDF_ABAFC7_B4BCCE-512px.png', // silver
+
+// '593E2C_E5D8A9_BC9F79_9F8A68-512px.png', // rose gold
+// '515151_DCDCDC_B7B7B7_9B9B9B-512px.png', // silver d edge
+// '4F4C45_A7AEAA_7A8575_9D97A2-512px.png', // green mineral
+// '46804D_CBE9AC_90B57C_95D38F-512px.png', // emerald b
+
+// '3F3A2F_91D0A5_7D876A_94977B-512px.png', // rose gold d
+// '0A0A0A_A9A9A9_525252_747474-512px.png', // black metal
+// '624541_FCD0C6_E4A19A_FCBCB4-512px.png', // rose gold
