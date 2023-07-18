@@ -1,7 +1,7 @@
 import { Text } from '@react-three/drei'
 import { useControls } from 'leva'
 import { useMemo } from 'react'
-import { LatheGeometry, Vector2, Vector3 } from 'three'
+import { DoubleSide, LatheGeometry, Vector2, Vector3 } from 'three'
 
 // lathe size
 const radius = 8
@@ -12,26 +12,37 @@ const height = 1
 
 const labelFontSize = 4
 
-const geometry = createHexGeometry(width, height)
+const [geometry, selectedGeometry] = createHexGeometry(width, height)
 
 type Props = {
   vector: Vector3
+  selected: boolean
+  id: number
 } & JSX.IntrinsicElements['mesh']
 
 export function Hex(props: Props) {
+  const { vector, material, selected, onClick, id } = props
+
   const { showHexVectors } = useControls({ showHexVectors: __DEV__ })
 
-  const position = useMemo(() => hexToPixel(props.vector), [props.vector])
+  const position = useMemo(() => hexToPixel(vector), [vector])
 
   return (
-    <group position={position}>
-      <mesh {...props} geometry={geometry} />
-      {showHexVectors && HexVectorLabel(props.vector)}
+    <group position={position} onClick={onClick}>
+      <mesh material={material} geometry={geometry} />
+      {showHexVectors && HexVectorLabel(vector, id)}
+      <mesh
+        material-color="lime"
+        geometry={selectedGeometry}
+        visible={selected}
+        position-z={1}
+        material-side={DoubleSide}
+      />
     </group>
   )
 }
 
-function HexVectorLabel(vector: Vector3) {
+function HexVectorLabel(vector: Vector3, id: number) {
   return (
     <group>
       <Text
@@ -53,6 +64,10 @@ function HexVectorLabel(vector: Vector3) {
         material-color={'lime'}
         fontSize={labelFontSize}
       >{`${vector.z}`}</Text>
+
+      <Text material-color={'white'} fontSize={labelFontSize}>
+        {id}
+      </Text>
     </group>
   )
 }
@@ -60,7 +75,7 @@ function HexVectorLabel(vector: Vector3) {
 function hexToPixel(vector: Vector3) {
   const x = radius * ((3 / 2) * vector.x)
   const y = radius * ((Math.sqrt(3) / 2) * vector.x + Math.sqrt(3) * vector.y)
-  console.log('pixe')
+  console.log('hextopixel')
   return new Vector3(x * width, y * height, 0)
 }
 
@@ -72,7 +87,17 @@ function createHexGeometry(width: number, height: number) {
     [0, 5], // pit
   ].map(p => new Vector2(...p))
 
-  return new LatheGeometry(hexShape, 6, -Math.PI / 2)
+  const main = new LatheGeometry(hexShape, 6, -Math.PI / 2)
     .rotateX(-Math.PI / 2)
     .scale(width, height, 1)
+
+  const selected = new LatheGeometry(
+    [hexShape[0], hexShape[1]],
+    6,
+    -Math.PI / 2
+  )
+    .rotateX(-Math.PI / 2)
+    .scale(width, height, 1)
+
+  return [main, selected]
 }

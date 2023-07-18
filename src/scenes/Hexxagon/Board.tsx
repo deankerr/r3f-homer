@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { DoubleSide, MeshMatcapMaterial, Vector3 } from 'three'
 
 import { Hex } from './Hex'
@@ -8,11 +8,10 @@ const size = 4
 const scale = [0.1, 0.1, 0.1] as const
 
 export function Board() {
-  const hexMap = new Map([[new Vector3(0, 0, 0), createCell(0, 0, 0)]])
+  const vectors = useMemo(() => createHexes(size), [])
+  const [selected, setSelected] = useState<number[]>([])
 
-  const vecs = inRange(new Vector3(0, 0, 0), size)
-
-  // material
+  // shared material
   const matcap = useMatcap()
   const material = useMemo(
     () =>
@@ -24,10 +23,23 @@ export function Board() {
     [matcap]
   )
 
+  function handleClick(id: number) {
+    console.log('clicked', id)
+    if (selected.includes(id)) setSelected([])
+    else setSelected([id])
+  }
+
   return (
     <group scale={scale}>
-      {vecs.map((position, i) => (
-        <Hex vector={position} key={i} material={material} />
+      {vectors.map((vector, i) => (
+        <Hex
+          vector={vector}
+          key={i}
+          id={i}
+          selected={selected.includes(i)}
+          material={material}
+          onClick={() => handleClick(i)}
+        />
       ))}
     </group>
   )
@@ -42,16 +54,12 @@ const directions = [
   new Vector3(0, -1, 1),
 ]
 
-type Cell = {
-  position: Vector3
-}
-
-function createCell(x: number, y: number, z: number) {
-  return { x, y, z }
+function createHexes(size: number) {
+  const origin = new Vector3(0, 0, 0)
+  return inRange(origin, size)
 }
 
 // https://www.redblobgames.com/grids/hexagons-v2/
-
 function neighbours(from: Vector3) {
   return directions.map(d => from.add(from))
 }
@@ -70,6 +78,6 @@ function inRange(origin: Vector3, range: number) {
       results.push(new Vector3(x, y, z).add(origin))
     }
   }
-  console.log('Hexes:', results.length)
+  console.log('Hexes in range:', results.length)
   return results
 }
