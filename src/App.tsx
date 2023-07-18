@@ -32,7 +32,6 @@ const router = createBrowserRouter([
         path: 'believe',
         lazy: () => import('./scenes/Believe/Believe'),
       },
-
       {
         path: 'hexxagon',
         lazy: () => import('./scenes/Hexxagon/Hexxagon'),
