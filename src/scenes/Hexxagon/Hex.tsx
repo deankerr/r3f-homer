@@ -48,6 +48,14 @@ export function Hex(props: Props) {
         fontSize={labelFontSize}
         visible={hexLabels}
       >{`${r}`}</Text>
+
+      <Text
+        position-x={-3}
+        position-y={-3}
+        material-color={'lime'}
+        fontSize={labelFontSize}
+        visible={hexLabels}
+      >{`${-q - r}`}</Text>
     </group>
   )
 }

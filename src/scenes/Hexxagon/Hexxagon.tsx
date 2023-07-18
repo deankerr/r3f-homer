@@ -14,6 +14,7 @@ import { useEffect, useRef } from 'react'
 import { Group } from 'three'
 
 import { Board } from './Board'
+import { Board2 } from './Board2'
 
 const starsSpeed = 0.001
 
@@ -39,6 +40,7 @@ export function Component() {
       <CameraControls ref={cameraRef} />
 
       <Board ref={boardRef} />
+      <Board2 />
 
       <group ref={starsRef}>{/* <Stars radius={200} factor={5} /> */}</group>
 
