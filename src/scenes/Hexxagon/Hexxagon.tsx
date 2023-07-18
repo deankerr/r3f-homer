@@ -2,7 +2,7 @@ import { Box, CameraControls, Grid, Stats } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
-import { DoubleSide, Group } from 'three'
+import { DoubleSide, Group, PlaneGeometry } from 'three'
 
 import { Board } from './Board'
 import { Pearl } from './Pearl'
@@ -15,12 +15,13 @@ export function Component() {
 
   useEffect(() => {
     if (cameraRef.current && boardRef.current) {
-      void cameraRef.current.fitToBox(boardRef.current, false)
+      // void cameraRef.current.fitToBox(boardRef.current, false)
     }
   }, [])
 
   const lightPosition = [-20, 15, 20] as const
 
+  const tg = new PlaneGeometry(16, 16)
   return (
     <>
       <CameraControls ref={cameraRef} />
@@ -32,6 +33,7 @@ export function Component() {
 
       <Ruby position-z={40} />
       <Pearl position-z={40} position-x={20} />
+      <Pearl position-z={40} position-x={40} geometry={tg} />
 
       <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} />
       {config.stats && <Stats />}

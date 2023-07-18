@@ -50,7 +50,7 @@ const geometry = new LatheGeometry(
   -Math.PI / 2
 )
   .rotateX(-Math.PI / 2)
-  .scale(scale * 2, scale, scale)
+  .scale(scale * 1.7, scale, scale)
 
 const paths = [
   'AB2C2C_EBB4B3_561212_DE8484-512px.png', // r b tl

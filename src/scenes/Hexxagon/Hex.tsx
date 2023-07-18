@@ -26,11 +26,15 @@ type Props = {
 export function Hex(props: Props) {
   const { vector, material, selected, onClick, id } = props
 
-  const { showHexVectors, allRubies, allPearls } = useControls('hex', {
-    showHexVectors: false,
-    allRubies: false,
-    allPearls: true,
-  })
+  const { showHexVectors, allRubies, allPearls, alternateGems } = useControls(
+    'hex',
+    {
+      showHexVectors: false,
+      allRubies: false,
+      allPearls: false,
+      alternateGems: true,
+    }
+  )
 
   const position = useMemo(() => hexToPixel(vector), [vector])
 
@@ -47,6 +51,7 @@ export function Hex(props: Props) {
       />
       {allRubies && <Ruby />}
       {allPearls && <Pearl />}
+      {alternateGems && vector.z % 2 ? <Ruby /> : <Pearl />}
     </group>
   )
 }

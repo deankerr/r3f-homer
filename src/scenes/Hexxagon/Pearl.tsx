@@ -1,6 +1,13 @@
-import { useTexture } from '@react-three/drei'
+import { GradientTexture, GradientType, useTexture } from '@react-three/drei'
 import { useControls } from 'leva'
-import { SphereGeometry, Vector2 } from 'three'
+import {
+  AdditiveBlending,
+  MultiplyBlending,
+  NoBlending,
+  SphereGeometry,
+  SubtractiveBlending,
+  Vector2,
+} from 'three'
 
 import { useNormal } from './Textures'
 
@@ -11,11 +18,27 @@ export function Pearl(props: Props) {
     matcap: { value: 0, min: 0, max: matcapPaths.length - 1, step: 1 },
   })
   const matcap = useTexture('matcaps/pearl/' + matcapPaths[config.matcap])
-  // const normal = useNormal('pearl', 19)
+  const normal = useNormal('pearl', 19)
 
   return (
     <mesh geometry={geometry} {...props}>
-      <meshMatcapMaterial matcap={matcap} />
+      {/* <meshMatcapMaterial
+        matcap={matcap}
+        blending={AdditiveBlending}
+        transparent={true}
+      /> */}
+
+      <meshBasicMaterial>
+        <GradientTexture
+          stops={[0, 0.25, 0.5, 0.65, 1]} // As many stops as you want
+          colors={['blue', 'blue', 'white', 'hotpink', 'hotpink']} // Colors need to match the number of stops
+          // size={16} // Size is optional, default = 1024
+          // width={1024} // Width of the canvas producing the texture, default = 16
+          // type={GradientType.Radial} // The type of the gradient, default = GradientType.Linear
+          // innerCircleRadius={1} // Optional, the radius of the inner circle of the gradient, default = 0
+          // outerCircleRadius={10} // Optional, the radius of the outer circle of the gradient, default = auto
+        />
+      </meshBasicMaterial>
     </mesh>
   )
 }
