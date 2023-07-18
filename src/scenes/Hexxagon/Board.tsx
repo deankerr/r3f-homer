@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react'
-import { DoubleSide, MeshMatcapMaterial, Vector3 } from 'three'
+import { forwardRef, useMemo, useState } from 'react'
+import { DoubleSide, Group, MeshMatcapMaterial, Vector3 } from 'three'
 
 import { Hex } from './Hex'
 import { useMatcap } from './Textures'
@@ -7,7 +7,9 @@ import { useMatcap } from './Textures'
 const size = 4
 const scale = [0.1, 0.1, 0.1] as const
 
-export function Board() {
+type Props = JSX.IntrinsicElements['mesh']
+
+export const Board = forwardRef<Group, Props>((props, ref) => {
   const vectors = useMemo(() => createHexes(size), [])
   const [selected, setSelected] = useState<number[]>([])
 
@@ -30,7 +32,7 @@ export function Board() {
   }
 
   return (
-    <group scale={scale}>
+    <group scale={scale} ref={ref}>
       {vectors.map((vector, i) => (
         <Hex
           vector={vector}
@@ -43,7 +45,8 @@ export function Board() {
       ))}
     </group>
   )
-}
+})
+Board.displayName = 'Board'
 
 const directions = [
   new Vector3(1, -1, 0),

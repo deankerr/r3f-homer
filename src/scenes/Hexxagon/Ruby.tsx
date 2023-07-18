@@ -4,11 +4,9 @@ import { DoubleSide, LatheGeometry, Vector2 } from 'three'
 
 import { useNormal } from './Textures'
 
-type Props = JSX.IntrinsicElements['mesh'] & {
-  flatShading: boolean
-}
+type Props = JSX.IntrinsicElements['mesh']
 
-export function Ruby({ flatShading, ...props }: Props) {
+export function Ruby(props: Props) {
   const config = useControls('ruby', {
     matcap: { value: 0, min: 0, max: paths.length - 1, step: 1 },
   })
@@ -21,14 +19,14 @@ export function Ruby({ flatShading, ...props }: Props) {
       <meshMatcapMaterial
         matcap={matcap}
         side={DoubleSide}
-        flatShading={flatShading}
+        flatShading={true}
         normalMap={normal}
         normalScale={new Vector2(0.2, 0.2)}
       />
     </mesh>
   )
 }
-// 20 24
+
 const scale = 0.9
 const sides = 10
 const face = 3.8

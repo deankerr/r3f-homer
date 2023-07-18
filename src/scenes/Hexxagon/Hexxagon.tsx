@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react'
 import { DoubleSide, Group } from 'three'
 
 import { Board } from './Board'
+import { Pearl } from './Pearl'
 import { Ruby } from './Ruby'
 
 export function Component() {
@@ -12,15 +13,9 @@ export function Component() {
   const cameraRef = useRef<CameraControls>(null!)
   const boardRef = useRef<Group>(null!)
 
-  const rconfig = useControls('ruby', {
-    color: '#f41600',
-    flatshading: true,
-  })
-
   useEffect(() => {
     if (cameraRef.current && boardRef.current) {
-      // void cameraRef.current.setLookAt(0, 0, 50, 0, 0, 0)
-      // void cameraRef.current.fitToBox(boardRef.current, false)
+      void cameraRef.current.fitToBox(boardRef.current, false)
     }
   }, [])
 
@@ -30,12 +25,13 @@ export function Component() {
     <>
       <CameraControls ref={cameraRef} />
 
-      <Board />
+      <Board ref={boardRef} />
 
       {/* <pointLight position={lightPosition} intensity={2} /> */}
       <Box position={lightPosition} />
 
-      <Ruby flatShading={true} position-z={40} />
+      <Ruby position-z={40} />
+      <Pearl position-z={40} position-x={20} />
 
       <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} />
       {config.stats && <Stats />}

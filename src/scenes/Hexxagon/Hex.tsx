@@ -3,6 +3,7 @@ import { useControls } from 'leva'
 import { useMemo } from 'react'
 import { DoubleSide, LatheGeometry, Vector2, Vector3 } from 'three'
 
+import { Pearl } from './Pearl'
 import { Ruby } from './Ruby'
 
 // lathe size
@@ -25,9 +26,10 @@ type Props = {
 export function Hex(props: Props) {
   const { vector, material, selected, onClick, id } = props
 
-  const { showHexVectors, rubies } = useControls({
+  const { showHexVectors, allRubies, allPearls } = useControls('hex', {
     showHexVectors: false,
-    rubies: true,
+    allRubies: false,
+    allPearls: true,
   })
 
   const position = useMemo(() => hexToPixel(vector), [vector])
@@ -43,7 +45,8 @@ export function Hex(props: Props) {
         position-z={1}
         material-side={DoubleSide}
       />
-      {rubies && <Ruby flatShading={true} />}
+      {allRubies && <Ruby />}
+      {allPearls && <Pearl />}
     </group>
   )
 }
