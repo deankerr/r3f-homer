@@ -1,36 +1,16 @@
-import { forwardRef, useMemo } from 'react'
-import { DoubleSide, Group, MeshMatcapMaterial, Vector3 } from 'three'
+import { useMemo } from 'react'
+import { DoubleSide, MeshMatcapMaterial, Vector3 } from 'three'
 
-import { CellData, Hex } from './Hex'
+import { Hex } from './Hex'
 import { useMatcap } from './Textures'
 
-// board
-const columns = [5, 6, 7, 8, 9, 8, 7, 6, 5]
+const size = 4
+const scale = [0.1, 0.1, 0.1] as const
 
-// hex
-const hexRadius = 8
-const hexWidth = 2 * hexRadius
-const hexHeight = Math.sqrt(3) * hexRadius
+export function Board() {
+  const hexMap = new Map([[new Vector3(0, 0, 0), createCell(0, 0, 0)]])
 
-const boardScale = [0.2, 0.1, 0.1] as const
-
-type Props = JSX.IntrinsicElements['group']
-export const Board = forwardRef<Group, Props>((props, ref) => {
-  // board layout
-  const boardData = useMemo(() => {
-    return columns.map((columnSize, i) => {
-      const q = i - Math.floor(columns.length / 2)
-      const x = 0.75 * hexWidth * q
-
-      return [...new Array<CellData>(columnSize)].map((_, j) => {
-        const r = j - Math.floor(columnSize / 2)
-        const alternate = (i % 2) * (hexHeight / 2)
-        const y = hexHeight * r + alternate
-
-        return { position: new Vector3(x, y, 0), q, r }
-      })
-    })
-  }, [])
+  const vecs = inRange(new Vector3(0, 0, 0), size)
 
   // material
   const matcap = useMatcap()
@@ -45,56 +25,51 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
   )
 
   return (
-    <group ref={ref} scale={boardScale} {...props}>
-      {boardData.flat().map((cell, j) => (
-        <Hex material={material} {...cell} key={j} />
+    <group scale={scale}>
+      {vecs.map((position, i) => (
+        <Hex vector={position} key={i} material={material} />
       ))}
     </group>
   )
-})
-Board.displayName = 'Board'
+}
 
-// <group scale={[widthRatio, 1, 1]} ref={ref}>
-//   {boardData.flat().map((cell, i) => (
-//     <Hex
-//       geometry={geometry}
-//       material={mats[config.material]}
-//       {...cell}
-//       key={i}
-//     />
-//   ))}
-// </group>
+const directions = [
+  new Vector3(1, -1, 0),
+  new Vector3(1, 0, -1),
+  new Vector3(0, 1, -1),
+  new Vector3(-1, 1, 0),
+  new Vector3(-1, 0, 1),
+  new Vector3(0, -1, 1),
+]
 
-/*  alternate materials
+type Cell = {
+  position: Vector3
+}
 
-const materialPhysical = useMemo(() => {
-    return new MeshPhysicalMaterial({
-      side: BackSide,
-      color: 'purple',
-      roughness: 0.1,
-      metalness: 0.5,
-      flatShading: true,
-    })
-  }, [])
+function createCell(x: number, y: number, z: number) {
+  return { x, y, z }
+}
 
-  const materialStandard = useMemo(() => {
-    return new MeshStandardMaterial({
-      side: BackSide,
-      color: 'hotpink',
-      roughness: 0.1,
-      metalness: 0.5,
-      flatShading: true,
-    })
-  }, [])
+// https://www.redblobgames.com/grids/hexagons-v2/
 
-  const mats = {
-    // matcap: materialMatcap,
-    physical: materialPhysical,
-    standard: materialStandard,
-  } as Record<string, Material>
+function neighbours(from: Vector3) {
+  return directions.map(d => from.add(from))
+}
 
-  const config = useControls({
-    material: { options: ['matcap', 'physical', 'standard'] },
-  })
+// https://www.redblobgames.com/grids/hexagons-v2/#range
+function inRange(origin: Vector3, range: number) {
+  const results: Vector3[] = []
 
-*/
+  for (let x = -range; x <= range; x++) {
+    for (
+      let y = Math.max(-range, -x - range);
+      y <= Math.min(range, -x + range);
+      y++
+    ) {
+      const z = -x - y
+      results.push(new Vector3(x, y, z).add(origin))
+    }
+  }
+  console.log('Hexes:', results.length)
+  return results
+}
