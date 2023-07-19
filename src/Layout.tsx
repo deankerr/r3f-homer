@@ -35,7 +35,7 @@ export const Layout = () => {
 //<Perf position="bottom-left" antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }}
 const SceneNavigation = () => {
   return (
-    <div className="fixed left-0 top-0 z-10">
+    <div className="fixed bottom-0 z-10 flex w-screen  justify-center gap-2 sm:bottom-auto sm:top-0">
       <SceneLink to="Rehetep" />
       <SceneLink to="Homer" />
       <SceneLink to="Believe" devOnly />
@@ -52,11 +52,7 @@ const SceneLink = ({ to, devOnly = false }: { to: string; devOnly?: boolean }) =
 
   return (
     <Link to={'/' + to.toLowerCase()}>
-      <div
-        className={`mx-1 inline-block rounded-full border-2 bg-black bg-opacity-40 px-2 uppercase ${text} ${border}`}
-      >
-        {to}
-      </div>
+      <div className={`inline rounded-full border-2 bg-black bg-opacity-40 px-2 uppercase ${text} ${border}`}>{to}</div>
     </Link>
   )
 }
