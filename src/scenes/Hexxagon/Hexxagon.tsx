@@ -17,7 +17,12 @@ import { Pearl } from './Pearl'
 import { Ruby } from './Ruby'
 
 export function Component() {
-  const config = useControls({ stats: __DEV__, grid: false, board: true })
+  const config = useControls({
+    stats: __DEV__,
+    grid: false,
+    board: true,
+    fov: { value: 50, min: 1, max: 100, step: 5 },
+  })
 
   // fit camera to board
   const boardRef = useRef<Group>(null!)
@@ -27,7 +32,7 @@ export function Component() {
     if (controlsRef.current && boardRef.current) {
       void controlsRef.current.fitToBox(boardRef.current, true)
     }
-  }, [camera])
+  }, [camera, config.fov])
 
   const lightPosition = [-10, 10, 20] as const
 
@@ -35,7 +40,7 @@ export function Component() {
 
   return (
     <>
-      <PerspectiveCamera makeDefault position-z={20} fov={50} />
+      <PerspectiveCamera makeDefault position-z={20} fov={config.fov} />
       <CameraControls ref={controlsRef} />
 
       <Board ref={boardRef} />
@@ -44,8 +49,8 @@ export function Component() {
       <ambientLight intensity={0.2} />
       <Box position={lightPosition} key={key} />
 
-      <Ruby position-z={40} />
-      <Pearl position-z={40} position-x={20} />
+      <Ruby position={[-20, 0, 40]} />
+      <Pearl position={[20, 0, 40]} />
 
       <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} />
       {config.stats && <Stats className="mt-8" />}
