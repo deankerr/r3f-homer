@@ -20,16 +20,10 @@ type GLTFResult = GLTF & {
 }
 
 export function Skull(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(
-    'model/skull-transformed.glb'
-  ) as GLTFResult
+  const { nodes, materials } = useGLTF('model/skull-transformed.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
-      <mesh
-        geometry={nodes.Object_2.geometry}
-        material={materials.defaultMat}
-        rotation={[-Math.PI / 2, 0, 0]}
-      />
+      <mesh geometry={nodes.Object_2.geometry} material={materials.defaultMat} rotation={[-Math.PI / 2, 0, 0]} />
     </group>
   )
 }

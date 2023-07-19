@@ -18,20 +18,12 @@ type GLTFResult = GLTF & {
 }
 
 export function Eye(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(
-    'model/Eye-transformed.glb'
-  ) as GLTFResult
+  const { nodes, materials } = useGLTF('model/Eye-transformed.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
       <group scale={1.04}>
-        <mesh
-          geometry={nodes.Sphere007.geometry}
-          material={materials['Eye.Shader']}
-        />
-        <mesh
-          geometry={nodes.Sphere007_1.geometry}
-          material={materials['Glass.Eye']}
-        />
+        <mesh geometry={nodes.Sphere007.geometry} material={materials['Eye.Shader']} />
+        <mesh geometry={nodes.Sphere007_1.geometry} material={materials['Glass.Eye']} />
       </group>
     </group>
   )

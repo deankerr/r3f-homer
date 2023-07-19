@@ -1,10 +1,4 @@
-import {
-  Box,
-  CameraControls,
-  Grid,
-  PerspectiveCamera,
-  Stats,
-} from '@react-three/drei'
+import { Box, CameraControls, Grid, PerspectiveCamera, Stats } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'

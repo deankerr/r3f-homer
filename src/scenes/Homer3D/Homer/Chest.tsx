@@ -7,10 +7,7 @@ import { Arm } from './Arm'
 type Props = JSX.IntrinsicElements['group'] & { skinColor: string }
 
 export function Chest({ skinColor, ...group }: Props) {
-  const [faceState, setHomerFace] = useTaxiStore(state => [
-    state.homerFace,
-    state.setHomerFace,
-  ])
+  const [faceState, setHomerFace] = useTaxiStore(state => [state.homerFace, state.setHomerFace])
 
   function handleClick() {
     if (!faceState) {
@@ -28,16 +25,8 @@ export function Chest({ skinColor, ...group }: Props) {
         <meshStandardMaterial color="white" />
       </Sphere>
 
-      <Arm
-        position={[-1.5, 2.6, 0]}
-        rotation={[0, -Math.PI / 2, 0]}
-        skinColor={skinColor}
-      />
-      <Arm
-        position={[1.5, 2.6, 0]}
-        rotation={[0, Math.PI / 2, 0]}
-        skinColor={skinColor}
-      />
+      <Arm position={[-1.5, 2.6, 0]} rotation={[0, -Math.PI / 2, 0]} skinColor={skinColor} />
+      <Arm position={[1.5, 2.6, 0]} rotation={[0, Math.PI / 2, 0]} skinColor={skinColor} />
     </group>
   )
 }

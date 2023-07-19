@@ -16,15 +16,10 @@ type GLTFResult = GLTF & {
 }
 
 export function PlasticChair(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(
-    'model/plastic_monobloc_chair_01_1k-transformed.glb'
-  ) as GLTFResult
+  const { nodes, materials } = useGLTF('model/plastic_monobloc_chair_01_1k-transformed.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
-      <mesh
-        geometry={nodes.plastic_monobloc_chair_01.geometry}
-        material={materials.plastic_monobloc_chair_01}
-      />
+      <mesh geometry={nodes.plastic_monobloc_chair_01.geometry} material={materials.plastic_monobloc_chair_01} />
     </group>
   )
 }

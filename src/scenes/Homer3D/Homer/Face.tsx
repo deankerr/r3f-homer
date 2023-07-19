@@ -19,10 +19,7 @@ export function Face({ skinColor, ...group }: Props) {
   const ref = useRef<Group>(null!)
 
   const homerState = useTaxiStore(state => state.homerState)
-  const [faceState, setHomerFace] = useTaxiStore(state => [
-    state.homerFace,
-    state.setHomerFace,
-  ])
+  const [faceState, setHomerFace] = useTaxiStore(state => [state.homerFace, state.setHomerFace])
 
   useFrame(() => {
     // rotate around the face quickly, once
@@ -70,18 +67,10 @@ export function Face({ skinColor, ...group }: Props) {
       </Sphere>
 
       {/* mouth */}
-      <Torus
-        args={[0.4, 0.4, 6]}
-        position={[0, 4, 0.5]}
-        rotation={[Math.PI / 2, 0, 0]}
-      >
+      <Torus args={[0.4, 0.4, 6]} position={[0, 4, 0.5]} rotation={[Math.PI / 2, 0, 0]}>
         <meshStandardMaterial color="sienna" />
       </Torus>
-      <Torus
-        args={[0.7, 0.1, 6]}
-        position={[0, 4, 0.525]}
-        rotation={[Math.PI / 2, 0, 0]}
-      >
+      <Torus args={[0.7, 0.1, 6]} position={[0, 4, 0.525]} rotation={[Math.PI / 2, 0, 0]}>
         <meshStandardMaterial color="#723911" />
       </Torus>
     </group>

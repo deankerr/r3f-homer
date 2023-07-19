@@ -20,13 +20,8 @@ type GLTFResult = GLTF & {
   }
 }
 
-export function Cat({
-  color,
-  ...props
-}: JSX.IntrinsicElements['group'] & { color: string }) {
-  const { nodes, materials } = useGLTF(
-    'model/egyptian_cat_figurine-transformed.glb'
-  ) as GLTFResult
+export function Cat({ color, ...props }: JSX.IntrinsicElements['group'] & { color: string }) {
+  const { nodes, materials } = useGLTF('model/egyptian_cat_figurine-transformed.glb') as GLTFResult
 
   const tintedColor = useMemo(() => {
     const tintMe = new THREE.Color(color)

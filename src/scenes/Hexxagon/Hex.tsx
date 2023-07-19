@@ -63,25 +63,11 @@ export function Hex(props: Props) {
 function HexVectorLabel(vector: Vector3, id: number) {
   return (
     <group>
-      <Text
-        position-y={3}
-        material-color={'red'}
-        fontSize={labelFontSize}
-      >{`${vector.x}`}</Text>
+      <Text position-y={3} material-color={'red'} fontSize={labelFontSize}>{`${vector.x}`}</Text>
 
-      <Text
-        position-x={4}
-        position-y={-3}
-        material-color={'blue'}
-        fontSize={labelFontSize}
-      >{`${vector.y}`}</Text>
+      <Text position-x={4} position-y={-3} material-color={'blue'} fontSize={labelFontSize}>{`${vector.y}`}</Text>
 
-      <Text
-        position-x={-4}
-        position-y={-3}
-        material-color={'lime'}
-        fontSize={labelFontSize}
-      >{`${vector.z}`}</Text>
+      <Text position-x={-4} position-y={-3} material-color={'lime'} fontSize={labelFontSize}>{`${vector.z}`}</Text>
 
       <Text material-color={'white'} fontSize={labelFontSize}>
         {id}
@@ -105,15 +91,9 @@ function createHexGeometry(width: number, height: number) {
     [0, 5], // pit
   ].map(p => new Vector2(...p))
 
-  const main = new LatheGeometry(hexShape, 6, -Math.PI / 2)
-    .rotateX(-Math.PI / 2)
-    .scale(width, height, 1)
+  const main = new LatheGeometry(hexShape, 6, -Math.PI / 2).rotateX(-Math.PI / 2).scale(width, height, 1)
 
-  const selected = new LatheGeometry(
-    [hexShape[0], hexShape[1]],
-    6,
-    -Math.PI / 2
-  )
+  const selected = new LatheGeometry([hexShape[0], hexShape[1]], 6, -Math.PI / 2)
     .rotateX(-Math.PI / 2)
     .scale(width, height, 1)
 

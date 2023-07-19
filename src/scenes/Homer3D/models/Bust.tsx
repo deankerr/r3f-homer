@@ -16,16 +16,10 @@ type GLTFResult = GLTF & {
 }
 
 export function Bust(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(
-    'model/marble_bust_01_1k-transformed.glb'
-  ) as GLTFResult
+  const { nodes, materials } = useGLTF('model/marble_bust_01_1k-transformed.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
-      <mesh
-        geometry={nodes.marble_bust_01.geometry}
-        material={materials.marble_bust_01}
-        position={[0, 0.028, 0]}
-      />
+      <mesh geometry={nodes.marble_bust_01.geometry} material={materials.marble_bust_01} position={[0, 0.028, 0]} />
     </group>
   )
 }

@@ -24,18 +24,11 @@ export function Camera() {
   // console.log(pos.x, pos.y, pos.z)
   // })
 
-  const camPoints = spiralPositions(200, 100).map((p, i) => (
-    <Box key={i} position={p} scale={2} />
-  ))
+  const camPoints = spiralPositions(200, 100).map((p, i) => <Box key={i} position={p} scale={2} />)
 
   return (
     <>
-      <PerspectiveCamera
-        fov={30}
-        far={3000}
-        position={cameraProps.position}
-        makeDefault
-      />
+      <PerspectiveCamera fov={30} far={3000} position={cameraProps.position} makeDefault />
       {/* {camPoints} */}
       <OrbitControls enablePan={false} minDistance={150} maxDistance={600} />
       {/* <CameraControls /> */}

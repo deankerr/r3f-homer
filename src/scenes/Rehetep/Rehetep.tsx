@@ -15,41 +15,13 @@ export function Component() {
       <URLText text="DEAN.TAXI" />
       <Temple />
 
-      <Ring
-        Body={Shard}
-        radius={400}
-        amount={32}
-        orbit={0.04}
-        spread={30}
-        size={[2, 3]}
-      />
+      <Ring Body={Shard} radius={400} amount={32} orbit={0.04} spread={30} size={[2, 3]} />
 
-      <Ring
-        Body={Obelisk}
-        radius={600}
-        amount={10}
-        orbit={0.03}
-        spread={1}
-        size={[7, 7]}
-      />
+      <Ring Body={Obelisk} radius={600} amount={10} orbit={0.03} spread={1} size={[7, 7]} />
 
-      <Ring
-        Body={Shard}
-        radius={1000}
-        amount={200}
-        orbit={0.1}
-        spread={200}
-        size={[3, 10]}
-      />
+      <Ring Body={Shard} radius={1000} amount={200} orbit={0.1} spread={200} size={[3, 10]} />
 
-      <Ring
-        Body={Shard}
-        radius={1000}
-        amount={200}
-        orbit={0.04}
-        spread={200}
-        size={[3, 10]}
-      />
+      <Ring Body={Shard} radius={1000} amount={200} orbit={0.04} spread={200} size={[3, 10]} />
 
       <Starfield />
 
@@ -57,12 +29,7 @@ export function Component() {
       <Lights />
 
       {config.r3fPerf && (
-        <Perf
-          position="bottom-left"
-          antialias={false}
-          logsPerSecond={2}
-          chart={{ hz: 1, length: 30 }}
-        />
+        <Perf position="bottom-left" antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }} />
       )}
     </>
   )

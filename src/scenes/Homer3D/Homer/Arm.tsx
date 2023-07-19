@@ -22,12 +22,7 @@ export function Arm({ skinColor, ...group }: Props) {
       </Capsule>
 
       {/* arm meat */}
-      <Capsule
-        ref={armRef}
-        args={[0.5, 2.5]}
-        rotation={[Math.PI / 2, 0, 0]}
-        position={[0, 0, 1.75]}
-      >
+      <Capsule ref={armRef} args={[0.5, 2.5]} rotation={[Math.PI / 2, 0, 0]} position={[0, 0, 1.75]}>
         <meshStandardMaterial color={skinColor} />
       </Capsule>
     </group>

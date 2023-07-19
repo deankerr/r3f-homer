@@ -16,15 +16,10 @@ type GLTFResult = GLTF & {
 }
 
 export function Lime(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(
-    'model/food_lime_01_1k-transformed.glb'
-  ) as GLTFResult
+  const { nodes, materials } = useGLTF('model/food_lime_01_1k-transformed.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
-      <mesh
-        geometry={nodes.food_lime_01.geometry}
-        material={materials.food_lime_01}
-      />
+      <mesh geometry={nodes.food_lime_01.geometry} material={materials.food_lime_01} />
     </group>
   )
 }

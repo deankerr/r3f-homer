@@ -62,39 +62,23 @@ function Glyphs() {
 
   return (
     <group rotation-y={Math.PI / 4}>
-      <Text3D
-        {...props}
-        position={[radius, height, adjust]}
-        rotation-y={Math.PI / 2}
-      >
+      <Text3D {...props} position={[radius, height, adjust]} rotation-y={Math.PI / 2}>
         {text[0]}
       </Text3D>
-      <Text3D
-        {...props}
-        position={[-radius, height, -adjust]}
-        rotation-y={-Math.PI / 2}
-      >
+      <Text3D {...props} position={[-radius, height, -adjust]} rotation-y={-Math.PI / 2}>
         {text[1]}
       </Text3D>
       <Text3D {...props} position={[-adjust, height, radius]}>
         {text[2]}
       </Text3D>
-      <Text3D
-        {...props}
-        position={[adjust, height, -radius]}
-        rotation-y={Math.PI}
-      >
+      <Text3D {...props} position={[adjust, height, -radius]} rotation-y={Math.PI}>
         {text[3]}
       </Text3D>
     </group>
   )
 }
 
-const textData = [
-  'אהבהשכחבלאמץמעברךכלם',
-  'ТИПИБУЛИΠΟΛΗМΣУΔДЕЖЗ',
-  'ΥΞΣΤΓΎΏΧΩΜΨΔΖΠΗΘЏАБВ',
-]
+const textData = ['אהבהשכחבלאמץמעברךכלם', 'ТИПИБУЛИΠΟΛΗМΣУΔДЕЖЗ', 'ΥΞΣΤΓΎΏΧΩΜΨΔΖΠΗΘЏАБВ']
 
 function getSideText(chars: number) {
   const rows = textData.length - 1

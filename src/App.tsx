@@ -48,11 +48,7 @@ function Home() {
 export function Preload() {
   return (
     <div className="flex h-full items-center justify-center">
-      <img
-        src="taxi-icon.svg"
-        alt="Taxi Loading"
-        className="max-h-screen animate-pulse"
-      />
+      <img src="taxi-icon.svg" alt="Taxi Loading" className="max-h-screen animate-pulse" />
     </div>
   )
 }

@@ -10,11 +10,9 @@ type Props = PositionalAudioProps & {
   distance?: number
 }
 
-export const AudioReady = forwardRef<PostionalAudio3, Props>(
-  function AudioReady(props, ref) {
-    // const canStartAudio = useTaxiStore((state) => state.canStartAudio)
+export const AudioReady = forwardRef<PostionalAudio3, Props>(function AudioReady(props, ref) {
+  // const canStartAudio = useTaxiStore((state) => state.canStartAudio)
 
-    return <PositionalAudio ref={ref} {...props} autoplay={false} load />
-    // return <Suspense>{canStartAudio && audio}</Suspense>
-  }
-)
+  return <PositionalAudio ref={ref} {...props} autoplay={false} load />
+  // return <Suspense>{canStartAudio && audio}</Suspense>
+})

@@ -16,9 +16,7 @@ type GLTFResult = GLTF & {
 }
 
 export function LightBlueSky(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(
-    'model/LightBlueSky-transformed.glb'
-  ) as GLTFResult
+  const { nodes, materials } = useGLTF('model/LightBlueSky-transformed.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.Skybox.geometry} material={materials.Skybox_mat} />

@@ -5,10 +5,8 @@ const config = {
   semi: false,
   singleQuote: true,
   arrowParens: 'avoid',
-  plugins: [
-    require('@trivago/prettier-plugin-sort-imports'),
-    require('prettier-plugin-tailwindcss'),
-  ],
+  printWidth: 120,
+  plugins: [require('@trivago/prettier-plugin-sort-imports'), require('prettier-plugin-tailwindcss')],
   importOrder: ['^@/(.*)$', '^@components/(.*)$', '^[./]'],
   importOrderSeparation: true,
   importOrderSortSpecifiers: true,

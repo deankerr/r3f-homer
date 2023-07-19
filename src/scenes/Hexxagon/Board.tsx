@@ -72,11 +72,7 @@ function inRange(origin: Vector3, range: number) {
   const results: Vector3[] = []
 
   for (let x = -range; x <= range; x++) {
-    for (
-      let y = Math.max(-range, -x - range);
-      y <= Math.min(range, -x + range);
-      y++
-    ) {
+    for (let y = Math.max(-range, -x - range); y <= Math.min(range, -x + range); y++) {
       const z = -x - y
       results.push(new Vector3(x, y, z).add(origin))
     }

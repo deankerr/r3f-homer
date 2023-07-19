@@ -4,19 +4,7 @@ import { useState } from 'react'
 import { Orbit } from '.'
 import { Homer } from './Homer'
 import { BigText, HomerCone, HomerDode, Starfield } from './components'
-import {
-  Bust,
-  Dolphin,
-  Eye,
-  Gnome,
-  LightBlueSky,
-  Lime,
-  PlasticChair,
-  Skull,
-  Sun,
-  Taxi,
-  Toilet,
-} from './models'
+import { Bust, Dolphin, Eye, Gnome, LightBlueSky, Lime, PlasticChair, Skull, Sun, Taxi, Toilet } from './models'
 
 export function Component() {
   const [showSky, setShowSky] = useState(false)
@@ -54,12 +42,7 @@ export function Component() {
 
       <Homer position={[0, 6, -100]} />
 
-      <Eye
-        scale={200}
-        position={[0, 200, 0]}
-        rotation={[Math.PI / 2, 0, 0]}
-        onClick={() => setShowSky(!showSky)}
-      />
+      <Eye scale={200} position={[0, 200, 0]} rotation={[Math.PI / 2, 0, 0]} onClick={() => setShowSky(!showSky)} />
 
       <ambientLight intensity={0.1} />
       <OrbitControls target={[0, 8, 0]} enablePan={false} />

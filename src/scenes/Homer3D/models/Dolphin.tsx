@@ -23,9 +23,7 @@ type GLTFResult = GLTF & {
 }
 
 export function Dolphin(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(
-    'model/bottlenose_dolphin-transformed.glb'
-  ) as GLTFResult
+  const { nodes, materials } = useGLTF('model/bottlenose_dolphin-transformed.glb') as GLTFResult
   return (
     <group {...props}>
       <group name="Sketchfab_Scene">

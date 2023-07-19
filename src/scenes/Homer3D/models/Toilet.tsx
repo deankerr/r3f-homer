@@ -16,9 +16,7 @@ type GLTFResult = GLTF & {
 }
 
 export function Toilet(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(
-    'model/toilet-transformed.glb'
-  ) as GLTFResult
+  const { nodes, materials } = useGLTF('model/toilet-transformed.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
       <mesh geometry={nodes.Toilet.geometry} material={materials.Toilet} />

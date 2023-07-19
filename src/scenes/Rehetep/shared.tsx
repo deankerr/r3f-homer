@@ -50,29 +50,21 @@ export function useMaterialColorLerpAnimation(
 }
 
 // this is all really bad
-export function useGridColorLerpAnimation(
-  ref: React.MutableRefObject<THREE.Mesh>
-) {
+export function useGridColorLerpAnimation(ref: React.MutableRefObject<THREE.Mesh>) {
   useFrame(state => {
     if (!ref.current) return
 
     const material = ref.current.material as THREE.ShaderMaterial
     const cellColor = material.uniforms.sectionColor.value as THREE.Color
 
-    cellColor.lerpColors(
-      dimmedColor1,
-      dimmedColor2,
-      Math.abs(Math.sin(state.clock.elapsedTime / colorSpeed))
-    )
+    cellColor.lerpColors(dimmedColor1, dimmedColor2, Math.abs(Math.sin(state.clock.elapsedTime / colorSpeed)))
   })
 }
 
 function logHSL(color: THREE.Color) {
   const hsl = { h: 0, s: 0, l: 0 }
   color.getHSL(hsl)
-  return `(${Number(hsl.h).toFixed(2)},${Number(hsl.s).toFixed(2)},${Number(
-    hsl.s
-  ).toFixed(2)})`
+  return `(${Number(hsl.h).toFixed(2)},${Number(hsl.s).toFixed(2)},${Number(hsl.s).toFixed(2)})`
 }
 /* 
 //* how to turn towards a point

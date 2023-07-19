@@ -33,13 +33,7 @@ export function Lights() {
 
   return (
     <>
-      <directionalLight
-        position={[x, y, z]}
-        color={color}
-        intensity={intensity}
-        ref={ref}
-        visible={visible}
-      />
+      <directionalLight position={[x, y, z]} color={color} intensity={intensity} ref={ref} visible={visible} />
       <ambientLight {...ambientProps} />
     </>
   )

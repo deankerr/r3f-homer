@@ -1,13 +1,7 @@
 import { Capsule, Torus } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
-import {
-  Color,
-  Mesh,
-  MeshStandardMaterial,
-  PositionalAudio,
-  Vector3,
-} from 'three'
+import { Color, Mesh, MeshStandardMaterial, PositionalAudio, Vector3 } from 'three'
 
 import { useTaxiStore } from '@/store'
 
@@ -27,10 +21,7 @@ export function Head({ skinColor, ...group }: Props) {
   const headRef = useRef<Mesh>(null!)
   const headMaterialRef = useRef<MeshStandardMaterial>(null!)
 
-  const [homerState, setHomerState] = useTaxiStore(state => [
-    state.homerState,
-    state.setHomerState,
-  ])
+  const [homerState, setHomerState] = useTaxiStore(state => [state.homerState, state.setHomerState])
 
   const audioRef = useRef<PositionalAudio>(null!)
 
@@ -70,11 +61,7 @@ export function Head({ skinColor, ...group }: Props) {
         <Torus args={[0.5, 0.05]} position={[0, 6.2, 0.1]} rotation={[0, 0, 0]}>
           <meshStandardMaterial color="black" />
         </Torus>
-        <Torus
-          args={[0.5, 0.05]}
-          position={[0, 6.2, -0.4]}
-          rotation={[0, 0, 0]}
-        >
+        <Torus args={[0.5, 0.05]} position={[0, 6.2, -0.4]} rotation={[0, 0, 0]}>
           <meshStandardMaterial color="black" />
         </Torus>
 

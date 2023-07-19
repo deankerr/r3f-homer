@@ -6,10 +6,7 @@ import { LoadingScene } from './scenes/LoadingScene'
 import { useTaxiStore } from './store'
 
 export const Layout = () => {
-  const [canStartAudio, setCanStartAudio] = useTaxiStore(state => [
-    state.canStartAudio,
-    state.setCanStartAudio,
-  ])
+  const [canStartAudio, setCanStartAudio] = useTaxiStore(state => [state.canStartAudio, state.setCanStartAudio])
 
   function handleInteraction() {
     if (!canStartAudio) setCanStartAudio()
@@ -42,13 +39,7 @@ const SceneNavigation = () => {
   )
 }
 
-const SceneLink = ({
-  to,
-  devOnly = false,
-}: {
-  to: string
-  devOnly?: boolean
-}) => {
+const SceneLink = ({ to, devOnly = false }: { to: string; devOnly?: boolean }) => {
   if (devOnly && !__DEV__) return null
 
   const text = devOnly ? 'text-blue-400' : 'text-fuchsia-400'

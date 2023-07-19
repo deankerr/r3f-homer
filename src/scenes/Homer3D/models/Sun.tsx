@@ -18,9 +18,7 @@ type GLTFResult = GLTF & {
 }
 
 export function Sun(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(
-    'model/sun-transformed.glb'
-  ) as GLTFResult
+  const { nodes, materials } = useGLTF('model/sun-transformed.glb') as GLTFResult
 
   const ref = useRef<THREE.Group>(null!)
 
@@ -30,11 +28,7 @@ export function Sun(props: JSX.IntrinsicElements['group']) {
 
   return (
     <group ref={ref} {...props} dispose={null}>
-      <mesh
-        geometry={nodes.sun1.geometry}
-        material={materials.sun}
-        scale={10.008}
-      />
+      <mesh geometry={nodes.sun1.geometry} material={materials.sun} scale={10.008} />
     </group>
   )
 }

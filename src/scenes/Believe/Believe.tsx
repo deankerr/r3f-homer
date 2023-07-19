@@ -46,16 +46,7 @@ const Background = () => {
       <meshBasicMaterial>
         <GradientTexture
           stops={[0, 0.1, 0.2, 0.4, 0.5, 0.6, 0.7, 0.8]}
-          colors={[
-            'magenta',
-            'hotpink',
-            'magenta',
-            'hotpink',
-            'magenta',
-            'orange',
-            'khaki',
-            'orange',
-          ]}
+          colors={['magenta', 'hotpink', 'magenta', 'hotpink', 'magenta', 'orange', 'khaki', 'orange']}
         />
       </meshBasicMaterial>
     </mesh>

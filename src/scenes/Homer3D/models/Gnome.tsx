@@ -16,15 +16,10 @@ type GLTFResult = GLTF & {
 }
 
 export function Gnome(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF(
-    'model/garden_gnome_1k-transformed.glb'
-  ) as GLTFResult
+  const { nodes, materials } = useGLTF('model/garden_gnome_1k-transformed.glb') as GLTFResult
   return (
     <group {...props} dispose={null}>
-      <mesh
-        geometry={nodes.garden_gnome.geometry}
-        material={materials.garden_gnome_01}
-      />
+      <mesh geometry={nodes.garden_gnome.geometry} material={materials.garden_gnome_01} />
     </group>
   )
 }

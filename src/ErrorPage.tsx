@@ -10,11 +10,7 @@ export default function ErrorPage() {
       <h1 className="font-serif text-3xl">&quot;Oh no!&quot;</h1>
       <p>An error has regretfully occured:</p>
       <p>
-        <i>
-          {isRouteErrorResponse(error)
-            ? error.error?.message || error.statusText
-            : 'Unknown error message'}
-        </i>
+        <i>{isRouteErrorResponse(error) ? error.error?.message || error.statusText : 'Unknown error message'}</i>
       </p>
     </div>
   )
