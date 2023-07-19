@@ -1,4 +1,4 @@
-import { Box, CameraControls, Grid, PerspectiveCamera, Stats } from '@react-three/drei'
+import { Box, CameraControls, Grid, PerspectiveCamera } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
@@ -12,7 +12,6 @@ import { Ruby } from './Ruby'
 
 export function Component() {
   const config = useControls({
-    stats: __DEV__,
     grid: false,
     board: true,
     fov: { value: 50, min: 1, max: 100, step: 5 },
@@ -47,7 +46,6 @@ export function Component() {
       <Pearl position={[20, 0, 40]} />
 
       <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} />
-      {config.stats && <Stats className="mt-8" />}
     </>
   )
 }

@@ -1,3 +1,4 @@
+import { StatsGl } from '@react-three/drei'
 import { Canvas } from '@react-three/fiber'
 import { Leva } from 'leva'
 import { Link, Outlet, useLocation } from 'react-router-dom'
@@ -14,20 +15,24 @@ export const Layout = () => {
 
   const location = useLocation()
   const hashLeva = location.hash.includes('leva')
+  const hashStats = location.hash.includes('stats')
 
   return (
     <div className="h-screen" onClick={handleInteraction}>
       <SceneNavigation />
-      <Leva collapsed={!hashLeva} hidden={__PROD__ && !hashLeva} />
+
       <Canvas>
         <color attach="background" args={['#000']} />
         <LoadingScene />
         <Outlet />
+        {(hashStats || __DEV__) && <StatsGl horizontal={false} />}
       </Canvas>
+
+      <Leva collapsed={!hashLeva} hidden={__PROD__ && !hashLeva} />
     </div>
   )
 }
-
+//<Perf position="bottom-left" antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }}
 const SceneNavigation = () => {
   return (
     <div className="fixed left-0 top-0 z-10">

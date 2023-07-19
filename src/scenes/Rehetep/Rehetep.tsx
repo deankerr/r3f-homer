@@ -1,5 +1,4 @@
 import { useControls } from 'leva'
-import { Perf } from 'r3f-perf'
 
 import { Lights, Ring } from '.'
 import { Camera } from '.'
@@ -27,10 +26,6 @@ export function Component() {
 
       <Camera />
       <Lights />
-
-      {config.r3fPerf && (
-        <Perf position="bottom-left" antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }} />
-      )}
     </>
   )
 }
