@@ -2,49 +2,55 @@ import { GradientTexture, GradientType } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useRef } from 'react'
-import { Mesh, SphereGeometry, Vector3 } from 'three'
+import { Group, Mesh, RingGeometry, SphereGeometry, Vector3 } from 'three'
+
+const lookAtDivide = new Vector3(1.2, 1.2, 1)
 
 type Props = JSX.IntrinsicElements['group']
 
-const vec0 = new Vector3()
-
 export function Pearl(props: Props) {
-  const config = useControls('pearl', {
-    outer: true,
-    transparent: true,
-    opacity: { value: 0.5, min: 0, max: 1, step: 0.1 },
-  })
+  const config = useControls(
+    'pearl',
+    {
+      outer: true,
+    },
+    { collapsed: true }
+  )
 
   const innerRef = useRef<Mesh>(null!)
+  const outerRef = useRef<Mesh>(null!)
+  const groupRef = useRef<Group>(null!)
+
   const { camera } = useThree()
   useFrame(() => {
-    innerRef.current.lookAt(camera.position)
+    innerRef.current.lookAt(camera.position.clone().divide(lookAtDivide))
+    outerRef.current.lookAt(camera.position)
   })
 
   return (
-    <group {...props}>
-      <mesh scale={1.1} visible={config.outer}>
-        <sphereGeometry args={[5.5]} />
-        <meshLambertMaterial
-          transparent={config.transparent}
-          opacity={config.opacity}
-        />
+    <group {...props} ref={groupRef}>
+      <mesh geometry={ringGeometry} ref={outerRef} visible={config.outer}>
+        <meshBasicMaterial color={'#d7d7d7'} />
       </mesh>
 
-      {/* <Billboard> */}
-      <mesh geometry={geometry} rotation={[0, 0, 0.77]} ref={innerRef}>
-        <meshBasicMaterial>
+      <mesh geometry={geometry} ref={innerRef} scale={0.82}>
+        <meshPhongMaterial>
           <GradientTexture
             stops={[0.2, 0.5, 0.8]}
             colors={['blue', 'thistle', 'magenta']}
-            //@ts-expect-error should not be undefined?
+            //@ts-expect-error incorrectly typed as undefined?
             type={GradientType.Linear}
           />
-        </meshBasicMaterial>
+        </meshPhongMaterial>
       </mesh>
-      {/* </Billboard> */}
     </group>
   )
 }
 
-const geometry = new SphereGeometry(5)
+const geometry = new SphereGeometry(5.5)
+  .rotateZ(Math.PI * 0.2)
+  .scale(1.16, 1, 1)
+
+const ringGeometry = new RingGeometry(4, 5)
+  .rotateZ(Math.PI * 0.2)
+  .scale(1.16, 1, 1)

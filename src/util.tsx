@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { Vector3 } from 'three'
 
 export function ringPositions(radius: number, amount: number) {
@@ -24,6 +25,24 @@ export function spiralPositions(radius: number, amount: number) {
   }
 
   return positions
+}
+
+export function useRemountKey() {
+  const [state, setState] = useState(0)
+
+  useEffect(() => {
+    document.addEventListener('keydown', handleKeydown)
+    return () => document.removeEventListener('keydown', handleKeydown)
+  }, [])
+
+  function handleKeydown(event: KeyboardEvent) {
+    if (event.key === 'R') {
+      console.log('remount!')
+      setState(Date.now())
+    }
+  }
+
+  return state
 }
 
 /* 

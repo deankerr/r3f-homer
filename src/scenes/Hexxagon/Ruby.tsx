@@ -7,9 +7,13 @@ import { useNormal } from './Textures'
 type Props = JSX.IntrinsicElements['mesh']
 
 export function Ruby(props: Props) {
-  const config = useControls('ruby', {
-    matcap: { value: 0, min: 0, max: paths.length - 1, step: 1 },
-  })
+  const config = useControls(
+    'ruby',
+    {
+      matcap: { value: 0, min: 0, max: paths.length - 1, step: 1 },
+    },
+    { collapsed: true }
+  )
 
   const matcap = useTexture('matcaps/ruby/' + paths[config.matcap])
   const normal = useNormal('ruby', 20)
@@ -20,14 +24,16 @@ export function Ruby(props: Props) {
         matcap={matcap}
         side={DoubleSide}
         flatShading={true}
-        // normalMap={normal}
-        normalScale={new Vector2(0.2, 0.2)}
+        normalMap={normal}
+        normalScale={new Vector2(0.05, 0.05)}
       />
     </mesh>
   )
 }
 
 const scale = 0.9
+const scaleX = 1.25
+
 const sides = 10
 const face = 3.8
 const base = 6
@@ -50,7 +56,7 @@ const geometry = new LatheGeometry(
   -Math.PI / 2
 )
   .rotateX(-Math.PI / 2)
-  .scale(scale * 1.7, scale, scale)
+  .scale(scale * scaleX, scale, scale)
 
 const paths = [
   'AB2C2C_EBB4B3_561212_DE8484-512px.png', // r b tl

@@ -10,7 +10,7 @@ import { Ruby } from './Ruby'
 const radius = 8
 
 // scaled by
-const width = 2
+const width = 1.5
 const height = 1
 
 const labelFontSize = 4
