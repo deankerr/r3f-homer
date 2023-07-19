@@ -2,11 +2,10 @@ import { useTexture } from '@react-three/drei'
 import { useControls } from 'leva'
 
 export function useMatcap() {
-  // const path = 'matcaps/board/3E2335_D36A1B_8E4A2E_2842A5-64px.png' //light gold w/ purple ref
-  const { npath } = useControls('hex', {
-    npath: { value: 0, min: 0, max: matcapPaths.length - 1, step: 1 },
+  const { matcap } = useControls('hex', {
+    matcap: { value: 0, min: 0, max: matcapPaths.length - 1, step: 1 },
   })
-  const path = matcapPaths[npath] //light gold w/ purple ref
+  const path = matcapPaths[matcap] //light gold w/ purple ref
   return useTexture(path)
 }
 
@@ -88,6 +87,11 @@ const matcapPaths = [
   'matcaps/board/BD5345_460F11_732622_EDB7B1-64px.png',
   'matcaps/board/C21338_920C24_E71C54_F34A7D-64px.png',
   'matcaps/board/D04444_AF2F2F_8B2424_9B2C2C-64px.png',
+  'matcaps/board/6C52AA_C9A6EA_A681D6_B494E2-512px.png',
+  'matcaps/board/8955D0_744CC4_EA4AEF_954DA4-512px.png',
+  'matcaps/board/8F4277_361530_BF538E_52274C-512px.png',
+  'matcaps/board/935555_F6DAD9_D39393_593333-512px.png',
+  'matcaps/board/942967_D292B5_C76E9E_551A4C-512px.png',
 ]
 
 // '773012_AE5124_4D1908_340F04-512px.png', // wood

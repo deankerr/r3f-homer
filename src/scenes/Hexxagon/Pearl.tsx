@@ -2,20 +2,12 @@ import { GradientTexture, GradientType } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useRef } from 'react'
-import { Group, Mesh, RingGeometry, SphereGeometry, Vector3 } from 'three'
-
-const lookAtDivide = new Vector3(1.2, 1.2, 1)
+import { Group, Mesh, RingGeometry, SphereGeometry } from 'three'
 
 type Props = JSX.IntrinsicElements['group']
 
 export function Pearl(props: Props) {
-  const config = useControls(
-    'pearl',
-    {
-      outer: true,
-    },
-    { collapsed: true }
-  )
+  const config = useControls('pearl', { outer: true }, { collapsed: true })
 
   const innerRef = useRef<Mesh>(null!)
   const outerRef = useRef<Mesh>(null!)
@@ -23,8 +15,8 @@ export function Pearl(props: Props) {
 
   const { camera } = useThree()
   useFrame(() => {
-    innerRef.current.lookAt(camera.position.clone().divide(lookAtDivide))
     outerRef.current.lookAt(camera.position)
+    innerRef.current.lookAt(camera.position)
   })
 
   return (
@@ -48,9 +40,9 @@ export function Pearl(props: Props) {
 }
 
 const geometry = new SphereGeometry(5.5)
-  .rotateZ(Math.PI * 0.2)
+  // .rotateZ(Math.PI * 0.1)
   .scale(1.16, 1, 1)
 
 const ringGeometry = new RingGeometry(4, 5)
-  .rotateZ(Math.PI * 0.2)
+  // .rotateZ(Math.PI * 0.2)
   .scale(1.16, 1, 1)

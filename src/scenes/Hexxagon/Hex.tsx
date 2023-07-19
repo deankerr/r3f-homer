@@ -26,14 +26,15 @@ type Props = {
 export function Hex(props: Props) {
   const { vector, material, selected, onClick, id } = props
 
-  const { showHexVectors, allRubies, allPearls, alternateGems } = useControls(
+  const config = useControls(
     'hex',
     {
-      showHexVectors: false,
+      labels: false,
       allRubies: false,
       allPearls: false,
-      alternateGems: true,
-    }
+      alternate: true,
+    },
+    { collapsed: true }
   )
 
   const position = useMemo(() => hexToPixel(vector), [vector])
@@ -44,7 +45,7 @@ export function Hex(props: Props) {
   return (
     <group position={position} onClick={onClick}>
       <mesh material={material} geometry={geometry} />
-      {showHexVectors && HexVectorLabel(vector, id)}
+      {config.labels && HexVectorLabel(vector, id)}
       <mesh
         material-color="lime"
         geometry={selectedGeometry}
@@ -52,9 +53,9 @@ export function Hex(props: Props) {
         position-z={1}
         material-side={DoubleSide}
       />
-      {allRubies && rubyMesh}
-      {allPearls && pearlMesh}
-      {alternateGems && (vector.z % 2 ? rubyMesh : pearlMesh)}
+      {config.allRubies && rubyMesh}
+      {config.allPearls && pearlMesh}
+      {config.alternate && (vector.z % 2 ? rubyMesh : pearlMesh)}
     </group>
   )
 }
