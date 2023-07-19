@@ -31,7 +31,7 @@ export const Layout = () => {
         {hashPerf ? (
           <Perf position="bottom-left" antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }} />
         ) : (
-          (hashStats || __DEV__) && <StatsGl horizontal={false} />
+          (hashStats || __DEV__) && <StatsGl horizontal={false} minimal />
         )}
       </Canvas>
 
@@ -65,19 +65,3 @@ const SceneLink = ({ to, devOnly = false }: { to: string; devOnly?: boolean }) =
     </Link>
   )
 }
-
-// const useResetKey = () => {
-//   const [resetKey, setResetKey] = useState(Date.now())
-
-//   const handler = (event: KeyboardEvent) => {
-//     if (event.key === 'R') setResetKey(Date.now())
-//   }
-
-//   useEffect(() => {
-//     document.addEventListener('keydown', handler)
-
-//     return () => document.removeEventListener('keydown', handler)
-//   }, [])
-
-//   return resetKey
-// }

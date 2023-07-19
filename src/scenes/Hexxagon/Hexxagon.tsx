@@ -39,11 +39,11 @@ export function Component() {
       <PerspectiveCamera makeDefault position-z={20} fov={config.fov} />
       <CameraControls ref={controlsRef} />
 
-      <Board ref={boardRef} />
+      <Board ref={boardRef} key={key} />
 
       <pointLight position={lightPosition} intensity={2} />
       <ambientLight intensity={0.2} />
-      <Box position={lightPosition} key={key} />
+      <Box position={lightPosition} />
 
       <Ruby position={[-20, 0, 40]} />
       <Pearl position={[20, 0, 40]} />

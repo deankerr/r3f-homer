@@ -3,7 +3,6 @@ import { RouterProvider, createBrowserRouter, redirect } from 'react-router-dom'
 
 import ErrorPage from './ErrorPage'
 import { Layout } from './Layout'
-import { Component as Hexx } from './scenes/Hexxagon/Hexxagon'
 
 export default function App() {
   return <RouterProvider router={router} fallbackElement={<Preload />} />
@@ -35,7 +34,6 @@ const router = createBrowserRouter([
       {
         path: 'hexxagon',
         lazy: () => import('./scenes/Hexxagon/Hexxagon'),
-        // element: <Hexx />,
       },
     ],
   },

@@ -22,7 +22,9 @@ export const LoadingScene = () => {
       <group ref={starsRef}>
         <Stars />
       </group>
-      <Text color={'pink'}>Loading</Text>
+      <Text color={'white'} fontSize={1}>
+        Loading
+      </Text>
     </Hud>
   )
 }
