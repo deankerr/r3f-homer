@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber'
 import { Leva } from 'leva'
-import { Link, Outlet } from 'react-router-dom'
+import { Link, Outlet, useLocation, useNavigation } from 'react-router-dom'
 
 import { LoadingScene } from './scenes/LoadingScene'
 import { useTaxiStore } from './store'
@@ -15,10 +15,13 @@ export const Layout = () => {
     if (!canStartAudio) setCanStartAudio()
   }
 
+  const location = useLocation()
+  const showLeva = location.hash.includes('leva')
+
   return (
     <div className="h-screen" onClick={handleInteraction}>
       <SceneNavigation />
-      <Leva collapsed={true} hidden={!__DEV__} />
+      <Leva collapsed={!showLeva} hidden={!__DEV__} />
       <Canvas>
         <color attach="background" args={['#000']} />
         <LoadingScene />
