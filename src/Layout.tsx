@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber'
 import { Leva } from 'leva'
-import { Link, Outlet, useLocation, useNavigation } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 
 import { LoadingScene } from './scenes/LoadingScene'
 import { useTaxiStore } from './store'
@@ -13,12 +13,12 @@ export const Layout = () => {
   }
 
   const location = useLocation()
-  const showLeva = location.hash.includes('leva')
+  const hashLeva = location.hash.includes('leva')
 
   return (
     <div className="h-screen" onClick={handleInteraction}>
       <SceneNavigation />
-      <Leva collapsed={!showLeva} hidden={!__DEV__ || showLeva} />
+      <Leva collapsed={!hashLeva} hidden={__PROD__ && !hashLeva} />
       <Canvas>
         <color attach="background" args={['#000']} />
         <LoadingScene />
