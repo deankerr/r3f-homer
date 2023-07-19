@@ -1,57 +1,50 @@
-import { GradientTexture, GradientType, useTexture } from '@react-three/drei'
+import { GradientTexture, GradientType } from '@react-three/drei'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
-import {
-  AdditiveBlending,
-  MultiplyBlending,
-  NoBlending,
-  SphereGeometry,
-  SubtractiveBlending,
-  Vector2,
-} from 'three'
+import { useRef } from 'react'
+import { Mesh, SphereGeometry, Vector3 } from 'three'
 
-import { useNormal } from './Textures'
+type Props = JSX.IntrinsicElements['group']
 
-type Props = JSX.IntrinsicElements['mesh']
+const vec0 = new Vector3()
 
 export function Pearl(props: Props) {
   const config = useControls('pearl', {
-    matcap: { value: 0, min: 0, max: matcapPaths.length - 1, step: 1 },
+    outer: true,
+    transparent: true,
+    opacity: { value: 0.5, min: 0, max: 1, step: 0.1 },
   })
-  const matcap = useTexture('matcaps/pearl/' + matcapPaths[config.matcap])
-  const normal = useNormal('pearl', 19)
+
+  const innerRef = useRef<Mesh>(null!)
+  const { camera } = useThree()
+  useFrame(() => {
+    innerRef.current.lookAt(camera.position)
+  })
 
   return (
-    <mesh geometry={geometry} {...props}>
-      {/* <meshMatcapMaterial
-        matcap={matcap}
-        blending={AdditiveBlending}
-        transparent={true}
-      /> */}
-
-      <meshBasicMaterial>
-        <GradientTexture
-          stops={[0, 0.25, 0.5, 0.65, 1]} // As many stops as you want
-          colors={['blue', 'blue', 'white', 'hotpink', 'hotpink']} // Colors need to match the number of stops
-          // size={16} // Size is optional, default = 1024
-          // width={1024} // Width of the canvas producing the texture, default = 16
-          // type={GradientType.Radial} // The type of the gradient, default = GradientType.Linear
-          // innerCircleRadius={1} // Optional, the radius of the inner circle of the gradient, default = 0
-          // outerCircleRadius={10} // Optional, the radius of the outer circle of the gradient, default = auto
+    <group {...props}>
+      <mesh scale={1.1} visible={config.outer}>
+        <sphereGeometry args={[5.5]} />
+        <meshLambertMaterial
+          transparent={config.transparent}
+          opacity={config.opacity}
         />
-      </meshBasicMaterial>
-    </mesh>
+      </mesh>
+
+      {/* <Billboard> */}
+      <mesh geometry={geometry} rotation={[0, 0, 0.77]} ref={innerRef}>
+        <meshBasicMaterial>
+          <GradientTexture
+            stops={[0.2, 0.5, 0.8]}
+            colors={['blue', 'thistle', 'magenta']}
+            //@ts-expect-error should not be undefined?
+            type={GradientType.Linear}
+          />
+        </meshBasicMaterial>
+      </mesh>
+      {/* </Billboard> */}
+    </group>
   )
 }
 
-const geometry = new SphereGeometry(6).translate(0, 0, -3).scale(1.2, 1, 1)
-
-const matcapPaths = [
-  '637598_B7C4D3_22293A_9BACBF-512px.png',
-  '3E95CC_65D9F1_A2E2F6_679BD4-512px.png',
-  '8CAEBC_3A4443_506463_DAEFEF-512px.png',
-  '85B9D3_C9EAF9_417277_528789-512px.png',
-  '416BA7_A5B8D0_0D2549_65ABEB-512px.png',
-  '495CA6_CCD2E6_A5B1D8_1E2852-512px.png',
-  '537387_75BBB9_152E5B_0E85E8-512px.png',
-  'B6B8B1_994A24_315C81_927963-512px.png',
-]
+const geometry = new SphereGeometry(5)

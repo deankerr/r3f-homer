@@ -38,6 +38,9 @@ export function Hex(props: Props) {
 
   const position = useMemo(() => hexToPixel(vector), [vector])
 
+  const rubyMesh = <Ruby />
+  const pearlMesh = <Pearl position={[0, 0, -2]} />
+
   return (
     <group position={position} onClick={onClick}>
       <mesh material={material} geometry={geometry} />
@@ -49,9 +52,9 @@ export function Hex(props: Props) {
         position-z={1}
         material-side={DoubleSide}
       />
-      {allRubies && <Ruby />}
-      {allPearls && <Pearl />}
-      {alternateGems && vector.z % 2 ? <Ruby /> : <Pearl />}
+      {allRubies && rubyMesh}
+      {allPearls && pearlMesh}
+      {alternateGems && (vector.z % 2 ? rubyMesh : pearlMesh)}
     </group>
   )
 }

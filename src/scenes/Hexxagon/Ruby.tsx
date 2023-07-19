@@ -20,7 +20,7 @@ export function Ruby(props: Props) {
         matcap={matcap}
         side={DoubleSide}
         flatShading={true}
-        normalMap={normal}
+        // normalMap={normal}
         normalScale={new Vector2(0.2, 0.2)}
       />
     </mesh>

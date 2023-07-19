@@ -1,5 +1,5 @@
 import { Box, CameraControls, Grid, Stats } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
 import { DoubleSide, Group, PlaneGeometry } from 'three'
@@ -9,9 +9,12 @@ import { Pearl } from './Pearl'
 import { Ruby } from './Ruby'
 
 export function Component() {
-  const config = useControls({ stats: __DEV__, grid: false })
+  const config = useControls({ stats: __DEV__, grid: false, board: true })
   const cameraRef = useRef<CameraControls>(null!)
   const boardRef = useRef<Group>(null!)
+
+  const { camera } = useThree()
+  console.log('cam', camera.toJSON())
 
   useEffect(() => {
     if (cameraRef.current && boardRef.current) {
@@ -26,14 +29,14 @@ export function Component() {
     <>
       <CameraControls ref={cameraRef} />
 
-      <Board ref={boardRef} />
+      {config.board && <Board ref={boardRef} />}
 
       {/* <pointLight position={lightPosition} intensity={2} /> */}
+      <ambientLight intensity={0.5} />
       <Box position={lightPosition} />
 
       <Ruby position-z={40} />
       <Pearl position-z={40} position-x={20} />
-      <Pearl position-z={40} position-x={40} geometry={tg} />
 
       <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} />
       {config.stats && <Stats />}
