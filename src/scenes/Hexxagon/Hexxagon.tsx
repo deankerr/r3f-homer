@@ -4,6 +4,7 @@ import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
 import { DoubleSide, Group } from 'three'
 
+import { useFrameLoopDemand } from '@/hooks'
 import { useRemountKey } from '@/util'
 
 import { Board } from './Board'
@@ -11,6 +12,8 @@ import { Pearl } from './Pearl'
 import { Ruby } from './Ruby'
 
 export function Component() {
+  useFrameLoopDemand()
+
   const config = useControls({
     grid: false,
     board: true,
