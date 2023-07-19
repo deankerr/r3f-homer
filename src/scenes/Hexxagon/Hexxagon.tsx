@@ -1,4 +1,11 @@
-import { Box, CameraControls, Grid, Stats } from '@react-three/drei'
+import {
+  Box,
+  CameraControls,
+  Grid,
+  PerspectiveCamera,
+  Stats,
+} from '@react-three/drei'
+import { useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
 import { DoubleSide, Group } from 'three'
@@ -11,14 +18,16 @@ import { Ruby } from './Ruby'
 
 export function Component() {
   const config = useControls({ stats: __DEV__, grid: false, board: true })
-  const cameraRef = useRef<CameraControls>(null!)
-  const boardRef = useRef<Group>(null!)
 
+  // fit camera to board
+  const boardRef = useRef<Group>(null!)
+  const controlsRef = useRef<CameraControls>(null!)
+  const camera = useThree(state => state.camera)
   useEffect(() => {
-    if (cameraRef.current && boardRef.current) {
-      void cameraRef.current.fitToBox(boardRef.current, false)
+    if (controlsRef.current && boardRef.current) {
+      void controlsRef.current.fitToBox(boardRef.current, true)
     }
-  }, [])
+  }, [camera])
 
   const lightPosition = [-10, 10, 20] as const
 
@@ -26,9 +35,10 @@ export function Component() {
 
   return (
     <>
-      <CameraControls ref={cameraRef} />
+      <PerspectiveCamera makeDefault position-z={20} fov={50} />
+      <CameraControls ref={controlsRef} />
 
-      {config.board && <Board ref={boardRef} />}
+      <Board ref={boardRef} />
 
       <pointLight position={lightPosition} intensity={2} />
       <ambientLight intensity={0.2} />
@@ -38,7 +48,7 @@ export function Component() {
       <Pearl position-z={40} position-x={20} />
 
       <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} />
-      {config.stats && <Stats />}
+      {config.stats && <Stats className="mt-8" />}
     </>
   )
 }
