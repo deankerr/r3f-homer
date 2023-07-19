@@ -2,14 +2,13 @@ import { Box, CameraControls, Grid, PerspectiveCamera } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
-import { DoubleSide, Group } from 'three'
+import { DoubleSide, Group, MeshBasicMaterial } from 'three'
 
 import { useFrameLoopDemand } from '@/hooks'
 import { useRemountKey } from '@/util'
 
 import { Board } from './Board'
-import { Pearl } from './Pearl'
-import { Ruby } from './Ruby'
+import { MeshTest } from './MeshTest'
 
 export function Component() {
   useFrameLoopDemand()
@@ -26,7 +25,8 @@ export function Component() {
   const camera = useThree(state => state.camera)
   useEffect(() => {
     if (controlsRef.current && boardRef.current) {
-      void controlsRef.current.fitToBox(boardRef.current, true)
+      // void controlsRef.current.fitToBox(boardRef.current, true)
+      void controlsRef.current.setLookAt(0, 0, 10, 0, 0, 20)
     }
   }, [camera, config.fov])
 
@@ -34,21 +34,21 @@ export function Component() {
 
   const key = useRemountKey()
 
+  const hexmat = new MeshBasicMaterial({ side: DoubleSide })
   return (
     <>
       <PerspectiveCamera makeDefault position-z={20} fov={config.fov} />
       <CameraControls ref={controlsRef} />
 
-      <Board ref={boardRef} key={key} />
+      {config.board && <Board ref={boardRef} key={key} />}
 
       <pointLight position={lightPosition} intensity={2} />
       <ambientLight intensity={0.2} />
       <Box position={lightPosition} />
 
-      <Ruby position={[-20, 0, 40]} />
-      <Pearl position={[20, 0, 40]} />
+      <MeshTest position={[0, 0, 20]} />
 
-      <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} />
+      <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} cellColor={'red'} />
     </>
   )
 }

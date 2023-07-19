@@ -25,11 +25,11 @@ export function Pearl(props: Props) {
 
   return (
     <group {...props} ref={groupRef}>
-      <mesh geometry={ringGeometry} ref={outerRef} visible={config.outer}>
+      <mesh geometry={geometry.outer} ref={outerRef} visible={config.outer}>
         <meshBasicMaterial color={'#d7d7d7'} />
       </mesh>
 
-      <mesh geometry={geometry} ref={innerRef} scale={0.82}>
+      <mesh geometry={geometry.main} ref={innerRef} scale={0.82}>
         <meshPhongMaterial>
           <GradientTexture
             stops={[0.2, 0.5, 0.8]}
@@ -43,10 +43,10 @@ export function Pearl(props: Props) {
   )
 }
 
-const geometry = new SphereGeometry(5.5)
-  // .rotateZ(Math.PI * 0.1)
-  .scale(1.16, 1, 1)
-
-const ringGeometry = new RingGeometry(4, 5)
-  // .rotateZ(Math.PI * 0.2)
-  .scale(1.16, 1, 1)
+//* geometry
+const geometry = (() => {
+  return {
+    main: new SphereGeometry(),
+    outer: new RingGeometry(),
+  }
+})()

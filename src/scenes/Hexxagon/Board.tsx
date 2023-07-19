@@ -5,9 +5,8 @@ import { Hex } from './Hex'
 import { useMatcap } from './Textures'
 
 const size = 4
-const scale = [0.1, 0.1, 0.1] as const
 
-type Props = JSX.IntrinsicElements['mesh']
+type Props = JSX.IntrinsicElements['mesh' | 'group']
 
 export const Board = forwardRef<Group, Props>((props, ref) => {
   const vectors = useMemo(() => createHexes(size), [])
@@ -32,7 +31,7 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
   }
 
   return (
-    <group scale={scale} ref={ref}>
+    <group ref={ref}>
       {vectors.map((vector, i) => (
         <Hex
           vector={vector}

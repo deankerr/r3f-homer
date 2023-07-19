@@ -10,12 +10,12 @@ export function Ruby(props: Props) {
   const config = useControls(
     'ruby',
     {
-      matcap: { value: 0, min: 0, max: paths.length - 1, step: 1 },
+      matcap: { value: 0, min: 0, max: matcapPaths.length - 1, step: 1 },
     },
     { collapsed: true }
   )
 
-  const matcap = useTexture('matcaps/ruby/' + paths[config.matcap])
+  const matcap = useTexture('matcaps/ruby/' + matcapPaths[config.matcap])
   const normal = useNormal('ruby', 20)
 
   return (
@@ -31,34 +31,28 @@ export function Ruby(props: Props) {
   )
 }
 
-const scale = 0.9
-const scaleX = 1.25
+//* geometry
+const geometry = (() => {
+  const segments = 10
 
-const sides = 10
-const face = 3.8
-const base = 6
+  const points = [
+    [0, 0],
+    [3.8, 0], // face side 1
+    [6, 2],
+    [6, 3], // middle
+    [6, 4],
+    [3.8, 6], // face side 2
+    [0, 6],
+  ]
 
-const rubyShape = [
-  [0, 0],
-  [face, 0],
-  [face, 0.3],
-  [base, 2],
-  [base, 4],
-  [base, 6],
-  [face, 7.7],
-  [face, 8],
-  [0, 8],
-]
+  // scale greatest magnitude to 1
+  const vectors = points.map(points => new Vector2(...points).divideScalar(6))
 
-const geometry = new LatheGeometry(
-  rubyShape.map(p => new Vector2(...p)),
-  sides,
-  -Math.PI / 2
-)
-  .rotateX(-Math.PI / 2)
-  .scale(scale * scaleX, scale, scale)
+  // create / rotate / center
+  return new LatheGeometry(vectors, segments, -Math.PI / 2).rotateX(-Math.PI / 2).center()
+})()
 
-const paths = [
+const matcapPaths = [
   'AB2C2C_EBB4B3_561212_DE8484-512px.png', // r b tl
   '9D282A_38191D_DFC6CD_D6495A-512px.png', // r l tl
   'D54C2B_5F1105_F39382_F08375-512px.png', // r b u

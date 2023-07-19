@@ -6,16 +6,7 @@ import { DoubleSide, LatheGeometry, Vector2, Vector3 } from 'three'
 import { Pearl } from './Pearl'
 import { Ruby } from './Ruby'
 
-// lathe size
-const radius = 8
-
-// scaled by
-const width = 1.5
-const height = 1
-
 const labelFontSize = 4
-
-const [geometry, selectedGeometry] = createHexGeometry(width, height)
 
 type Props = {
   vector: Vector3
@@ -43,16 +34,19 @@ export function Hex(props: Props) {
   const pearlMesh = <Pearl position={[0, 0, -2]} />
 
   return (
-    <group position={position} onClick={onClick}>
-      <mesh material={material} geometry={geometry} />
+    <group position={props.position ? props.position : position} onClick={onClick}>
+      <mesh material={material} geometry={geometry.main} />
+
       {config.labels && HexVectorLabel(vector, id)}
+
       <mesh
         material-color="lime"
-        geometry={selectedGeometry}
+        geometry={geometry.selected}
         visible={selected}
-        position-z={1}
+        // position-z={1}
         material-side={DoubleSide}
       />
+
       {config.allRubies && rubyMesh}
       {config.allPearls && pearlMesh}
       {config.alternate && (vector.z % 2 ? rubyMesh : pearlMesh)}
@@ -77,25 +71,25 @@ function HexVectorLabel(vector: Vector3, id: number) {
 }
 
 function hexToPixel(vector: Vector3) {
-  const x = radius * ((3 / 2) * vector.x)
-  const y = radius * ((Math.sqrt(3) / 2) * vector.x + Math.sqrt(3) * vector.y)
+  const x = 1 * ((3 / 2) * vector.x)
+  const y = 1 * ((Math.sqrt(3) / 2) * vector.x + Math.sqrt(3) * vector.y)
   console.log('hextopixel')
-  return new Vector3(x * width, y * height, 0)
+  return new Vector3(x * 1, y * 1, 0)
 }
 
-function createHexGeometry(width: number, height: number) {
-  const hexShape = [
-    [8, 0], // outer
-    [7, 0], // border
-    [5, 5], //  slope
-    [0, 5], // pit
-  ].map(p => new Vector2(...p))
+//* geometry
+const lathePoints = [
+  [8, 0], // outer
+  [7, 0], // border
+  [5, 5], // slope
+  [0, 5], // pit
+] as const
 
-  const main = new LatheGeometry(hexShape, 6, -Math.PI / 2).rotateX(-Math.PI / 2).scale(width, height, 1)
+// scale greatest magnitude to 1
+const latheVectors = lathePoints.map(points => new Vector2(...points).divideScalar(8))
 
-  const selected = new LatheGeometry([hexShape[0], hexShape[1]], 6, -Math.PI / 2)
-    .rotateX(-Math.PI / 2)
-    .scale(width, height, 1)
-
-  return [main, selected]
+// create and rotate geometry
+const geometry = {
+  main: new LatheGeometry(latheVectors, 6, -Math.PI / 2).rotateX(-Math.PI / 2).center(),
+  selected: new LatheGeometry(latheVectors.slice(0, 2), 6, -Math.PI / 2).rotateX(-Math.PI / 2).translate(0, 0, 0.1),
 }
