@@ -1,8 +1,8 @@
-import { Box, CameraControls, Grid, PerspectiveCamera } from '@react-three/drei'
+import { Box, CameraControls, Edges, Grid, PerspectiveCamera, Svg } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { button, useControls } from 'leva'
 import { useEffect, useRef } from 'react'
-import { DoubleSide, Group, Mesh, Object3D } from 'three'
+import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3D } from 'three'
 
 import { useFrameLoopDemand } from '@/hooks'
 
@@ -35,7 +35,7 @@ export function Component() {
       <PerspectiveCamera makeDefault position-z={20} fov={config.fov} />
       <CameraControls ref={controlsRef} />
 
-      {config.board && <Board ref={boardRef} scale={[1.25, 1, 1]} />}
+      {config.board && <Board ref={boardRef} scale={[2.0, 1, 1]} />}
 
       <pointLight position={lightPosition} intensity={2} />
       <ambientLight intensity={0.2} />
@@ -43,6 +43,7 @@ export function Component() {
 
       <MeshTest ref={meshTestRef} position={[0, 10, 50]} />
 
+      <axesHelper visible={config.grid} args={[20]} />
       <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} cellColor={'red'} />
     </>
   )

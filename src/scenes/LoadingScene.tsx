@@ -18,7 +18,7 @@ export const LoadingScene = () => {
   return (
     <Hud renderPriority={loading ? 1 : -1}>
       <PerspectiveCamera makeDefault position={[0, 0, 10]} />
-      <color attach="background" args={['#000']} />
+      {/* <color attach="background" args={['#000']} /> */}
       <group ref={starsRef}>
         <Stars />
       </group>

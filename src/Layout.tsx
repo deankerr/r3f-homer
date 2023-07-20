@@ -1,8 +1,10 @@
-import { StatsGl } from '@react-three/drei'
-import { Canvas } from '@react-three/fiber'
+import { Center, Hud, OrthographicCamera, Resize, StatsGl, Svg } from '@react-three/drei'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Leva } from 'leva'
 import { Perf } from 'r3f-perf'
+import { useLayoutEffect, useRef } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
+import { Group, Mesh } from 'three'
 
 import { LoadingScene } from './scenes/LoadingScene'
 import { useTaxiStore } from './store'
@@ -13,7 +15,6 @@ export const Layout = () => {
   function handleInteraction() {
     if (!canStartAudio) setCanStartAudio()
   }
-
   const location = useLocation()
   const hashLeva = location.hash.includes('leva')
   const hashStats = location.hash.includes('stats')
@@ -24,9 +25,14 @@ export const Layout = () => {
       <SceneNavigation />
 
       <Canvas>
-        <color attach="background" args={['#000']} />
+        <color attach="background" args={['black']} />
+
+        <Hud>
+          <Outlet />
+        </Hud>
+
         <LoadingScene />
-        <Outlet />
+        <DevHud />
 
         {hashPerf ? (
           <Perf position="bottom-left" antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }} />
@@ -63,5 +69,62 @@ const SceneLink = ({ to, devOnly = false }: { to: string; devOnly?: boolean }) =
     <Link to={'/' + to.toLowerCase() + location.hash}>
       <div className={`inline rounded-full border-2 bg-black bg-opacity-40 px-2 uppercase ${text} ${border}`}>{to}</div>
     </Link>
+  )
+}
+
+const DevHud = () => {
+  const groupRef = useRef<Group>(null!)
+  const spinRef = useRef<Group>(null!)
+
+  const viewport = useThree(state => state.viewport)
+
+  useLayoutEffect(() => {
+    if (groupRef.current) {
+      groupRef.current.position.set(viewport.width, -viewport.height, 1)
+    }
+
+    if (spinRef.current) {
+      spinRef.current.position.set(-viewport.width, viewport.height, 1)
+    }
+  }, [viewport])
+
+  useFrame((_, delta) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 1.57
+    }
+  })
+
+  return (
+    <Hud renderPriority={2}>
+      <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={50} />
+
+      <Center ref={groupRef}>
+        <Resize>
+          <Svg src="taxi-sign-3.svg" fillMaterial={{ color: 'yellow' }} />
+        </Resize>
+      </Center>
+
+      <Spinner dref={spinRef} />
+      <ambientLight intensity={0.4} />
+      <pointLight position={[10, 5, 0]} />
+    </Hud>
+  )
+}
+
+function Spinner(props: JSX.IntrinsicElements['group'] & { dref?: React.Ref<Group> }) {
+  const ref = useRef<Mesh>(null!)
+  useFrame((_, delta) => {
+    if (ref.current) {
+      ref.current.rotation.y += delta * 1.57
+    }
+  })
+
+  return (
+    <group {...props} ref={props.dref}>
+      <mesh ref={ref}>
+        <icosahedronGeometry />
+        <meshPhongMaterial color={'aquamarine'} />
+      </mesh>
+    </group>
   )
 }
