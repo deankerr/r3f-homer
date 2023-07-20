@@ -76,6 +76,6 @@ function inRange(origin: Vector3, range: number) {
       results.push(new Vector3(x, y, z).add(origin))
     }
   }
-  console.log('Hexes in range:', results.length)
+  // console.log('Hexes in range:', results.length)
   return results
 }

@@ -73,7 +73,6 @@ function HexVectorLabel(vector: Vector3, id: number) {
 function hexToPixel(vector: Vector3) {
   const x = 1 * ((3 / 2) * vector.x)
   const y = 1 * ((Math.sqrt(3) / 2) * vector.x + Math.sqrt(3) * vector.y)
-  console.log('hextopixel')
   return new Vector3(x * 1, y * 1, 0)
 }
 
