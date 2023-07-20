@@ -6,11 +6,20 @@ import { useMatcap } from './Textures'
 
 const size = 4
 
-type Props = JSX.IntrinsicElements['mesh' | 'group']
+type Props = JSX.IntrinsicElements['group']
+
+const all = Array(61)
+  .fill(0)
+  .map((_, i) => i)
+
+const evens = all.filter(n => n % 2 === 0)
+const odds = all.filter(n => n % 2 === 1)
 
 export const Board = forwardRef<Group, Props>((props, ref) => {
   const vectors = useMemo(() => createHexes(size), [])
   const [selected, setSelected] = useState<number[]>([])
+  const [hasRuby, setHasRuby] = useState<number[]>(evens)
+  const [hasPearl, setHasPearl] = useState<number[]>(odds)
 
   // shared material
   const matcap = useMatcap()
@@ -31,7 +40,7 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
   }
 
   return (
-    <group ref={ref}>
+    <group ref={ref} {...props}>
       {vectors.map((vector, i) => (
         <Hex
           vector={vector}
@@ -40,6 +49,8 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
           selected={selected.includes(i)}
           material={material}
           onClick={() => handleClick(i)}
+          hasRuby={hasRuby.includes(i)}
+          hasPearl={hasPearl.includes(i)}
         />
       ))}
     </group>

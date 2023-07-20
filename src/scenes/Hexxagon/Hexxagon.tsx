@@ -19,18 +19,10 @@ export function Component() {
   })
 
   // fit camera to board
-  const camera = useThree(state => state.camera)
   const controlsRef = useRef<CameraControls>(null!)
   const boardRef = useRef<Group>(null!)
   const meshTestRef = useRef<Group>(null!)
   const lightboxRef = useRef<Mesh>(null!)
-
-  const target = meshTestRef
-  useEffect(() => {
-    if (controlsRef.current && target.current) {
-      void controlsRef.current.fitToBox(target.current, true)
-    }
-  }, [camera, config.fov, target])
 
   useFitToBoxControls('board', boardRef, controlsRef)
   useFitToBoxControls('mesh test', meshTestRef, controlsRef)
@@ -43,7 +35,7 @@ export function Component() {
       <PerspectiveCamera makeDefault position-z={20} fov={config.fov} />
       <CameraControls ref={controlsRef} />
 
-      {config.board && <Board ref={boardRef} />}
+      {config.board && <Board ref={boardRef} scale={[1.25, 1, 1]} />}
 
       <pointLight position={lightPosition} intensity={2} />
       <ambientLight intensity={0.2} />
@@ -70,3 +62,15 @@ function useFitToBoxControls(
     }),
   })
 }
+
+/* 
+
+const camera = useThree(state => state.camera)
+  const target = meshTestRef
+  useEffect(() => {
+    if (controlsRef.current && target.current) {
+      void controlsRef.current.fitToBox(target.current, true)
+    }
+  }, [camera, config.fov, target])
+
+*/

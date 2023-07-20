@@ -15,7 +15,7 @@ export const MeshTest = forwardRef<Group, Props>((props, ref) => {
 
   return (
     <group ref={ref} {...groupProps}>
-      <Hex vector={new Vector3(0, 0, 0)} selected={false} id={0} material={hexmat} position={[-2, 0, 0]} />
+      <Hex vector={new Vector3(0, 0, 0)} selected={true} id={0} material={hexmat} position={[-2, 0, 0]} />
       <Ruby position={[0, 0, 0]} />
       <Pearl position={[2, 0, 0]} />
     </group>

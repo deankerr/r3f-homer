@@ -1,70 +1,62 @@
 import { Text } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useMemo } from 'react'
-import { DoubleSide, LatheGeometry, Vector2, Vector3 } from 'three'
+import { DoubleSide, LatheGeometry, MeshBasicMaterial, Vector2, Vector3 } from 'three'
 
 import { Pearl } from './Pearl'
 import { Ruby } from './Ruby'
-
-const labelFontSize = 4
 
 type Props = {
   vector: Vector3
   selected: boolean
   id: number
+  hasRuby?: boolean
+  hasPearl?: boolean
 } & JSX.IntrinsicElements['mesh']
 
 export function Hex(props: Props) {
-  const { vector, material, selected, onClick, id } = props
+  const { vector, material, selected, onClick, id, hasRuby, hasPearl } = props
 
-  const config = useControls(
-    'hex',
-    {
-      labels: false,
-      allRubies: false,
-      allPearls: false,
-      alternate: true,
-    },
-    { collapsed: true }
-  )
+  const config = useControls('hex', { labels: false }, { collapsed: true })
 
-  const position = useMemo(() => hexToPixel(vector), [vector])
-
-  const rubyMesh = <Ruby />
-  const pearlMesh = <Pearl position={[0, 0, -2]} />
+  const position = props.position ?? hexToPixel(vector)
 
   return (
     <group position={props.position ? props.position : position} onClick={onClick}>
-      <mesh material={material} geometry={geometry.main} />
-
-      {config.labels && HexVectorLabel(vector, id)}
-
+      <mesh name="hex" material={material} geometry={geometry.main} />
       <mesh
+        name="hex selected"
         material-color="lime"
         geometry={geometry.selected}
         visible={selected}
-        // position-z={1}
         material-side={DoubleSide}
       />
 
-      {config.allRubies && rubyMesh}
-      {config.allPearls && pearlMesh}
-      {config.alternate && (vector.z % 2 ? rubyMesh : pearlMesh)}
+      <Ruby scale={0.65} visible={hasRuby} />
+      <Pearl scale={0.65} visible={hasPearl} />
+      <Labels data={[...vector.toArray(), id]} visible={config.labels} />
     </group>
   )
 }
 
-function HexVectorLabel(vector: Vector3, id: number) {
+type LabelProps = { data: number[]; visible: boolean }
+function Labels({ data, visible }: LabelProps) {
+  const textProps = { visible, outlineWidth: 0.1 }
+
   return (
-    <group>
-      <Text position-y={3} material-color={'red'} fontSize={labelFontSize}>{`${vector.x}`}</Text>
-
-      <Text position-x={4} position-y={-3} material-color={'blue'} fontSize={labelFontSize}>{`${vector.y}`}</Text>
-
-      <Text position-x={-4} position-y={-3} material-color={'lime'} fontSize={labelFontSize}>{`${vector.z}`}</Text>
-
-      <Text material-color={'white'} fontSize={labelFontSize}>
-        {id}
+    <group scale={0.3} position={[0, 0, 0.6]}>
+      <Text {...textProps} position={[0, 1.25, 0]} color="red">
+        {data[0]}
+      </Text>
+      <Text {...textProps} position={[1, -1, 0]} color="blue">
+        {data[1]}
+      </Text>
+      <Text {...textProps} position={[-1, -1, 0]} color="lime">
+        {data[2]}
+      </Text>
+      <Text {...textProps} position={[0, 0, 0]} color="white">
+        {data[3]}
       </Text>
     </group>
   )
@@ -90,5 +82,5 @@ const latheVectors = lathePoints.map(points => new Vector2(...points).divideScal
 // create and rotate geometry
 const geometry = {
   main: new LatheGeometry(latheVectors, 6, -Math.PI / 2).rotateX(-Math.PI / 2).center(),
-  selected: new LatheGeometry(latheVectors.slice(0, 2), 6, -Math.PI / 2).rotateX(-Math.PI / 2).translate(0, 0, 0.1),
+  selected: new LatheGeometry(latheVectors.slice(0, 2), 6, -Math.PI / 2).rotateX(-Math.PI / 2).translate(0, 0, 0.4),
 }
