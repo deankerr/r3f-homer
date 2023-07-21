@@ -1,4 +1,3 @@
-import { inject } from '@vercel/analytics'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
@@ -13,10 +12,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 
 if (process.env.NODE_ENV === 'development') {
   document.title = '🗿DEAN.TAXI'
-}
-
-if (process.env.NODE_ENV !== 'development') {
-  inject()
 }
 
 // allow scrolling to hide the address bar on ios safari

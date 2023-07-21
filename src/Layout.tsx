@@ -1,5 +1,6 @@
 import { Center, Hud, OrthographicCamera, Resize, StatsGl, Svg } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Analytics } from '@vercel/analytics/react'
 import { Leva } from 'leva'
 import { Perf } from 'r3f-perf'
 import { useLayoutEffect, useRef } from 'react'
@@ -15,10 +16,8 @@ export const Layout = () => {
   function handleInteraction() {
     if (!canStartAudio) setCanStartAudio()
   }
+
   const location = useLocation()
-  const hashLeva = location.hash.includes('leva')
-  const hashStats = location.hash.includes('stats')
-  const hashPerf = location.hash.includes('perf')
 
   function hash(value: string) {
     return location.hash.includes(value)
@@ -38,15 +37,14 @@ export const Layout = () => {
         <LoadingScene />
         <DevHud />
 
-        {/* {hashPerf ? (
-          <Perf antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }} />
-        ) : (
-          (hashStats || __DEV__) && <StatsGl horizontal={false} minimal />
-        )} */}
+        {hash('dev') && !hash('perf') && <StatsGl minimal />}
+        {hash('perf') && <Perf antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }} />}
+
         {hash('dev') && <StatsGl minimal />}
       </Canvas>
 
       <Leva collapsed={false} hidden={!hash('dev')} />
+      {__PROD__ && <Analytics />}
     </div>
   )
 }
