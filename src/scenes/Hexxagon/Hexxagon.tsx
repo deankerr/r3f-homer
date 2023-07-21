@@ -1,22 +1,26 @@
 import { Box, CameraControls, Edges, Grid, PerspectiveCamera, Svg } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { button, useControls } from 'leva'
 import { useEffect, useRef, useState } from 'react'
 import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3D } from 'three'
 
-import { useFrameLoopDemand } from '@/hooks'
-
 import { Board } from './Board'
 import { MeshTest } from './MeshTest'
 
-export function Component() {
-  useFrameLoopDemand()
-
+function Scene() {
   const config = useControls({
     grid: false,
     board: true,
     fov: { value: 50, min: 1, max: 100, step: 5 },
   })
+
+  const camera = useThree(state => state.camera)
+  useEffect(() => {
+    if ('fov' in camera) {
+      camera.fov = config.fov
+      camera.updateProjectionMatrix()
+    }
+  }, [camera, config.fov])
 
   // fit camera to board
   const controlsRef = useRef<CameraControls>(null!)
@@ -47,7 +51,6 @@ export function Component() {
 
   return (
     <>
-      <PerspectiveCamera makeDefault position-z={20} fov={config.fov} />
       <CameraControls ref={controlsRef} />
 
       {config.board && <Board ref={boardRef} scale={[1, 1, 1]} />}
@@ -61,6 +64,14 @@ export function Component() {
       <axesHelper visible={config.grid} args={[20]} />
       <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} cellColor={'red'} />
     </>
+  )
+}
+
+export function Component() {
+  return (
+    <Canvas frameloop="demand" camera={{ position: [0, 0, 20] }}>
+      <Scene />
+    </Canvas>
   )
 }
 Component.displayName = 'Hexxagon'

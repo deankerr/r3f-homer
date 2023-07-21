@@ -1,5 +1,6 @@
 import { Center, Hud, OrthographicCamera, Resize, StatsGl, Svg } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Analytics } from '@vercel/analytics/react'
 import { Leva } from 'leva'
 import { Perf } from 'r3f-perf'
 import { useLayoutEffect, useRef } from 'react'
@@ -26,23 +27,9 @@ export const Layout = () => {
     <div className="fixed h-screen w-screen" onClick={handleInteraction}>
       <SceneNavigation />
 
-      <Canvas>
-        <color attach="background" args={['black']} />
+      <Outlet />
 
-        <Hud>
-          <Outlet />
-        </Hud>
-
-        <LoadingScene />
-        <DevHud />
-
-        {hash('dev') && !hash('perf') && <StatsGl minimal />}
-        {hash('perf') && <Perf antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }} />}
-
-        {hash('dev') && <StatsGl minimal />}
-      </Canvas>
-
-      <Leva collapsed={false} hidden={!hash('dev')} />
+      {__PROD__ && <Analytics />}
     </div>
   )
 }

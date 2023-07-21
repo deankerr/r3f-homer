@@ -1,16 +1,12 @@
-import { useControls } from 'leva'
+import { Canvas } from '@react-three/fiber'
 
 import { Lights, Ring } from '.'
 import { Camera } from '.'
 import { Obelisk, Shard, Starfield, Temple, URLText } from './components'
 
 export function Component() {
-  const config = useControls('main', {
-    r3fPerf: false,
-  })
-
   return (
-    <>
+    <Canvas>
       <URLText text="DEAN.TAXI" />
       <Temple />
 
@@ -26,7 +22,7 @@ export function Component() {
 
       <Camera />
       <Lights />
-    </>
+    </Canvas>
   )
 }
 Component.displayName = 'Rehetep'

@@ -1,4 +1,5 @@
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
 import { useState } from 'react'
 
 import { Orbit } from '.'
@@ -9,7 +10,7 @@ import { Bust, Dolphin, Eye, Gnome, LightBlueSky, Lime, PlasticChair, Skull, Sun
 export function Component() {
   const [showSky, setShowSky] = useState(false)
   return (
-    <>
+    <Canvas>
       <PerspectiveCamera position={[0, 10, 12]} makeDefault />
       <Starfield rotate={true} />
       <BigText text="DEAN.TAXI" position={[-2, 10, -50]} />
@@ -46,7 +47,7 @@ export function Component() {
 
       <ambientLight intensity={0.1} />
       <OrbitControls target={[0, 8, 0]} enablePan={false} />
-    </>
+    </Canvas>
   )
 }
 Component.displayName = 'Homer3D'
