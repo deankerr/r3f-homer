@@ -1,6 +1,5 @@
 import { Center, Hud, OrthographicCamera, Resize, StatsGl, Svg } from '@react-three/drei'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { Analytics } from '@vercel/analytics/react'
 import { Leva } from 'leva'
 import { Perf } from 'r3f-perf'
 import { useLayoutEffect, useRef } from 'react'
@@ -44,7 +43,6 @@ export const Layout = () => {
       </Canvas>
 
       <Leva collapsed={false} hidden={!hash('dev')} />
-      {__PROD__ && <Analytics />}
     </div>
   )
 }
