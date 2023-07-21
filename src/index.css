@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body,
+body {
+  @apply overflow-hidden bg-black;
+}
+
 #root {
-  @apply h-screen bg-black text-slate-100;
-  user-select: none;
-  overflow: hidden;
+  @apply h-screen select-none text-slate-100;
 }

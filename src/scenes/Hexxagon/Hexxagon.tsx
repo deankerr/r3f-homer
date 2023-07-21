@@ -1,7 +1,7 @@
 import { Box, CameraControls, Edges, Grid, PerspectiveCamera, Svg } from '@react-three/drei'
-import { useThree } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { button, useControls } from 'leva'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3D } from 'three'
 
 import { useFrameLoopDemand } from '@/hooks'
@@ -28,6 +28,21 @@ export function Component() {
   useFitToBoxControls('mesh test', meshTestRef, controlsRef)
   useFitToBoxControls('light box', lightboxRef, controlsRef)
 
+  const [initialZoomDone, setInitialZoomDone] = useState(false)
+  useFrame(() => {
+    if (!initialZoomDone && controlsRef.current && boardRef.current) {
+      void controlsRef.current.fitToBox(boardRef.current, true)
+      setInitialZoomDone(true)
+    }
+  })
+
+  const viewport = useThree(state => state.viewport)
+  useEffect(() => {
+    if (controlsRef.current && boardRef.current) {
+      void controlsRef.current.fitToBox(boardRef.current, true)
+    }
+  }, [viewport])
+
   const lightPosition = [-10, 10, 20] as const
 
   return (
@@ -35,7 +50,7 @@ export function Component() {
       <PerspectiveCamera makeDefault position-z={20} fov={config.fov} />
       <CameraControls ref={controlsRef} />
 
-      {config.board && <Board ref={boardRef} scale={[1.25, 1, 1]} />}
+      {config.board && <Board ref={boardRef} scale={[1, 1, 1]} />}
 
       <pointLight position={lightPosition} intensity={2} />
       <ambientLight intensity={0.2} />

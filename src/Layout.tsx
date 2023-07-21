@@ -20,8 +20,12 @@ export const Layout = () => {
   const hashStats = location.hash.includes('stats')
   const hashPerf = location.hash.includes('perf')
 
+  function hash(value: string) {
+    return location.hash.includes(value)
+  }
+
   return (
-    <div className="h-screen" onClick={handleInteraction}>
+    <div className="fixed h-screen w-screen" onClick={handleInteraction}>
       <SceneNavigation />
 
       <Canvas>
@@ -34,14 +38,15 @@ export const Layout = () => {
         <LoadingScene />
         <DevHud />
 
-        {hashPerf ? (
-          <Perf position="bottom-left" antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }} />
+        {/* {hashPerf ? (
+          <Perf antialias={false} logsPerSecond={2} chart={{ hz: 1, length: 30 }} />
         ) : (
           (hashStats || __DEV__) && <StatsGl horizontal={false} minimal />
-        )}
+        )} */}
+        {hash('dev') && <StatsGl minimal />}
       </Canvas>
 
-      <Leva collapsed={!hashLeva} hidden={__PROD__ && !hashLeva} />
+      <Leva collapsed={false} hidden={!hash('dev')} />
     </div>
   )
 }
@@ -79,7 +84,6 @@ const DevHud = () => {
   useLayoutEffect(() => {
     if (groupRef.current) {
       groupRef.current.position.set(viewport.width, -viewport.height - 1, 1)
-      console.log(viewport.aspect, viewport.width, viewport.height)
     }
   }, [viewport])
 

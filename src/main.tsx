@@ -18,3 +18,8 @@ if (process.env.NODE_ENV === 'development') {
 if (process.env.NODE_ENV !== 'development') {
   inject()
 }
+
+// allow scrolling to hide the address bar on ios safari
+screen.orientation.addEventListener('change', () => {
+  document.body.style.overflowY = 'auto'
+})
