@@ -4,7 +4,7 @@ import { Leva } from 'leva'
 import { Perf } from 'r3f-perf'
 import { useLayoutEffect, useRef } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import { Group, Mesh } from 'three'
+import { Group } from 'three'
 
 import { LoadingScene } from './scenes/LoadingScene'
 import { useTaxiStore } from './store'
@@ -74,17 +74,12 @@ const SceneLink = ({ to, devOnly = false }: { to: string; devOnly?: boolean }) =
 
 const DevHud = () => {
   const groupRef = useRef<Group>(null!)
-  const spinRef = useRef<Group>(null!)
 
   const viewport = useThree(state => state.viewport)
-
   useLayoutEffect(() => {
     if (groupRef.current) {
-      groupRef.current.position.set(viewport.width, -viewport.height, 1)
-    }
-
-    if (spinRef.current) {
-      spinRef.current.position.set(-viewport.width, viewport.height, 1)
+      groupRef.current.position.set(viewport.width, -viewport.height - 1, 1)
+      console.log(viewport.aspect, viewport.width, viewport.height)
     }
   }, [viewport])
 
@@ -103,28 +98,6 @@ const DevHud = () => {
           <Svg src="taxi-sign-3.svg" fillMaterial={{ color: 'yellow' }} />
         </Resize>
       </Center>
-
-      <Spinner dref={spinRef} />
-      <ambientLight intensity={0.4} />
-      <pointLight position={[10, 5, 0]} />
     </Hud>
-  )
-}
-
-function Spinner(props: JSX.IntrinsicElements['group'] & { dref?: React.Ref<Group> }) {
-  const ref = useRef<Mesh>(null!)
-  useFrame((_, delta) => {
-    if (ref.current) {
-      ref.current.rotation.y += delta * 1.57
-    }
-  })
-
-  return (
-    <group {...props} ref={props.dref}>
-      <mesh ref={ref}>
-        <icosahedronGeometry />
-        <meshPhongMaterial color={'aquamarine'} />
-      </mesh>
-    </group>
   )
 }

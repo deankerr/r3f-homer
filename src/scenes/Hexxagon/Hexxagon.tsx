@@ -35,7 +35,7 @@ export function Component() {
       <PerspectiveCamera makeDefault position-z={20} fov={config.fov} />
       <CameraControls ref={controlsRef} />
 
-      {config.board && <Board ref={boardRef} scale={[2.0, 1, 1]} />}
+      {config.board && <Board ref={boardRef} scale={[1.25, 1, 1]} />}
 
       <pointLight position={lightPosition} intensity={2} />
       <ambientLight intensity={0.2} />
