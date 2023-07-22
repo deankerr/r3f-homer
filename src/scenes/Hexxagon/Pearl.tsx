@@ -25,9 +25,7 @@ export function Pearl(props: Props) {
 
   return (
     <group {...props} ref={groupRef}>
-      <mesh geometry={geometry.outer} ref={outerRef} visible={config.outer}>
-        <meshBasicMaterial color={'#d7d7d7'} />
-      </mesh>
+      <mesh geometry={geometry.outer} material-color="#d7d7d7" ref={outerRef} visible={config.outer} />
 
       <mesh geometry={geometry.main} ref={innerRef} scale={0.82}>
         <meshPhongMaterial>
