@@ -3,11 +3,13 @@ import { Canvas, invalidate, useFrame, useThree } from '@react-three/fiber'
 import { Leva, buttonGroup, useControls } from 'leva'
 import { Perf } from 'r3f-perf'
 import { useEffect, useRef, useState } from 'react'
+import { Provider } from 'react-redux'
 import { DoubleSide, Group } from 'three'
 
 import { Board } from './Board'
 import { MeshTest } from './MeshTest'
 import { useRotation } from './shared'
+import { hexxStore } from './store'
 
 function Scene() {
   // console.log('Hexxagon')
@@ -60,12 +62,12 @@ function Scene() {
 
 export function Component() {
   return (
-    <>
-      <Leva hidden={false} />
+    <Provider store={hexxStore}>
+      <Leva collapsed />
       <Canvas frameloop="demand" camera={{ position: [0, 0, 20], fov: 40 }}>
         <Scene />
       </Canvas>
-    </>
+    </Provider>
   )
 }
 Component.displayName = 'Hexxagon'

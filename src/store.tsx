@@ -1,10 +1,8 @@
-import { mountStoreDevtool } from 'simple-zustand-devtools'
 import { create } from 'zustand'
-import { devtools } from 'zustand/middleware'
 
 type HomerState = 'idle' | 'faceRotating' | 'headMarging' | 'headDemarging'
 
-type State = {
+type TaxiState = {
   refresh: boolean
   toggleRefresh: () => void
 
@@ -18,22 +16,20 @@ type State = {
   setHomerFace: (to: boolean) => void
 }
 
-export const useTaxiStore = create<State>()(
-  devtools(set => ({
-    refresh: false,
-    toggleRefresh: () => set(state => ({ refresh: !state.refresh })),
+export const useTaxiStore = create<TaxiState>()(set => ({
+  refresh: false,
+  toggleRefresh: () => set(state => ({ refresh: !state.refresh })),
 
-    canStartAudio: false,
-    setCanStartAudio: () => set(() => ({ canStartAudio: true })),
+  canStartAudio: false,
+  setCanStartAudio: () => set(() => ({ canStartAudio: true })),
 
-    homerState: 'idle',
-    setHomerState: (to: HomerState) => set(() => ({ homerState: to })),
+  homerState: 'idle',
+  setHomerState: (to: HomerState) => set(() => ({ homerState: to })),
 
-    homerFace: false,
-    setHomerFace: (to: boolean) => set(() => ({ homerFace: to })),
-  }))
-)
+  homerFace: false,
+  setHomerFace: (to: boolean) => set(() => ({ homerFace: to })),
+}))
 
-if (process.env.NODE_ENV === 'development') {
-  mountStoreDevtool('Store', useTaxiStore)
-}
+// if (process.env.NODE_ENV === 'development') {
+//   mountStoreDevtool('Store', useTaxiStore)
+// }
