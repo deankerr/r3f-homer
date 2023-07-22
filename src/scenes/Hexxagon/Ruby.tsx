@@ -2,8 +2,6 @@ import { useTexture } from '@react-three/drei'
 import { useControls } from 'leva'
 import { DoubleSide, LatheGeometry, Vector2 } from 'three'
 
-import { useNormal } from './Textures'
-
 type Props = JSX.IntrinsicElements['mesh']
 
 export function Ruby(props: Props) {
@@ -16,17 +14,10 @@ export function Ruby(props: Props) {
   )
 
   const matcap = useTexture('matcaps/ruby/' + matcapPaths[config.matcap])
-  const normal = useNormal('ruby', 20)
 
   return (
     <mesh geometry={geometry} {...props}>
-      <meshMatcapMaterial
-        matcap={matcap}
-        side={DoubleSide}
-        flatShading={true}
-        normalMap={normal}
-        normalScale={new Vector2(0.05, 0.05)}
-      />
+      <meshMatcapMaterial matcap={matcap} side={DoubleSide} flatShading={true} />
     </mesh>
   )
 }

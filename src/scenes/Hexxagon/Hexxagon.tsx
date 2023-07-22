@@ -15,7 +15,6 @@ function Scene() {
 
   const config = useControls({
     grid: false,
-    board: true,
     fov: { value: 40, min: 1, max: 100, step: 5 },
   })
 
@@ -52,7 +51,7 @@ function Scene() {
     <>
       <CameraControls ref={controlsRef} />
 
-      {config.board && <Board ref={boardRef} scale={[1, 1, 1]} name="board" />}
+      <Board ref={boardRef} scale={[1, 1, 1]} name="board" />
 
       <pointLight position={lightPosition} intensity={2} />
       <ambientLight intensity={0.2} />
