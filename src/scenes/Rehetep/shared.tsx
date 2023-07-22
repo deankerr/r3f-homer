@@ -1,5 +1,4 @@
 import { useFrame } from '@react-three/fiber'
-import { useRef } from 'react'
 import * as THREE from 'three'
 
 const colorSpeed = 20
@@ -13,8 +12,6 @@ const dimmedColor2 = new THREE.Color('violet').offsetHSL(0, 0, -dimmedOffset)
 
 type MaterialWithColor = THREE.Material & { color: THREE.Color }
 
-const testHSL = { h: 0, s: 0, l: 0 }
-const testTarget = { h: 0, s: 0, l: 0 }
 export function useMaterialColorLerpAnimation(
   ref: React.MutableRefObject<MaterialWithColor>,
   colorType: 'main' | 'dimmed'
@@ -22,10 +19,7 @@ export function useMaterialColorLerpAnimation(
   const color1 = colorType === 'main' ? mainColor1 : dimmedColor1
   const color2 = colorType === 'main' ? mainColor2 : dimmedColor2
 
-  const target = useRef(color2)
-  const time = useRef(0)
-
-  useFrame((state, delta) => {
+  useFrame(state => {
     if (!ref.current) return
 
     const t = Math.abs(Math.sin(state.clock.elapsedTime / colorSpeed))
@@ -61,11 +55,6 @@ export function useGridColorLerpAnimation(ref: React.MutableRefObject<THREE.Mesh
   })
 }
 
-function logHSL(color: THREE.Color) {
-  const hsl = { h: 0, s: 0, l: 0 }
-  color.getHSL(hsl)
-  return `(${Number(hsl.h).toFixed(2)},${Number(hsl.s).toFixed(2)},${Number(hsl.s).toFixed(2)})`
-}
 /* 
 //* how to turn towards a point
 const turnSpeed = 1 / 4

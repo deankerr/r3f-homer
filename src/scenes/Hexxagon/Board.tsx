@@ -9,12 +9,12 @@ const boardSize = 4
 
 type Props = JSX.IntrinsicElements['group']
 
-const all = Array(61)
-  .fill(0)
-  .map((_, i) => i)
+// const all = Array(61)
+//   .fill(0)
+//   .map((_, i) => i)
 
-const evens = all.filter(n => n % 2 === 0)
-const odds = all.filter(n => n % 2 === 1)
+// const evens = all.filter(n => n % 2 === 0)
+// const odds = all.filter(n => n % 2 === 1)
 
 export const Board = forwardRef<Group, Props>((props, ref) => {
   //* hex shared material
@@ -66,24 +66,19 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
 })
 Board.displayName = 'Board'
 
-const directions = [
-  new Vector3(1, -1, 0),
-  new Vector3(1, 0, -1),
-  new Vector3(0, 1, -1),
-  new Vector3(-1, 1, 0),
-  new Vector3(-1, 0, 1),
-  new Vector3(0, -1, 1),
-]
-
-function createHexes(size: number) {
-  const origin = new Vector3(0, 0, 0)
-  return inRange(origin, size)
-}
+// const directions = [
+//   new Vector3(1, -1, 0),
+//   new Vector3(1, 0, -1),
+//   new Vector3(0, 1, -1),
+//   new Vector3(-1, 1, 0),
+//   new Vector3(-1, 0, 1),
+//   new Vector3(0, -1, 1),
+// ]
 
 // https://www.redblobgames.com/grids/hexagons-v2/
-function neighbours(from: Vector3) {
-  return directions.map(d => from.add(from))
-}
+// function neighbours(from: Vector3) {
+//   return directions.map(d => from.add(from))
+// }
 
 // https://www.redblobgames.com/grids/hexagons-v2/#range
 function inRange(origin: Vector3, range: number) {

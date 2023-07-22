@@ -7,7 +7,7 @@ Source: https://sketchfab.com/3d-models/egyptian-cat-figurine-edf17f47aed9423084
 Title: Egyptian cat figurine
 */
 import { useGLTF } from '@react-three/drei'
-import React, { useEffect, useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 import * as THREE from 'three'
 import { GLTF } from 'three-stdlib'
 

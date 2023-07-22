@@ -1,13 +1,6 @@
-import { Center, Hud, OrthographicCamera, Resize, StatsGl, Svg } from '@react-three/drei'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Analytics } from '@vercel/analytics/react'
-import { Leva } from 'leva'
-import { Perf } from 'r3f-perf'
-import { useLayoutEffect, useRef } from 'react'
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import { Group } from 'three'
 
-import { LoadingScene } from './scenes/LoadingScene'
 import { useTaxiStore } from './store'
 
 export const Layout = () => {
@@ -17,11 +10,11 @@ export const Layout = () => {
     if (!canStartAudio) setCanStartAudio()
   }
 
-  const location = useLocation()
+  // const location = useLocation()
 
-  function hash(value: string) {
-    return location.hash.includes(value)
-  }
+  // function hash(value: string) {
+  //   return location.hash.includes(value)
+  // }
 
   return (
     <div className="fixed h-screen w-screen" onClick={handleInteraction}>
@@ -60,31 +53,31 @@ const SceneLink = ({ to, devOnly = false }: { to: string; devOnly?: boolean }) =
   )
 }
 
-const DevHud = () => {
-  const groupRef = useRef<Group>(null!)
+// const DevHud = () => {
+//   const groupRef = useRef<Group>(null!)
 
-  const viewport = useThree(state => state.viewport)
-  useLayoutEffect(() => {
-    if (groupRef.current) {
-      groupRef.current.position.set(viewport.width, -viewport.height - 1, 1)
-    }
-  }, [viewport])
+//   const viewport = useThree(state => state.viewport)
+//   useLayoutEffect(() => {
+//     if (groupRef.current) {
+//       groupRef.current.position.set(viewport.width, -viewport.height - 1, 1)
+//     }
+//   }, [viewport])
 
-  useFrame((_, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 1.57
-    }
-  })
+//   useFrame((_, delta) => {
+//     if (groupRef.current) {
+//       groupRef.current.rotation.y += delta * 1.57
+//     }
+//   })
 
-  return (
-    <Hud renderPriority={2}>
-      <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={50} />
+//   return (
+//     <Hud renderPriority={2}>
+//       <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={50} />
 
-      <Center ref={groupRef}>
-        <Resize>
-          <Svg src="taxi-sign-3.svg" fillMaterial={{ color: 'yellow' }} />
-        </Resize>
-      </Center>
-    </Hud>
-  )
-}
+//       <Center ref={groupRef}>
+//         <Resize>
+//           <Svg src="taxi-sign-3.svg" fillMaterial={{ color: 'yellow' }} />
+//         </Resize>
+//       </Center>
+//     </Hud>
+//   )
+// }

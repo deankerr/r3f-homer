@@ -1,6 +1,6 @@
 import { Object3DProps, useFrame } from '@react-three/fiber'
 import { useMemo, useRef } from 'react'
-import { Group, MathUtils, Vector3 } from 'three'
+import { Group, MathUtils } from 'three'
 
 import { ringPositions } from '@/util'
 

@@ -1,4 +1,4 @@
-import { Box, CameraControls, Grid, StatsGl } from '@react-three/drei'
+import { Box, CameraControls, Grid } from '@react-three/drei'
 import { Canvas, invalidate, useFrame, useThree } from '@react-three/fiber'
 import { Leva, buttonGroup, useControls } from 'leva'
 import { Perf } from 'r3f-perf'
@@ -8,7 +8,6 @@ import { DoubleSide, Group } from 'three'
 
 import { Board } from './Board'
 import { MeshTest } from './MeshTest'
-import { useRotation } from './shared'
 import { hexxStore } from './store'
 
 function Scene() {

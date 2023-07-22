@@ -1,8 +1,6 @@
 import { Circle, Text } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
-import { useMemo } from 'react'
-import { DoubleSide, LatheGeometry, Material, MeshBasicMaterial, Vector2, Vector3 } from 'three'
+import { DoubleSide, LatheGeometry, Vector2, Vector3 } from 'three'
 
 import { HexData } from './Board'
 import { Pearl } from './Pearl'

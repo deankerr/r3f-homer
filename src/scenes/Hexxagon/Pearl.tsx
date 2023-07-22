@@ -1,5 +1,4 @@
 import { GradientTexture, GradientType } from '@react-three/drei'
-import { useFrame, useThree } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useRef } from 'react'
 import { Group, Mesh, RingGeometry, SphereGeometry } from 'three'

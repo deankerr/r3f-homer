@@ -1,4 +1,4 @@
-import { Hud, PerspectiveCamera, Plane, Stars, Text } from '@react-three/drei'
+import { Hud, PerspectiveCamera, Stars, Text } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react'
 import { useNavigation } from 'react-router-dom'
