@@ -1,30 +1,25 @@
-import { Text } from '@react-three/drei'
+import { Circle, Text } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
 import { useControls } from 'leva'
 import { useMemo } from 'react'
-import { DoubleSide, LatheGeometry, MeshBasicMaterial, Vector2, Vector3 } from 'three'
+import { DoubleSide, LatheGeometry, Material, MeshBasicMaterial, Vector2, Vector3 } from 'three'
 
+import { HexData } from './Board'
 import { Pearl } from './Pearl'
 import { Ruby } from './Ruby'
 
-type Props = {
-  vector: Vector3
-  selected: boolean
-  id: number
-  hasRuby?: boolean
-  hasPearl?: boolean
-} & JSX.IntrinsicElements['mesh']
+type Props = HexData & JSX.IntrinsicElements['mesh'] & { index: number }
 
 export function Hex(props: Props) {
-  const { vector, material, selected, onClick, id, hasRuby, hasPearl } = props
+  const { vector, material, selected, onClick, contents, index } = props
 
   const config = useControls('hex', { labels: false }, { collapsed: true })
 
   const position = props.position ?? hexToPixel(vector)
 
   return (
-    <group position={props.position ? props.position : position} onClick={onClick}>
-      <mesh name="hex" material={material} geometry={geometry.main} />
+    <group position={props.position ? props.position : position}>
+      <mesh name="hex" material={material} geometry={geometry.main} onClick={onClick} />
       <mesh
         name="hex selected"
         material-color="lime"
@@ -33,9 +28,11 @@ export function Hex(props: Props) {
         material-side={DoubleSide}
       />
 
-      <Ruby scale={0.65} visible={hasRuby} />
-      <Pearl scale={0.65} visible={hasPearl} />
-      <Labels data={[...vector.toArray(), id]} visible={config.labels} />
+      <Ruby scale={0.65} visible={contents === 'ruby'} />
+      <Pearl scale={0.65} visible={contents === 'pearl'} />
+      <Circle args={[0.6]} material-color="black" visible={contents === 'hole'} />
+
+      <Labels data={[...vector.toArray(), index]} visible={config.labels} />
     </group>
   )
 }

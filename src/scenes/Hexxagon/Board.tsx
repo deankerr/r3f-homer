@@ -5,7 +5,7 @@ import { DoubleSide, Group, MeshMatcapMaterial, Vector3 } from 'three'
 
 import { Hex } from './Hex'
 
-const size = 4
+const boardSize = 4
 
 type Props = JSX.IntrinsicElements['group']
 
@@ -17,11 +17,6 @@ const evens = all.filter(n => n % 2 === 0)
 const odds = all.filter(n => n % 2 === 1)
 
 export const Board = forwardRef<Group, Props>((props, ref) => {
-  const vectors = useMemo(() => createHexes(size), [])
-  const [selected, setSelected] = useState<number[]>([])
-  const [hasRuby, setHasRuby] = useState<number[]>([])
-  const [hasPearl, setHasPearl] = useState<number[]>([])
-
   //* hex shared material
   const config = useControls(
     'board',
@@ -36,7 +31,7 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
   const boardMatcap = useTexture(matcapPaths[config.matcap])
   const boardNormal = useTexture(normalPaths[0])
 
-  const material = useMemo(
+  const boardMaterial = useMemo(
     () =>
       new MeshMatcapMaterial({
         matcap: boardMatcap,
@@ -47,25 +42,24 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
     [boardMatcap, boardNormal]
   )
 
+  //* game logic
+  const [state, setState] = useState(() => createBoardState())
+
   function handleClick(id: number) {
     console.log('clicked', id)
-    if (selected.includes(id)) setSelected([])
-    else setSelected([id])
+    const nextHex = { ...state[id] }
+    nextHex.selected = !nextHex.selected
+
+    const nextState = [...state]
+    nextState[id] = nextHex
+
+    setState(nextState)
   }
 
   return (
     <group ref={ref} visible={config.visible} {...props}>
-      {vectors.map((vector, i) => (
-        <Hex
-          vector={vector}
-          key={i}
-          id={i}
-          selected={selected.includes(i)}
-          material={material}
-          onClick={() => handleClick(i)}
-          hasRuby={hasRuby.includes(i)}
-          hasPearl={hasPearl.includes(i)}
-        />
+      {state.map((hex, i) => (
+        <Hex {...hex} index={i} material={boardMaterial} onClick={() => handleClick(i)} key={i} />
       ))}
     </group>
   )
@@ -115,3 +109,45 @@ const matcapPaths = [
 ]
 
 const normalPaths = ['normals/4918-normal.jpg']
+
+function createBoardState() {
+  const origin = new Vector3(0, 0, 0)
+  const vectors = inRange(origin, boardSize)
+
+  const state: HexData[] = vectors.map((vector, index) => {
+    return { index, vector, contents: 'empty', selected: false }
+  })
+
+  // temp initial game state
+  const rubies = [4, 26, 60]
+  rubies.forEach(i => (state[i].contents = 'ruby'))
+
+  const pearls = [0, 34, 56]
+  pearls.forEach(i => (state[i].contents = 'pearl'))
+
+  const holes = [21, 31, 38]
+  holes.forEach(i => (state[i].contents = 'hole'))
+
+  console.log('create:', state)
+  return state
+}
+
+/* 
+Static:
+  Grid Vector *
+  Pixel Vector in grid //drv
+  is hole
+
+Dynamic:
+  Has ruby / pearl
+  is selected
+  is targetable //drv
+  is available move //drv
+
+*/
+
+export type HexData = {
+  vector: Vector3
+  contents: 'empty' | 'pearl' | 'ruby' | 'hole'
+  selected: boolean
+}

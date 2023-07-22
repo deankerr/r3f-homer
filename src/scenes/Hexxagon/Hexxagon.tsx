@@ -21,7 +21,6 @@ function Scene() {
 
   const camera = useThree(state => state.camera)
   useEffect(() => {
-    console.log('fovo')
     if ('fov' in camera) {
       camera.fov = config.fov
       camera.updateProjectionMatrix()
@@ -42,7 +41,7 @@ function Scene() {
 
   const lightPosition = [-10, 10, 20] as const
 
-  useRotation(boardRef, 0, 1.57, 0)
+  // useRotation(boardRef, 0, 1.57, 0)
   return (
     <>
       <CameraControls ref={controlsRef} />

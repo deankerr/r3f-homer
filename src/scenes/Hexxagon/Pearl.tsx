@@ -13,15 +13,15 @@ export function Pearl(props: Props) {
   const outerRef = useRef<Mesh>(null!)
   const groupRef = useRef<Group>(null!)
 
-  const { camera } = useThree()
-  useFrame(() => {
-    outerRef.current.lookAt(camera.position)
-    if (config.lookAt) {
-      innerRef.current.lookAt(camera.position)
-    } else {
-      innerRef.current.rotation.set(0, 0, 0)
-    }
-  })
+  // const { camera } = useThree()
+  // useFrame(() => {
+  //   outerRef.current.lookAt(camera.position)
+  //   if (config.lookAt) {
+  //     innerRef.current.lookAt(camera.position)
+  //   } else {
+  //     innerRef.current.rotation.set(0, 0, 0)
+  //   }
+  // })
 
   return (
     <group {...props} ref={groupRef}>
