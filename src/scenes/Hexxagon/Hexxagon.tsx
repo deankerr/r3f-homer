@@ -1,17 +1,22 @@
-import { Box, CameraControls, Edges, Grid, PerspectiveCamera, Svg } from '@react-three/drei'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-import { button, useControls } from 'leva'
+import { Box, CameraControls, Grid, StatsGl } from '@react-three/drei'
+import { Canvas, invalidate, useFrame, useThree } from '@react-three/fiber'
+import { Leva, buttonGroup, useControls } from 'leva'
 import { useEffect, useRef, useState } from 'react'
-import { DoubleSide, Group, Mesh, MeshBasicMaterial, Object3D } from 'three'
+import { DoubleSide, Group } from 'three'
 
 import { Board } from './Board'
 import { MeshTest } from './MeshTest'
 
 function Scene() {
+  console.log('Hexxagon')
+
+  const controlsRef = useRef<CameraControls>(null!)
+  useZoomToControls(controlsRef)
+
   const config = useControls({
     grid: false,
     board: true,
-    fov: { value: 50, min: 1, max: 100, step: 5 },
+    fov: { value: 40, min: 1, max: 100, step: 5 },
   })
 
   const camera = useThree(state => state.camera)
@@ -19,18 +24,12 @@ function Scene() {
     if ('fov' in camera) {
       camera.fov = config.fov
       camera.updateProjectionMatrix()
+      invalidate()
     }
   }, [camera, config.fov])
 
   // fit camera to board
-  const controlsRef = useRef<CameraControls>(null!)
   const boardRef = useRef<Group>(null!)
-  const meshTestRef = useRef<Group>(null!)
-  const lightboxRef = useRef<Mesh>(null!)
-
-  useFitToBoxControls('board', boardRef, controlsRef)
-  useFitToBoxControls('mesh test', meshTestRef, controlsRef)
-  useFitToBoxControls('light box', lightboxRef, controlsRef)
 
   const [initialZoomDone, setInitialZoomDone] = useState(false)
   useFrame(() => {
@@ -53,13 +52,13 @@ function Scene() {
     <>
       <CameraControls ref={controlsRef} />
 
-      {config.board && <Board ref={boardRef} scale={[1, 1, 1]} />}
+      {config.board && <Board ref={boardRef} scale={[1, 1, 1]} name="board" />}
 
       <pointLight position={lightPosition} intensity={2} />
       <ambientLight intensity={0.2} />
-      <Box position={lightPosition} ref={lightboxRef} />
+      <Box position={lightPosition} />
 
-      <MeshTest ref={meshTestRef} position={[0, 10, 50]} />
+      <MeshTest position={[0, 10, 50]} name="mesh test" />
 
       <axesHelper visible={config.grid} args={[20]} />
       <Grid visible={config.grid} infiniteGrid={true} side={DoubleSide} cellColor={'red'} />
@@ -69,35 +68,30 @@ function Scene() {
 
 export function Component() {
   return (
-    <Canvas frameloop="demand" camera={{ position: [0, 0, 20] }}>
-      <Scene />
-    </Canvas>
+    <>
+      <Leva hidden={false} />
+      <Canvas frameloop="demand" camera={{ position: [0, 0, 20], fov: 40 }}>
+        <StatsGl minimal />
+        <Scene />
+      </Canvas>
+    </>
   )
 }
 Component.displayName = 'Hexxagon'
 
-function useFitToBoxControls(
-  label: string,
-  targetRef: React.MutableRefObject<Object3D>,
-  controlsRef: React.MutableRefObject<CameraControls>
-) {
-  useControls('fit to box', {
-    [label]: button(() => {
-      if (!controlsRef.current) return console.error('f2b no camera')
-      if (!targetRef.current) return console.error('f2b no target?')
-      void controlsRef.current.fitToBox(targetRef.current, true)
-    }),
+function useZoomToControls(controlsRef: React.MutableRefObject<CameraControls>) {
+  const { children } = useThree(state => state.scene)
+
+  const list: { [key: string]: () => void } = {}
+
+  children.forEach(t => {
+    if (t.name) list[t.name] = () => void controlsRef.current.fitToBox(t, true)
   })
+
+  useControls(
+    {
+      zoom: buttonGroup(list),
+    },
+    [children.length]
+  )
 }
-
-/* 
-
-const camera = useThree(state => state.camera)
-  const target = meshTestRef
-  useEffect(() => {
-    if (controlsRef.current && target.current) {
-      void controlsRef.current.fitToBox(target.current, true)
-    }
-  }, [camera, config.fov, target])
-
-*/
