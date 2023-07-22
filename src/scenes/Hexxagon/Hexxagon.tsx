@@ -8,7 +8,7 @@ import { DoubleSide, Group } from 'three'
 
 import { Board } from './Board'
 import { MeshTest } from './MeshTest'
-import { hexxStore } from './store'
+import { hexxStore } from './hexxStore'
 
 function Scene() {
   // console.log('Hexxagon')
