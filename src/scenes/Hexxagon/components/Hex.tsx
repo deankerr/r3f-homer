@@ -2,22 +2,24 @@ import { Circle, Text } from '@react-three/drei'
 import { useControls } from 'leva'
 import { DoubleSide, LatheGeometry, Vector2, Vector3 } from 'three'
 
-import { HexData } from './Board'
+import { hex3ToPosition } from '../lib'
+import { HexxData } from '../slice'
 import { Pearl } from './Pearl'
 import { Ruby } from './Ruby'
 
-type Props = HexData & JSX.IntrinsicElements['mesh'] & { index: number }
+type Props = HexxData & JSX.IntrinsicElements['mesh'] & { index: number }
 
 export function Hex(props: Props) {
   const { vector, material, selected, onClick, contents, index } = props
 
-  const config = useControls('hex', { labels: false }, { collapsed: true })
+  const config = useControls({ showLabels: true })
 
-  const position = props.position ?? hexToPixel(vector)
+  const position = props.position ?? hex3ToPosition(vector)
 
   return (
-    <group position={props.position ? props.position : position}>
+    <group position={position}>
       <mesh name="hex" material={material} geometry={geometry.main} onClick={onClick} />
+
       <mesh
         name="hex selected"
         material-color="lime"
@@ -30,7 +32,7 @@ export function Hex(props: Props) {
       <Pearl scale={0.65} visible={contents === 'pearl'} />
       <Circle args={[0.6]} material-color="black" visible={contents === 'hole'} />
 
-      <Labels data={[...vector.toArray(), index]} visible={config.labels} />
+      <Labels data={[...vector, index]} visible={config.showLabels} />
     </group>
   )
 }
@@ -55,12 +57,6 @@ function Labels({ data, visible }: LabelProps) {
       </Text>
     </group>
   )
-}
-
-function hexToPixel(vector: Vector3) {
-  const x = 1 * ((3 / 2) * vector.x)
-  const y = 1 * ((Math.sqrt(3) / 2) * vector.x + Math.sqrt(3) * vector.y)
-  return new Vector3(x * 1, y * 1, 0)
 }
 
 //* geometry

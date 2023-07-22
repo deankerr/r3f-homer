@@ -1,16 +1,15 @@
 import { useTexture } from '@react-three/drei'
 import { useControls } from 'leva'
-import { forwardRef, useMemo, useState } from 'react'
-import { useSelector } from 'react-redux'
-import { DoubleSide, Group, MeshMatcapMaterial, Vector3 } from 'three'
+import { forwardRef, useMemo } from 'react'
+import { DoubleSide, Group, MeshMatcapMaterial } from 'three'
 
+import { useHexxDispatch, useHexxSelector } from '../shared'
+import { selectHex } from '../slice'
 import { Hex } from './Hex'
-import type { HexxRootState } from './hexxStore'
 
 type Props = JSX.IntrinsicElements['group']
 
 export const Board = forwardRef<Group, Props>((props, ref) => {
-  //* hex shared material
   const config = useControls(
     'board',
     {
@@ -21,6 +20,7 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
     { collapsed: true }
   )
 
+  // * hex shared material
   const boardMatcap = useTexture(matcapPaths[config.matcap])
   const boardNormal = useTexture(normalPaths[0])
 
@@ -35,16 +35,19 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
     [boardMatcap, boardNormal]
   )
 
-  function handleClick() {
-    console.log('clicked something')
-  }
+  // * game state
+  const list = useHexxSelector(state => state.gameState.list)
+  const dispatch = useHexxDispatch()
 
-  const list = useSelector((state: HexxRootState) => state.gameState.list)
+  function handleClick(number: number) {
+    console.log('clicked', number)
+    dispatch(selectHex(number))
+  }
 
   return (
     <group ref={ref} visible={config.visible} {...props}>
-      {list.map((hex, i) => (
-        <Hex {...hex} index={i} material={boardMaterial} onClick={() => handleClick()} key={i} />
+      {list.map(hex => (
+        <Hex {...hex} material={boardMaterial} onClick={() => handleClick(hex.index)} key={hex.index} />
       ))}
     </group>
   )
@@ -61,9 +64,3 @@ const matcapPaths = [
 ]
 
 const normalPaths = ['normals/4918-normal.jpg']
-
-export type HexData = {
-  vector: Vector3
-  contents: 'empty' | 'pearl' | 'ruby' | 'hole'
-  selected: boolean
-}

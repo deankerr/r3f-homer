@@ -43,6 +43,7 @@ const config = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     // dev
     '@typescript-eslint/no-unused-vars': 'off',
+    'prefer-const': 'warn',
   },
 }
 
