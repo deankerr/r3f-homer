@@ -3,8 +3,9 @@ import { useControls } from 'leva'
 import { forwardRef, useMemo } from 'react'
 import { DoubleSide, Group, MeshMatcapMaterial } from 'three'
 
+import { getSelectedNeighbours } from '../lib'
 import { useHexxDispatch, useHexxSelector } from '../shared'
-import { selectHex } from '../slice'
+import { HexxData, selectHex } from '../slice'
 import { Hex } from './Hex'
 
 type Props = JSX.IntrinsicElements['group']
@@ -36,18 +37,30 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
   )
 
   // * game state
-  const list = useHexxSelector(state => state.gameState.list)
+  const gameState = useHexxSelector(state => state.gameState)
   const dispatch = useHexxDispatch()
 
-  function handleClick(number: number) {
-    console.log('clicked', number)
-    dispatch(selectHex(number))
+  const { list, selected } = gameState
+  const selectionData = getSelectedNeighbours(selected ? list[selected] : null)
+  console.log('selneighbours', selectionData)
+  // const selected = gameState.selected ? gameState.list[]
+  // const selectedNear = selected ?
+
+  function handleHexClick(hex: HexxData) {
+    console.log('clicked', hex.vector)
+    dispatch(selectHex(hex.index))
   }
 
   return (
     <group ref={ref} visible={config.visible} {...props}>
-      {list.map(hex => (
-        <Hex {...hex} material={boardMaterial} onClick={() => handleClick(hex.index)} key={hex.index} />
+      {gameState.list.map(hex => (
+        <Hex
+          {...hex}
+          selected={gameState.selected === hex.index}
+          material={boardMaterial}
+          onClick={() => handleHexClick(hex)}
+          key={hex.index}
+        />
       ))}
     </group>
   )

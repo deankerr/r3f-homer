@@ -1,5 +1,5 @@
 import { forwardRef } from 'react'
-import { DoubleSide, Group, MeshBasicMaterial, Vector3 } from 'three'
+import { DoubleSide, Group, MeshBasicMaterial } from 'three'
 
 import { Hex } from './Hex'
 import { Pearl } from './Pearl'
@@ -14,14 +14,7 @@ export const MeshTest = forwardRef<Group, Props>((props, ref) => {
 
   return (
     <group ref={ref} {...groupProps}>
-      <Hex
-        vector={new Vector3(0, 0, 0)}
-        selected={true}
-        contents="empty"
-        index={0}
-        material={hexmat}
-        position={[-2, 0, 0]}
-      />
+      <Hex vector={[0, 0, 0]} selected={true} contents="empty" index={0} material={hexmat} position={[-2, 0, 0]} />
       <Ruby position={[0, 0, 0]} />
       <Pearl position={[2, 0, 0]} />
     </group>

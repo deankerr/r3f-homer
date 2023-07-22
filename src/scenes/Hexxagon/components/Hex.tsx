@@ -7,10 +7,10 @@ import { HexxData } from '../slice'
 import { Pearl } from './Pearl'
 import { Ruby } from './Ruby'
 
-type Props = HexxData & JSX.IntrinsicElements['mesh'] & { index: number }
+type Props = HexxData & JSX.IntrinsicElements['mesh'] & { selected: boolean }
 
 export function Hex(props: Props) {
-  const { vector, material, selected, onClick, contents, index } = props
+  const { vector, material, onClick, contents, index, selected } = props
 
   const config = useControls({ showLabels: true })
 

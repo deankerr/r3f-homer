@@ -47,7 +47,7 @@ function Scene() {
     <>
       <CameraControls ref={controlsRef} />
 
-      <Board ref={boardRef} scale={[1.5, 1, 1]} name="board" />
+      <Board ref={boardRef} scale={[1, 1, 1]} name="board" />
 
       <pointLight position={lightPosition} intensity={2} />
       <ambientLight intensity={0.2} />

@@ -30,6 +30,15 @@ export function hexesInRange(origin: Hex3, range: number) {
   return results
 }
 
+export function getSelectedNeighbours(origin: HexxData | null) {
+  if (!origin) return { origin: null, near: null, far: null }
+
+  const near = neighbours(new Vector3(...origin.vector))
+  const far = hexesInRange(origin.vector, 2)
+
+  return { origin, near, far }
+}
+
 export function hex3ToPosition(vector: Hex3) {
   const [x, y] = vector
   const positionX = 1 * ((3 / 2) * x)
@@ -48,7 +57,7 @@ export function createInitialGridState(boardSize = 4) {
     if (initPearl.some(vec => hex3Equals(vec, vector))) contents = 'pearl'
     if (initHole.some(vec => hex3Equals(vec, vector))) contents = 'hole'
 
-    const hex: HexxData = { index: i, vector, contents, selected: false }
+    const hex: HexxData = { index: i, vector, contents }
 
     return hex
   })
