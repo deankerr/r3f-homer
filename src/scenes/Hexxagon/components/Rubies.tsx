@@ -1,14 +1,21 @@
 import { useTexture } from '@react-three/drei'
 import { folder, useControls } from 'leva'
-import { DoubleSide, LatheGeometry, Vector2 } from 'three'
+import { forwardRef } from 'react'
+import { DoubleSide, Group, LatheGeometry, Vector2 } from 'three'
 
-type Props = JSX.IntrinsicElements['mesh']
+import { hex3ToPosition } from '../lib'
+import { useHexxSelector } from '../shared'
 
-export function Ruby(props: Props) {
+type Props = JSX.IntrinsicElements['group']
+
+export const Rubies = forwardRef<Group, Props>((props, ref) => {
+  const { ...groupProps } = props
+
   const config = useControls(
     'visual',
     {
-      ruby: folder({
+      rubies: folder({
+        visible: true,
         matcap: { value: 0, min: 0, max: matcapPaths.length - 1, step: 1 },
       }),
     },
@@ -17,12 +24,23 @@ export function Ruby(props: Props) {
 
   const matcap = useTexture('matcaps/ruby/' + matcapPaths[config.matcap])
 
+  const gameState = useHexxSelector(state => state.gameState)
+
   return (
-    <mesh geometry={geometry} {...props}>
-      <meshMatcapMaterial matcap={matcap} side={DoubleSide} flatShading={true} />
-    </mesh>
+    <group ref={ref} {...groupProps} visible={config.visible}>
+      {gameState.list
+        .filter(hex => hex.contents === 'ruby')
+        .map((hex, i) => (
+          <group key={i} position={hex3ToPosition(hex.vector)} scale={0.65}>
+            <mesh geometry={geometry}>
+              <meshMatcapMaterial matcap={matcap} side={DoubleSide} flatShading={true} />
+            </mesh>
+          </group>
+        ))}
+    </group>
   )
-}
+})
+Rubies.displayName = 'Rubies'
 
 //* geometry
 const geometry = (() => {
