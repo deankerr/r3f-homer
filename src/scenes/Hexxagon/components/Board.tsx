@@ -1,5 +1,5 @@
 import { useTexture } from '@react-three/drei'
-import { useControls } from 'leva'
+import { folder, useControls } from 'leva'
 import { forwardRef, useMemo } from 'react'
 import { DoubleSide, Group, MeshMatcapMaterial } from 'three'
 
@@ -12,11 +12,13 @@ type Props = JSX.IntrinsicElements['group']
 
 export const Board = forwardRef<Group, Props>((props, ref) => {
   const config = useControls(
-    'board',
+    'visual',
     {
-      visible: true,
-      matcap: { value: 0, min: 0, max: matcapPaths.length - 1, step: 1 },
-      normal: { value: 0, min: 0, max: normalPaths.length - 1, step: 1 },
+      board: folder({
+        visible: true,
+        matcap: { value: 0, min: 0, max: matcapPaths.length - 1, step: 1 },
+        normal: { value: 0, min: 0, max: normalPaths.length - 1, step: 1 },
+      }),
     },
     { collapsed: true }
   )

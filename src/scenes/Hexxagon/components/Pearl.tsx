@@ -1,26 +1,27 @@
 import { GradientTexture, GradientType } from '@react-three/drei'
-import { useControls } from 'leva'
+import { useFrame, useThree } from '@react-three/fiber'
+import { folder, useControls } from 'leva'
 import { useRef } from 'react'
 import { Group, Mesh, RingGeometry, SphereGeometry } from 'three'
 
 type Props = JSX.IntrinsicElements['group']
 
 export function Pearl(props: Props) {
-  const config = useControls('pearl', { outer: true, lookAt: true }, { collapsed: true })
+  const config = useControls('visual', { pearl: folder({ outer: true, lookAt: false }) }, { collapsed: true })
 
   const innerRef = useRef<Mesh>(null!)
   const outerRef = useRef<Mesh>(null!)
   const groupRef = useRef<Group>(null!)
 
-  // const { camera } = useThree()
-  // useFrame(() => {
-  //   outerRef.current.lookAt(camera.position)
-  //   if (config.lookAt) {
-  //     innerRef.current.lookAt(camera.position)
-  //   } else {
-  //     innerRef.current.rotation.set(0, 0, 0)
-  //   }
-  // })
+  const { camera } = useThree()
+  useFrame(() => {
+    outerRef.current.lookAt(camera.position)
+    if (config.lookAt) {
+      innerRef.current.lookAt(camera.position)
+    } else {
+      innerRef.current.rotation.set(0, 0, 0)
+    }
+  })
 
   return (
     <group {...props} ref={groupRef}>

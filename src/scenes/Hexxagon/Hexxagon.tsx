@@ -1,18 +1,16 @@
-import { Box, CameraControls, Grid } from '@react-three/drei'
+import { CameraControls, Grid } from '@react-three/drei'
 import { Canvas, invalidate, useFrame, useThree } from '@react-three/fiber'
 import { Leva, buttonGroup, useControls } from 'leva'
 import { Perf } from 'r3f-perf'
 import { useEffect, useRef, useState } from 'react'
 import { Provider } from 'react-redux'
-import { DoubleSide, Group } from 'three'
+import { DoubleSide, Group, Vector3Tuple } from 'three'
 
 import { Board } from './components/Board'
 import { MeshTest } from './components/MeshTest'
 import { hexxStore } from './store'
 
 function Scene() {
-  // console.log('Hexxagon')
-
   const controlsRef = useRef<CameraControls>(null!)
   useZoomToControls(controlsRef)
 
@@ -29,7 +27,7 @@ function Scene() {
     }
   }, [camera, config.fov])
 
-  // fit camera to board
+  // * fit camera to board
   const boardRef = useRef<Group>(null!)
 
   const [initialZoomDone, setInitialZoomDone] = useState(false)
@@ -40,18 +38,23 @@ function Scene() {
     }
   })
 
-  const lightPosition = [-10, 10, 20] as const
+  // * board rotation
+  function rotateBoard(to: Vector3Tuple) {
+    boardRef.current.rotation.set(...to)
+    void controlsRef.current.fitToBox(boardRef.current, true)
+  }
+  useControls({
+    'board rotation': buttonGroup({ zero: () => rotateBoard([0, 0, 0]), one: () => rotateBoard([0, 0, Math.PI / 6]) }),
+  })
 
-  // useRotation(boardRef, 0, 1.57, 0)
   return (
     <>
       <CameraControls ref={controlsRef} />
 
-      <Board ref={boardRef} scale={[1, 1, 1]} name="board" />
+      <Board ref={boardRef} name="board" />
 
-      <pointLight position={lightPosition} intensity={2} />
+      <pointLight position={[-10, 10, 20]} intensity={2} />
       <ambientLight intensity={0.2} />
-      <Box position={lightPosition} />
 
       <MeshTest position={[0, 10, 50]} name="meshtest" />
       <Utility />

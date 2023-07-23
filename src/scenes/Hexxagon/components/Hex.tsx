@@ -12,7 +12,7 @@ type Props = HexxData & JSX.IntrinsicElements['mesh'] & { selected: boolean }
 export function Hex(props: Props) {
   const { vector, material, onClick, contents, index, selected } = props
 
-  const config = useControls({ showLabels: true })
+  const config = useControls({ labels: true })
 
   const position = props.position ?? hex3ToPosition(vector)
 
@@ -32,7 +32,7 @@ export function Hex(props: Props) {
       <Pearl scale={0.65} visible={contents === 'pearl'} />
       <Circle args={[0.6]} material-color="black" visible={contents === 'hole'} />
 
-      <Labels data={[...vector, index]} visible={config.showLabels} />
+      <Labels data={[...vector, index]} visible={config.labels} />
     </group>
   )
 }

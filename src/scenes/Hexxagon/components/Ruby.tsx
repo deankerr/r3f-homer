@@ -1,14 +1,16 @@
 import { useTexture } from '@react-three/drei'
-import { useControls } from 'leva'
+import { folder, useControls } from 'leva'
 import { DoubleSide, LatheGeometry, Vector2 } from 'three'
 
 type Props = JSX.IntrinsicElements['mesh']
 
 export function Ruby(props: Props) {
   const config = useControls(
-    'ruby',
+    'visual',
     {
-      matcap: { value: 0, min: 0, max: matcapPaths.length - 1, step: 1 },
+      ruby: folder({
+        matcap: { value: 0, min: 0, max: matcapPaths.length - 1, step: 1 },
+      }),
     },
     { collapsed: true }
   )
