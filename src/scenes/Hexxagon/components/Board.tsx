@@ -44,7 +44,7 @@ export const Board = forwardRef<Group, Props>((props, ref) => {
 
   const { list, selected } = gameState
   const selectionData = getSelectedNeighbours(selected ? list[selected] : null)
-  console.log('selneighbours', selectionData)
+  // console.log('selneighbours', selectionData)
   // const selected = gameState.selected ? gameState.list[]
   // const selectedNear = selected ?
 

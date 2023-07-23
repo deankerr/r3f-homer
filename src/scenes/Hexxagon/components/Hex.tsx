@@ -27,12 +27,6 @@ export function Hex(props: Props) {
         visible={selected}
         material-side={DoubleSide}
       />
-
-      <Ruby scale={0.65} visible={contents === 'ruby'} />
-      <Pearl scale={0.65} visible={contents === 'pearl'} />
-      <Circle args={[0.6]} material-color="black" visible={contents === 'hole'} />
-
-      <Labels data={[...vector, index]} visible={config.labels} />
     </group>
   )
 }

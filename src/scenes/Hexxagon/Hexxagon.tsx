@@ -1,18 +1,18 @@
 import { CameraControls, Grid } from '@react-three/drei'
-import { Canvas, invalidate, useFrame, useThree } from '@react-three/fiber'
-import { Leva, buttonGroup, useControls } from 'leva'
+import { Canvas, invalidate, useThree } from '@react-three/fiber'
+import { Leva, button, buttonGroup, useControls } from 'leva'
 import { Perf } from 'r3f-perf'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { Provider } from 'react-redux'
-import { DoubleSide, Group, Vector3Tuple } from 'three'
+import { DoubleSide, Group, Object3D } from 'three'
 
-import { Board } from './components/Board'
+import { Game } from './components/Game'
 import { MeshTest } from './components/MeshTest'
 import { hexxStore } from './store'
 
 function Scene() {
   const controlsRef = useRef<CameraControls>(null!)
-  useZoomToControls(controlsRef)
+  // useZoomToControls(controlsRef)
 
   const config = useControls({
     fov: { value: 40, min: 1, max: 100, step: 5 },
@@ -27,36 +27,51 @@ function Scene() {
     }
   }, [camera, config.fov])
 
-  // * fit camera to board
-  const boardRef = useRef<Group>(null!)
+  const fitToCamera = useCallback((targetRef: React.MutableRefObject<Object3D>) => {
+    if (!controlsRef.current || !targetRef.current)
+      return console.error('fitToCamera: invalid ref', controlsRef, targetRef)
+    void controlsRef.current.fitToBox(targetRef.current, true)
+  }, [])
 
-  const [initialZoomDone, setInitialZoomDone] = useState(false)
-  useFrame(() => {
-    if (!initialZoomDone && controlsRef.current && boardRef.current) {
-      void controlsRef.current.fitToBox(boardRef.current, true)
-      setInitialZoomDone(true)
-    }
-  })
+  const gameRef = useRef<Group>(null!)
+  const meshTestRef = useRef<Group>(null!)
 
-  // * board rotation
-  function rotateBoard(to: Vector3Tuple) {
-    boardRef.current.rotation.set(...to)
-    void controlsRef.current.fitToBox(boardRef.current, true)
-  }
   useControls({
-    'board rotation': buttonGroup({ zero: () => rotateBoard([0, 0, 0]), one: () => rotateBoard([0, 0, Math.PI / 6]) }),
+    fit: buttonGroup({
+      game: () => fitToCamera(gameRef),
+      test: () => fitToCamera(meshTestRef),
+    }),
   })
+  // * fit camera to board
+  // const boardRef = useRef<Group>(null!)
+
+  // const [initialZoomDone, setInitialZoomDone] = useState(false)
+  // useFrame(() => {
+  //   if (!initialZoomDone && controlsRef.current && boardRef.current) {
+  //     void controlsRef.current.fitToBox(boardRef.current, true)
+  //     setInitialZoomDone(true)
+  //   }
+  // })
+
+  // // * board rotation
+  // function rotateBoard(to: Vector3Tuple) {
+  //   boardRef.current.rotation.set(...to)
+  //   void controlsRef.current.fitToBox(boardRef.current, true)
+  // }
+  // useControls({
+  //   'board rotation': buttonGroup({ zero: () => rotateBoard([0, 0, 0]), one: () => rotateBoard([0, 0, Math.PI / 6]) }),
+  // })
 
   return (
     <>
       <CameraControls ref={controlsRef} />
 
-      <Board ref={boardRef} name="board" />
+      <Game ref={gameRef} />
 
       <pointLight position={[-10, 10, 20]} intensity={2} />
       <ambientLight intensity={0.2} />
 
-      <MeshTest position={[0, 10, 50]} name="meshtest" />
+      {/* <MeshTest ref={meshTestRef} position={[0, 10, 50]} name="meshtest" /> */}
       <Utility />
     </>
   )
