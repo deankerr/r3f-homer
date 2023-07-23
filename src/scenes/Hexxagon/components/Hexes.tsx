@@ -1,6 +1,6 @@
 import { useTexture } from '@react-three/drei'
 import { folder, useControls } from 'leva'
-import { forwardRef } from 'react'
+import { forwardRef, useEffect } from 'react'
 import { DoubleSide, Group, LatheGeometry, Vector2 } from 'three'
 
 import { hex3ToPosition } from '../lib'
@@ -22,9 +22,13 @@ export const Hexes = forwardRef<Group, Props>((props, ref) => {
     { collapsed: true }
   )
 
+  useEffect(() => {
+    console.log(config.matcap, ':', matcapPaths[config.matcap])
+  }, [config.matcap])
+
   // * hex shared material
-  const boardMatcap = useTexture(matcapPaths[config.matcap])
-  const boardNormal = useTexture(normalPaths[0])
+  const matcap = useTexture(matcapPaths[config.matcap])
+  const normalMap = useTexture(normalPaths[0])
 
   // * game state
   const gameState = useHexxSelector(state => state.gameState)
@@ -46,7 +50,7 @@ export const Hexes = forwardRef<Group, Props>((props, ref) => {
       {gameState.list.map((hex, i) => (
         <group key={i} position={hex3ToPosition(hex.vector)}>
           <mesh name="hex" geometry={geometry.main} onClick={() => handleHexClick(hex)}>
-            <meshMatcapMaterial matcap={boardMatcap} side={DoubleSide} flatShading={true} normalMap={boardNormal} />
+            <meshMatcapMaterial matcap={matcap} side={DoubleSide} flatShading={true} normalMap={normalMap} />
           </mesh>
 
           <mesh
@@ -80,16 +84,15 @@ const geometry = {
   selected: new LatheGeometry(latheVectors.slice(0, 2), 6, -Math.PI / 2).rotateX(-Math.PI / 2).translate(0, 0, 0.4),
 }
 
-const matcapPaths = [
-  'matcaps/board/3E2335_D36A1B_8E4A2E_2842A5-64px.png', // pink metalic classic
-  'matcaps/board/9D282A_38191D_DFC6CD_D6495A-64px.png', // salmon mtal
-  'matcaps/board/C21338_920C24_E71C54_F34A7D-64px.png', // gum
-  'matcaps/board/320455_720DBE_560496_47047B-512px.png', // purple
-  'matcaps/board/D04444_AF2F2F_8B2424_9B2C2C-64px.png', // salmon
-  'matcaps/board/BD5345_460F11_732622_EDB7B1-64px.png', // rose gold
-]
-
 const normalPaths = ['normals/4918-normal.jpg']
+
+const matcapPaths = [
+  'public/matcaps/board/4F439F_A28BE5_8570D6_7765C9-512px.png',
+  'public/matcaps/board/8C5945_D4C0B6_C3A49C_430504-64px.png',
+  'public/matcaps/board/593E2C_E5D8A9_BC9F79_9F8A68-64px.png',
+  'public/matcaps/board/9650CA_46236A_7239A6_633492-512px.png',
+  'public/matcaps/board/935555_F6DAD9_D39393_593333-512px.png',
+]
 
 // // * board rotation
 // function rotateBoard(to: Vector3Tuple) {
